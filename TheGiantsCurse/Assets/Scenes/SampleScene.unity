@@ -251,8 +251,8 @@ GameObject:
   - component: {fileID: 1905343968}
   - component: {fileID: 1905343967}
   - component: {fileID: 1905343966}
-  - component: {fileID: 1905343965}
   - component: {fileID: 1905343970}
+  - component: {fileID: 1905343965}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -274,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1905343970}
   movementSpeed: 5
+  turnSpeed: 720
 --- !u!65 &1905343966
 BoxCollider:
   m_ObjectHideFlags: 0
