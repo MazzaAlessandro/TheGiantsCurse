@@ -7,9 +7,14 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float aimingSpeed = 3f;
+    [SerializeField] private float arrowSpeed = 10f;
     [SerializeField] private float turnSpeed = 720;
 
     private float speed;
+    private float arrowCharge;
+    private float chargeStart = 0.5f;
+    private float chargeCap = 2f;
+    
     private Rigidbody rb;
     private Vector3 movementInput;
     private Vector3 aimDirection, mousePosition;
@@ -30,11 +35,16 @@ public class PlayerController : MonoBehaviour
             speed = aimingSpeed;
             Aiming();
         }
-
         else
         {
+            arrowCharge = chargeStart;
             speed = movementSpeed;
             RotateLook();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            ShootArrow();
         }
     }
 
@@ -58,6 +68,14 @@ public class PlayerController : MonoBehaviour
 
     void Aiming()
     {
+        arrowCharge += Time.deltaTime;
+        if (arrowCharge >= chargeCap)
+        {
+            arrowCharge = chargeCap;
+            Debug.Log("Maximum charge reached at: " + arrowCharge);
+        }
+            
+
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLenght;
@@ -70,5 +88,13 @@ public class PlayerController : MonoBehaviour
             aimDirection = new Vector3(mousePosition.x, transform.position.y, mousePosition.z);
             transform.LookAt(aimDirection);
         }
+    }
+
+    //right now this does not shoot anything, I'm just checking the math
+    void ShootArrow()
+    {
+        float finalArrowSpeed = arrowSpeed * arrowCharge;
+        Debug.Log("Arrow Speed is: " + finalArrowSpeed);
+        arrowCharge = chargeStart;
     }
 }
