@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private GameObject spawnPoint;
+    [SerializeField] private float health = 50f;
+    [SerializeField] private float fallDamage = 1f;
+    [SerializeField] private float healthRegain = 5f;
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float aimingSpeed = 3f;
     [SerializeField] private float arrowSpeed = 10f;
@@ -15,10 +17,11 @@ public class PlayerController : MonoBehaviour
     private float chargeStart = 0.5f;
     private float chargeCap = 2f;
     private int arrowCounter = 10;
-    private int maxArrowCapacity = 10;
 
     private bool movementEnabled, aimingEnabled;
-    
+
+    private GameObject spawnPoint;
+
     private Rigidbody rb;
 
     private Vector3 movementInput;
@@ -45,10 +48,16 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter(Collider coll)
     {
-        if(coll.gameObject.tag == "Arrow" && arrowCounter < maxArrowCapacity)
+        if(coll.gameObject.tag == "ArrowPickUp")
         {
             arrowCounter++;
             Debug.Log("Arrow collected, current arrow count: " + arrowCounter);
+            Destroy(coll.gameObject);
+        }
+        else if (coll.CompareTag("HealthPickUp"))
+        {
+            health += healthRegain;
+            Debug.Log("Health collected, current health: " + health);
             Destroy(coll.gameObject);
         }
     }
@@ -74,7 +83,11 @@ public class PlayerController : MonoBehaviour
         }
 
         if (transform.position.y <= -3)
+        {
+            health -= fallDamage;
+            Debug.Log("Current health: " + health);
             Spawn();
+        }  
     }
 
     void FixedUpdate()
