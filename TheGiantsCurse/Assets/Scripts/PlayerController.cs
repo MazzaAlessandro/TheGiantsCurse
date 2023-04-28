@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
+    private GameObject spawnPoint;
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float aimingSpeed = 3f;
     [SerializeField] private float arrowSpeed = 10f;
@@ -14,8 +14,13 @@ public class PlayerController : MonoBehaviour
     private float arrowCharge;
     private float chargeStart = 0.5f;
     private float chargeCap = 2f;
+    private int arrowCounter = 10;
+    private int maxArrowCapacity = 10;
+
+    private bool movementEnabled, aimingEnabled;
     
     private Rigidbody rb;
+
     private Vector3 movementInput;
     private Vector3 aimDirection, mousePosition;
 
@@ -23,14 +28,35 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        spawnPoint = GameObject.FindWithTag("Respawn");
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
+        Spawn();
+        movementEnabled = true;
+        aimingEnabled = true;
+    }
+
+    private void Spawn()
+    {
+        transform.position = spawnPoint.transform.position;
+        movementEnabled = true;
+        aimingEnabled = true;
+    }
+
+    public void OnTriggerEnter(Collider coll)
+    {
+        if(coll.gameObject.tag == "Arrow" && arrowCounter < maxArrowCapacity)
+        {
+            arrowCounter++;
+            Debug.Log("Arrow collected, current arrow count: " + arrowCounter);
+            Destroy(coll.gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && aimingEnabled)
         {
             speed = aimingSpeed;
             Aiming();
@@ -46,6 +72,9 @@ public class PlayerController : MonoBehaviour
         {
             ShootArrow();
         }
+
+        if (transform.position.y <= -3)
+            Spawn();
     }
 
     void FixedUpdate()
@@ -54,14 +83,15 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         movementInput = new Vector3(horizontal, 0, vertical);
 
-        rb.MovePosition(transform.position + movementInput.ToIso() * speed * Time.fixedDeltaTime);        
+        if (movementEnabled)
+            rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
     }
 
     void RotateLook()
     {
         if (movementInput != Vector3.zero)
         {
-            var rot = Quaternion.LookRotation(movementInput.ToIso(), Vector3.up);
+            var rot = Quaternion.LookRotation(movementInput, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, turnSpeed * Time.deltaTime);
         }
     }
@@ -93,8 +123,16 @@ public class PlayerController : MonoBehaviour
     //right now this does not shoot anything, I'm just checking the math
     void ShootArrow()
     {
-        float finalArrowSpeed = arrowSpeed * arrowCharge;
-        Debug.Log("Arrow Speed is: " + finalArrowSpeed);
-        arrowCharge = chargeStart;
+        if (arrowCounter > 0)
+        {
+            float finalArrowSpeed = arrowSpeed * arrowCharge;
+            arrowCharge = chargeStart;
+            arrowCounter--;
+            Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
+        } 
+        else
+        {
+            Debug.Log("Out of arrows");
+        }
     }
 }
