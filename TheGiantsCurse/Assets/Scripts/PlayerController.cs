@@ -9,20 +9,27 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float healthRegain = 5f;
     [SerializeField] private float movementSpeed = 5f;
     [SerializeField] private float aimingSpeed = 3f;
-    [SerializeField] private float arrowSpeed = 10f;
+    [SerializeField] private float arrowSpeed = 20f;
     [SerializeField] private float turnSpeed = 720;
+    [SerializeField] private float reloadTime = 1f;
+
+    [SerializeField] private Transform arrowSpawnPoint;
+
+    [SerializeField] private ArrowBehaviour arrowPrefab;
 
     private float speed;
     private float arrowCharge;
-    private float chargeStart = 0.5f;
-    private float chargeCap = 2f;
+    private float chargeStart = 0.8f;
+    private float chargeCap = 1.5f;
     private int arrowCounter = 10;
 
-    private bool movementEnabled, aimingEnabled;
+    private bool movementEnabled, aimingEnabled, isReloading;
 
     private GameObject spawnPoint;
 
     private Rigidbody rb;
+
+    private ArrowBehaviour currentArrow;
 
     private Vector3 movementInput;
     private Vector3 aimDirection, mousePosition;
@@ -41,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     private void Spawn()
     {
+        Reload();
         transform.position = spawnPoint.transform.position;
         movementEnabled = true;
         aimingEnabled = true;
@@ -136,16 +144,45 @@ public class PlayerController : MonoBehaviour
     //right now this does not shoot anything, I'm just checking the math
     void ShootArrow()
     {
-        if (arrowCounter > 0)
+        if (isReloading)
+        {
+            Debug.Log("You are reloading");
+            return; 
+        }
+        if (arrowCounter >= 1)
         {
             float finalArrowSpeed = arrowSpeed * arrowCharge;
             arrowCharge = chargeStart;
             arrowCounter--;
             Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
+            var force = transform.TransformDirection(Vector3.forward);
+            currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
+            currentArrow.transform.localPosition = Vector3.zero;
+            currentArrow.Shoot(transform.forward * finalArrowSpeed);
+            //currentArrow.Shoot(transform.forward, finalArrowSpeed);
+            currentArrow = null;
+            if (arrowCounter > 0)
+                Reload();
         } 
         else
         {
             Debug.Log("Out of arrows");
         }
+    }
+
+    void Reload()
+    {
+        if (isReloading) 
+            return;
+        isReloading = true;
+        StartCoroutine(ReloadAfterTime());
+    }
+
+    private IEnumerator ReloadAfterTime()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        //currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
+        //currentArrow.transform.localPosition = Vector3.zero;
+        isReloading = false;
     }
 }
