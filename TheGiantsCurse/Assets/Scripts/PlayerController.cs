@@ -38,10 +38,18 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        movementEnabled = false;
+        aimingEnabled = false;
         spawnPoint = GameObject.FindWithTag("Respawn");
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
-        Spawn();
+        transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        StartCoroutine(MovementEnabler());
+    }
+
+    private IEnumerator MovementEnabler()
+    {
+        yield return new WaitForSeconds(2);
         movementEnabled = true;
         aimingEnabled = true;
     }
