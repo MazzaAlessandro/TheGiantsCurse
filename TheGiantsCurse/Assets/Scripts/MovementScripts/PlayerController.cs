@@ -17,13 +17,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private ArrowBehaviour arrowPrefab;
 
+    [SerializeField] private Gadget gadget;
+
     private float speed;
     private float arrowCharge;
     private float chargeStart = 0.8f;
     private float chargeCap = 1.5f;
     private int arrowCounter = 10;
 
-    private bool movementEnabled, aimingEnabled, isReloading;
+    private bool movementEnabled, aimingEnabled, isReloading, fullCharge;
 
     private GameObject spawnPoint;
 
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         movementEnabled = false;
         aimingEnabled = false;
+        fullCharge = false;
         spawnPoint = GameObject.FindWithTag("Respawn");
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
@@ -98,6 +101,11 @@ public class PlayerController : MonoBehaviour
             ShootArrow();
         }
 
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            gadget.GadgetAction();
+        }
+
         if (transform.position.y <= -3)
         {
             health -= fallDamage;
@@ -127,13 +135,15 @@ public class PlayerController : MonoBehaviour
 
     void Aiming()
     {
-        arrowCharge += Time.deltaTime;
-        if (arrowCharge >= chargeCap)
-        {
-            arrowCharge = chargeCap;
-            Debug.Log("Maximum charge reached at: " + arrowCharge);
+        if (!fullCharge) { 
+            arrowCharge += Time.deltaTime;
+            if (arrowCharge >= chargeCap)
+            {
+               arrowCharge = chargeCap;
+                Debug.Log("Maximum charge reached at: " + arrowCharge);
+                fullCharge = true;
+            }
         }
-            
 
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -161,6 +171,7 @@ public class PlayerController : MonoBehaviour
         {
             float finalArrowSpeed = arrowSpeed * arrowCharge;
             arrowCharge = chargeStart;
+            fullCharge = false;
             arrowCounter--;
             Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
             var force = transform.TransformDirection(Vector3.forward);

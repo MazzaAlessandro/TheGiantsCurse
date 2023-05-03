@@ -9,6 +9,8 @@ public class ArrowBehaviour : MonoBehaviour
     private Rigidbody rb;
     private GameObject arrowPickup;
 
+    private bool fireArrow = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,10 +35,38 @@ public class ArrowBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.CompareTag("Wall"))
+        switch (coll.tag)
         {
-            Debug.Log("Arrow hit a wall!");
-            SpawnAmmoPickup();
+            case "Wall":
+                Debug.Log("Arrow hit a wall!");
+                SpawnAmmoPickup();
+                break;
+            case "Switch":
+                Debug.Log("Arrow hit a switch");
+                SpawnAmmoPickup();
+                coll.GetComponent<SwitchAction>().SetActive();
+                break;
+            case "Torch":
+                Debug.Log("Arrow hit a torch");
+                if (coll.GetComponent<TorchBehaviour>().IsLit() && !fireArrow)
+                {
+                    fireArrow = true;
+                    Debug.Log("Arrow is now on fire");
+                }
+                if (!coll.GetComponent<TorchBehaviour>().IsLit() && fireArrow)
+                {
+                    coll.GetComponent<TorchBehaviour>().LitTorch();
+                }
+                break;
+            case "IceBlock":
+                Debug.Log("Arrow hit an ice block");
+                if (fireArrow)
+                {
+                    Debug.Log("The ice block melts");
+                    coll.GetComponent<IceCubeBehaviour>().StartMelting();
+                }
+                SpawnAmmoPickup();
+                break;
         }
     }
 
