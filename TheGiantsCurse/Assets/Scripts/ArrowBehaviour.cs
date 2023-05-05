@@ -10,6 +10,7 @@ public class ArrowBehaviour : MonoBehaviour
     private GameObject arrowPickup;
 
     private bool fireArrow = false;
+    private bool ropedArrow = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -46,6 +47,12 @@ public class ArrowBehaviour : MonoBehaviour
                 SpawnAmmoPickup();
                 coll.GetComponent<SwitchAction>().SetActive();
                 break;
+            //this was only to test the timer on switches. They should be interactable, not to hit with arrows
+            /*case "TimedSwitch":
+                Debug.Log("Arrow hit a timed switch");
+                SpawnAmmoPickup();
+                coll.GetComponent<TimedSwitchAction>().SetActive();
+                break;*/
             case "Torch":
                 Debug.Log("Arrow hit a torch");
                 if (coll.GetComponent<TorchBehaviour>().IsLit() && !fireArrow)
@@ -77,5 +84,14 @@ public class ArrowBehaviour : MonoBehaviour
         arrowPickup.transform.SetParent(null);
         arrowPickup.transform.localScale = Vector3.one;
         Destroy(this.gameObject);
+    }
+
+    public void MakeFireArrow()
+    {
+        fireArrow = true;
+    }
+    public void MakeRoped()
+    {
+        ropedArrow = true;
     }
 }

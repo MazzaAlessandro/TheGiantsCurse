@@ -9,6 +9,9 @@ TagManager:
   - ArrowPickUp
   - HealthPickUp
   - Switch
+  - Torch
+  - IceBlock
+  - TimedSwitch
   layers:
   - Default
   - TransparentFX

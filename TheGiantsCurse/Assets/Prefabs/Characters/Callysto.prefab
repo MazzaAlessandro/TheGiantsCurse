@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1832006099087121441}
   - component: {fileID: 1832006099087121440}
   - component: {fileID: 1832006099087121436}
-  - component: {fileID: 1832006099087121443}
+  - component: {fileID: -7926966588473449984}
   m_Layer: 0
   m_Name: Callysto
   m_TagString: Player
@@ -117,7 +117,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &1832006099087121443
+--- !u!114 &-7926966588473449984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832006099087121442}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e17279d15cd6c6f4a98d9adb29e7b519, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f9a0e6219299f144b3c12af43b1b581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
@@ -137,6 +137,7 @@ MonoBehaviour:
   arrowSpeed: 20
   turnSpeed: 720
   reloadTime: 1
+  interactRange: 1
   arrowSpawnPoint: {fileID: 1832006099889838182}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   gadget: {fileID: 9068910078053485137}
