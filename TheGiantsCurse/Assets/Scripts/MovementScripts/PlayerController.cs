@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float healthRegain = 5f;
     [SerializeField] private float movementSpeed = 8f;
     [SerializeField] private float aimingSpeed = 4f;
+    [SerializeField] private float grappleSpeed = 8f;
     [SerializeField] protected float arrowSpeed = 20f;
     [SerializeField] private float turnSpeed = 720;
     [SerializeField] private float reloadTime = 1f;
@@ -29,12 +30,15 @@ public class PlayerController : MonoBehaviour
     protected float chargeCap = 1.5f;
     protected int arrowCounter = 10;
 
-    private bool movementEnabled, aimingEnabled, isReloading;
-    protected bool fullCharge;
+    private bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem;
+    protected bool fullCharge, ropedArrow;
 
     private GameObject spawnPoint;
 
     private Rigidbody rb;
+    private Rigidbody pickup;
+
+    private Transform pickupTransform;
 
     protected ArrowBehaviour currentArrow;
 
@@ -45,10 +49,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        grappled = false;
+        ropedArrow = false;
         movementEnabled = false;
         aimingEnabled = false;
         fullCharge = false;
         spawnPoint = GameObject.FindWithTag("Respawn");
+        pickupTransform = transform.GetChild(2);
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
@@ -80,7 +87,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (coll.CompareTag("HealthPickUp"))
         {
-            TakeDamage(-healthRegain);
+            health += healthRegain;
             Debug.Log("Health collected, current health: " + health);
             Destroy(coll.gameObject);
         }
@@ -103,7 +110,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            ShootArrow();
+            if (holdingItem)
+                Throw();
+            else
+                ShootArrow();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -113,7 +123,18 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Interact();
+            if (pickup != null)
+            {
+                Drop();
+            }
+            else
+                Interact();
+        }
+
+        //This is a command used just to test the rope immediatly, needs to be removed
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            MakeRoped();
         }
 
         if (transform.position.y <= -3)
@@ -126,12 +147,33 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        movementInput = new Vector3(horizontal, 0, vertical);
+        if (grappled)
+        {
+            if(Vector3.Distance(transform.position, movementInput) < 2f)
+            {
+                grappled = false;
+                rb.useGravity = true;
+                rb.isKinematic = false;
+                aimingEnabled = true;
+            }
+            else
+            {
+                //rb.MovePosition(transform.position + movementInput.normalized * grappleSpeed * Time.fixedDeltaTime);
+                rb.AddForce((movementInput - transform.position).normalized, ForceMode.VelocityChange);
+            }
+        }
+        else
+        {
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            movementInput = new Vector3(horizontal, 0, vertical);
 
-        if (movementEnabled)
-            rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
+            if (movementEnabled)
+                rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
+        }
+
+        if (holdingItem)
+            pickup.transform.position = pickupTransform.position;
     }
 
     void Interact()
@@ -143,7 +185,41 @@ public class PlayerController : MonoBehaviour
             {
                 interactObj.Interact();
             }
+
+            if (hitInfo.collider.gameObject.CompareTag("Explosive") || hitInfo.collider.gameObject.CompareTag("Pickup"))
+            {
+                Pickup(hitInfo.rigidbody);
+            }
         }
+    }
+
+    void Pickup(Rigidbody obj)
+    {
+        pickup = obj;
+        pickup.transform.SetParent(null);
+        pickup.isKinematic = false;
+        pickup.useGravity = false;
+        holdingItem = true;
+        Debug.Log("Interact with pickup object");
+    }
+
+    void Drop()
+    {
+        pickup.transform.SetParent(null);
+        pickup.isKinematic = false;
+        pickup.useGravity = true;
+        pickup = null;
+        holdingItem = false;
+    }
+
+    void Throw()
+    {
+        pickup.transform.SetParent(null);
+        pickup.isKinematic = false;
+        pickup.useGravity = true;
+        pickup.AddForce(transform.forward * arrowSpeed, ForceMode.Impulse);
+        pickup = null;
+        holdingItem = false;
     }
 
     void RotateLook()
@@ -214,8 +290,11 @@ public class PlayerController : MonoBehaviour
         var force = transform.TransformDirection(Vector3.forward);
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
         currentArrow.transform.localPosition = Vector3.zero;
+        if (ropedArrow)
+            currentArrow.MakeRoped();
         currentArrow.Shoot(transform.forward * finalArrowSpeed);
         //currentArrow.Shoot(transform.forward, finalArrowSpeed);
+        ropedArrow = false;
         currentArrow = null;
         if (arrowCounter > 0)
             Reload();
@@ -240,10 +319,32 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        Debug.Log("Took damage: " + damage + ". Health is now: " + health);
     }
 
     public void PickUpArrow(int arrows)
     {
         arrowCounter += arrows;
+    }
+
+    public void MakeRoped()
+    {
+        ropedArrow = true;
+    }
+
+    public void PullTowards(Vector3 destination)
+    {
+        Debug.Log("You are pulled to: " + destination);
+        aimingEnabled = false;
+        rb.useGravity = false;
+        transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+        //rb.isKinematic = true;
+        grappled = true;
+        movementInput = destination;
+    }
+
+    public bool IsGrappled()
+    {
+        return grappled;
     }
 }

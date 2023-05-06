@@ -30,10 +30,13 @@ public class CallystoController : PlayerController
         currentArrow.transform.localPosition = Vector3.zero;
         if (fullCharge)
             currentArrow.MakeFireArrow();
+        if (ropedArrow)
+            currentArrow.MakeRoped();
         currentArrow.Shoot(transform.forward * finalArrowSpeed);
         //currentArrow.Shoot(transform.forward, finalArrowSpeed);
         currentArrow = null;
         fullCharge = false;
+        ropedArrow = false;
         if (arrowCounter > 0)
             Reload();
     }

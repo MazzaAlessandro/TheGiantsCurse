@@ -8,6 +8,7 @@ public class ArrowBehaviour : MonoBehaviour
 
     private Rigidbody rb;
     private GameObject arrowPickup;
+    private LineRenderer lineRenderer;
 
     private bool fireArrow = false;
     private bool ropedArrow = false;
@@ -16,11 +17,23 @@ public class ArrowBehaviour : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (ropedArrow)
+        {
+            Vector3[] positions = new Vector3[]
+            {
+                transform.position,
+                this.gameObject.GetComponentInParent<Transform>().position
+            };
+
+            lineRenderer.SetPositions(positions);
+        }
+
         if (transform.position.y <= -3)
         {
             Destroy(this.gameObject);
@@ -31,7 +44,8 @@ public class ArrowBehaviour : MonoBehaviour
     {
         rb.isKinematic = false;
         rb.AddForce(force, ForceMode.Impulse);
-        transform.SetParent(null);
+        if (!ropedArrow)
+            transform.SetParent(null);
     }
 
     private void OnTriggerEnter(Collider coll)
@@ -72,6 +86,19 @@ public class ArrowBehaviour : MonoBehaviour
                     Debug.Log("The ice block melts");
                     coll.GetComponent<IceCubeBehaviour>().StartMelting();
                 }
+                SpawnAmmoPickup();
+                break;
+            case "Grapple":
+                Debug.Log("Hit a grappling point");
+                if (ropedArrow)
+                {
+                    GetComponentInParent<PlayerController>().PullTowards(coll.transform.position);
+                }
+                SpawnAmmoPickup();
+                break;
+            case "Explosive":
+                Debug.Log("Explosive barrel was hit");
+                coll.GetComponent<Explosive>().Ignite();
                 SpawnAmmoPickup();
                 break;
         }

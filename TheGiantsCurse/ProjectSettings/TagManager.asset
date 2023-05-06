@@ -12,6 +12,10 @@ TagManager:
   - Torch
   - IceBlock
   - TimedSwitch
+  - Destroyable
+  - Grapple
+  - Explosive
+  - Pickup
   layers:
   - Default
   - TransparentFX
