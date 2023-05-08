@@ -256,6 +256,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7257456782309366458, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
+      propertyPath: lanternLight
+      value: 
+      objectReference: {fileID: 450954241469354395}
     - target: {fileID: 8037984184615930136, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
       propertyPath: m_Name
       value: LanternGadget
@@ -266,6 +270,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
+--- !u!108 &450954241469354395 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2246886822349537648, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
+  m_PrefabInstance: {fileID: 1832006099651924203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5117987999760247759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6803295470789720868, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}

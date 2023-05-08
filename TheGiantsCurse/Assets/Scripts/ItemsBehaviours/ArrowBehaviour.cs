@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArrowBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject arrowPickupPrefab;
+    [SerializeField] private GameObject tipLight;
 
     private Rigidbody rb;
     private GameObject arrowPickup;
@@ -16,6 +17,7 @@ public class ArrowBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        tipLight.SetActive(false);
         rb = GetComponent<Rigidbody>();
         lineRenderer = GetComponent<LineRenderer>();
     }
@@ -71,7 +73,7 @@ public class ArrowBehaviour : MonoBehaviour
                 Debug.Log("Arrow hit a torch");
                 if (coll.GetComponent<TorchBehaviour>().IsLit() && !fireArrow)
                 {
-                    fireArrow = true;
+                    MakeFireArrow();
                     Debug.Log("Arrow is now on fire");
                 }
                 if (!coll.GetComponent<TorchBehaviour>().IsLit() && fireArrow)
@@ -115,6 +117,7 @@ public class ArrowBehaviour : MonoBehaviour
 
     public void MakeFireArrow()
     {
+        tipLight.SetActive(true);
         fireArrow = true;
     }
     public void MakeRoped()
