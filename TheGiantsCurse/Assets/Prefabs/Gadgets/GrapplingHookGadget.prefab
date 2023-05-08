@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfcd93200e6486f41b8825fc2f11fd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hookSpeed: 10
   cooldown: 3
+  Hook: {fileID: 0}

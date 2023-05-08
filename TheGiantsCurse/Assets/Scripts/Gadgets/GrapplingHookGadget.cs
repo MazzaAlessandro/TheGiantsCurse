@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class GrapplingHookGadget : Gadget
 {
+    [SerializeField] private float hookSpeed = 10f;
     [SerializeField] private float cooldown = 3f;
+
+    [SerializeField] private HookBehaviour Hook;
+
+    private HookBehaviour hookInstance;
 
     private float countdown;
 
@@ -34,7 +39,12 @@ public class GrapplingHookGadget : Gadget
     {
         if (isReady)
         {
+            GetComponentInParent<MoonriseController>().SetMovement(false);
             Debug.Log("Activate Grappling Hook Gadget! Cooldown: " + cooldown);
+            hookInstance = Instantiate(Hook, transform);
+            hookInstance.transform.localPosition = Vector3.forward;
+            hookInstance.Shoot(transform.forward * hookSpeed);
+            hookInstance = null;
             countdown = 0f;
             isReady = false;
         }

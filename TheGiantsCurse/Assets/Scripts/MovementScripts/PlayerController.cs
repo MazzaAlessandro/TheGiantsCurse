@@ -7,7 +7,7 @@ interface IInteractable{
 }
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float health = 50f;
+    [SerializeField] protected float health = 50f;
     [SerializeField] private float fallDamage = 1f;
     [SerializeField] private float healthRegain = 5f;
     [SerializeField] private float movementSpeed = 8f;
@@ -30,19 +30,18 @@ public class PlayerController : MonoBehaviour
     protected float chargeCap = 1.5f;
     protected int arrowCounter = 10;
 
-    private bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem;
-    protected bool fullCharge, ropedArrow;
+    protected bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem, fullCharge, ropedArrow;
 
     private GameObject spawnPoint;
 
-    private Rigidbody rb;
+    protected Rigidbody rb;
     private Rigidbody pickup;
 
     private Transform pickupTransform;
 
     protected ArrowBehaviour currentArrow;
 
-    private Vector3 movementInput;
+    protected Vector3 movementInput;
     private Vector3 aimDirection, mousePosition;
 
     private Camera mainCamera;
@@ -105,7 +104,8 @@ public class PlayerController : MonoBehaviour
         {
             arrowCharge = chargeStart;
             speed = movementSpeed;
-            RotateLook();
+            if(movementEnabled)
+                RotateLook();
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            gadget.GadgetAction();
+            UseGadget();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -154,18 +154,7 @@ public class PlayerController : MonoBehaviour
     {
         if (grappled)
         {
-            if(Vector3.Distance(transform.position, movementInput) < 2f)
-            {
-                grappled = false;
-                rb.useGravity = true;
-                rb.isKinematic = false;
-                aimingEnabled = true;
-            }
-            else
-            {
-                //rb.MovePosition(transform.position + movementInput.normalized * grappleSpeed * Time.fixedDeltaTime);
-                rb.AddForce((movementInput - transform.position).normalized, ForceMode.VelocityChange);
-            }
+            GrappledMovement();
         }
         else
         {
@@ -179,6 +168,26 @@ public class PlayerController : MonoBehaviour
 
         if (holdingItem)
             pickup.transform.position = pickupTransform.position;
+    }
+
+    public virtual void GrappledMovement()
+    {
+        if (Vector3.Distance(transform.position, movementInput) < 2f)
+        {
+            grappled = false;
+            rb.useGravity = true;
+            rb.isKinematic = false;
+            aimingEnabled = true;
+        }
+        else
+        {
+            rb.AddForce((movementInput - transform.position).normalized, ForceMode.VelocityChange);
+        }
+    }
+
+    public virtual void UseGadget()
+    {
+        gadget.GadgetAction();
     }
 
     void Interact()
@@ -292,7 +301,6 @@ public class PlayerController : MonoBehaviour
         fullCharge = false;
         arrowCounter--;
         Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
-        var force = transform.TransformDirection(Vector3.forward);
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
         currentArrow.transform.localPosition = Vector3.zero;
         if (ropedArrow)
@@ -321,7 +329,7 @@ public class PlayerController : MonoBehaviour
         isReloading = false;
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         health -= damage;
         Debug.Log("Took damage: " + damage + ". Health is now: " + health);
@@ -337,7 +345,7 @@ public class PlayerController : MonoBehaviour
         ropedArrow = true;
     }
 
-    public void PullTowards(Vector3 destination)
+    public virtual void PullTowards(Vector3 destination)
     {
         Debug.Log("You are pulled to: " + destination);
         aimingEnabled = false;
