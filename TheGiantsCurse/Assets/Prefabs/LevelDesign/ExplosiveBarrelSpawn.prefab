@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9157209730065463192}
   - component: {fileID: 9157209730065463195}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ExplosiveBarrelSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +58,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveBarrel
       objectReference: {fileID: 0}
+    - target: {fileID: 5978599342707948291, guid: 0d0aff5a73a1f5d4f8387f25f2917a65, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5978599342707948292, guid: 0d0aff5a73a1f5d4f8387f25f2917a65, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5978599342707948294, guid: 0d0aff5a73a1f5d4f8387f25f2917a65, type: 3}
       propertyPath: m_RootOrder
       value: 0

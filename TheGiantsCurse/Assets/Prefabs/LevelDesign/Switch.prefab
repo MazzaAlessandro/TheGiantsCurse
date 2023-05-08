@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6280113565948699853}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorDestination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 9022749854862624970}
   - component: {fileID: 9022749854862624971}
   - component: {fileID: 9022749854862624968}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SlidingDoor
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 9022749855455763637}
   - component: {fileID: 9022749855455763634}
   - component: {fileID: 9022749855455763635}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Switch
   m_TagString: Switch
   m_Icon: {fileID: 0}

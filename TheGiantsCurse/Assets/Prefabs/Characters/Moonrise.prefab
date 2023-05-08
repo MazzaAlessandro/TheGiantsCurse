@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5301940993673544216}
   - component: {fileID: 5301940993673544228}
   - component: {fileID: 5301940993673544219}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Moonrise
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5301940995013330526}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ArrowSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7901250511376596739}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PickupTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,6 +259,10 @@ PrefabInstance:
     - target: {fileID: 6492634662118584878, guid: ec387fbc82df58c4d8c3c39dfd56b87f, type: 3}
       propertyPath: m_Name
       value: GrapplingHookGadget
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492634662118584878, guid: ec387fbc82df58c4d8c3c39dfd56b87f, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec387fbc82df58c4d8c3c39dfd56b87f, type: 3}

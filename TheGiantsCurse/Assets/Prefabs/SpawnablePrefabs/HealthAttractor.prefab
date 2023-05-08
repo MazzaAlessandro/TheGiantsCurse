@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4274413912506783180}
   - component: {fileID: 2112723191830318858}
   - component: {fileID: 2883534978174498097}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HealthAttractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 7756451890625840903}
   - component: {fileID: 7366584593255747494}
   - component: {fileID: 2894894375641251877}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HealthPickUp
   m_TagString: HealthPickUp
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

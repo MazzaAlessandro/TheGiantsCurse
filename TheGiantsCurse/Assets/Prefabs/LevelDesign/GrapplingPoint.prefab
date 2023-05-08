@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7740101683402292878}
   - component: {fileID: 7740101683402292877}
   - component: {fileID: 7740101683402292876}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GrapplingPoint
   m_TagString: Grapple
   m_Icon: {fileID: 0}

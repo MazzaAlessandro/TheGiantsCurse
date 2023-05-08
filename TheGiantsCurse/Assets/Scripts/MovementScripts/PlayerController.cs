@@ -143,6 +143,11 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Current health: " + health);
             Spawn();
         }  
+
+        if (pickup == null)
+        {
+            holdingItem = false;
+        }
     }
 
     void FixedUpdate()

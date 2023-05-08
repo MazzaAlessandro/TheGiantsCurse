@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5100742627491780291}
   - component: {fileID: 5100742627491780290}
   - component: {fileID: 5100742627491780289}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SlidingDoor
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 5100742629092065980}
   - component: {fileID: 5100742629092065979}
   - component: {fileID: 5100742629092065978}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TimedSwitch
   m_TagString: TimedSwitch
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7843361072465033924}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorDestination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
