@@ -16,6 +16,9 @@ TagManager:
   - Grapple
   - Explosive
   - Pickup
+  - GlobalLight
+  - Dark
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

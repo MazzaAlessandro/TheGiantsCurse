@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Gadget gadget;
 
-    private float speed;
+    protected float speed;
     protected float arrowCharge;
     protected float chargeStart = 0.8f;
     protected float chargeCap = 1.5f;
@@ -84,16 +84,26 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Arrow collected, current arrow count: " + arrowCounter);
             Destroy(coll.gameObject);
         }
-        else if (coll.CompareTag("HealthPickUp"))
+
+        if (coll.CompareTag("HealthPickUp"))
         {
             health += healthRegain;
             Debug.Log("Health collected, current health: " + health);
             Destroy(coll.gameObject);
         }
+
+        if (coll.CompareTag("Checkpoint"))
+        {
+            if (spawnPoint != coll.gameObject)
+            {
+                Debug.Log("New Checkpoint! Now kill yourself");
+                spawnPoint = coll.gameObject;
+            }
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButton(1) && aimingEnabled)
         {
@@ -150,7 +160,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (grappled)
         {
@@ -359,5 +369,19 @@ public class PlayerController : MonoBehaviour
     public bool IsGrappled()
     {
         return grappled;
+    }
+
+    public void Stun(float stunDuration)
+    {
+        StartCoroutine(StunCoroutine(stunDuration));
+    }
+
+    private IEnumerator StunCoroutine(float duration)
+    {
+        movementEnabled = false;
+        aimingEnabled = false;
+        yield return new WaitForSeconds(duration);
+        movementEnabled = true;
+        aimingEnabled = true;
     }
 }

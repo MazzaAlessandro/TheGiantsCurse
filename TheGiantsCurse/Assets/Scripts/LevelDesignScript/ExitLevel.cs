@@ -16,6 +16,7 @@ public class ExitLevel : MonoBehaviour
     private void CompleteLevel()
     {
         Debug.Log("The Player has reached the end of the level");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
+        LevelManager.instance.NextLevel();
     }
 }

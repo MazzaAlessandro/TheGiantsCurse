@@ -24,4 +24,9 @@ public class HazardEvent : MonoBehaviour
         globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
     }
 
+    void Darkness(float duration)
+    {
+
+    }
+
 }

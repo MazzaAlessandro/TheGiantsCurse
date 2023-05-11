@@ -20,4 +20,29 @@ public static class Helper
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
+
+    public static IEnumerator Darkness(Light l, float fadeTime, float duration)
+    {
+        float t = 0.0f;
+
+        while (t < fadeTime)
+        {
+            t += Time.deltaTime;
+
+            l.intensity = Mathf.Lerp(1, 0, t / fadeTime);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        t = 0.0f;
+
+        while (t < fadeTime)
+        {
+            t += Time.deltaTime;
+
+            l.intensity = Mathf.Lerp(0, 1, t / fadeTime);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
 }

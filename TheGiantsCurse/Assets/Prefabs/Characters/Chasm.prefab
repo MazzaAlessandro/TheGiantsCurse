@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 8781800994898835876}
   - component: {fileID: 8781800994898835877}
   - component: {fileID: 8781800994898835865}
-  - component: {fileID: 8781800994898835878}
+  - component: {fileID: -670323699480627753}
   m_Layer: 3
   m_Name: Chasm
   m_TagString: Player
@@ -149,7 +149,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &8781800994898835878
+--- !u!114 &-670323699480627753
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,13 +158,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8781800994898835879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e17279d15cd6c6f4a98d9adb29e7b519, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e0856e2b3f944e47b663370c839995f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
   fallDamage: 1
   healthRegain: 5
-  movementSpeed: 7
+  movementSpeed: 8
   aimingSpeed: 4
   grappleSpeed: 8
   arrowSpeed: 20
@@ -173,7 +173,7 @@ MonoBehaviour:
   interactRange: 1
   arrowSpawnPoint: {fileID: 8781800995706011107}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
-  gadget: {fileID: 6320958448883640354}
+  gadget: {fileID: 3343842742694318291, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
 --- !u!1 &8781800995706011116
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,14 +271,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7000442950110379447, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
   m_PrefabInstance: {fileID: 8781800995193010417}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6320958448883640354 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3343842742694318291, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
-  m_PrefabInstance: {fileID: 8781800995193010417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19827c30e692ab4f96e8eaa3e0a213f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
