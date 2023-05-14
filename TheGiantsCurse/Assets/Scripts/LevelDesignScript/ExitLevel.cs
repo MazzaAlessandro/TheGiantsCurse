@@ -9,7 +9,13 @@ public class ExitLevel : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CompleteLevel();
+            if (!other.gameObject.GetComponent<PlayerController>().CanExit())
+            {
+                other.gameObject.GetComponent<PlayerController>().TurnOffExit();
+                other.gameObject.GetComponent<PlayerController>().EnterLevel();
+                CompleteLevel();
+            }
+            
         }
     }
 

@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class LanternGadget : Gadget
 {
-    [SerializeField] private float cooldown = 3f;
+    [SerializeField] private float cooldown = 5f;
 
     [SerializeField] private float lanternIntensity = 5f;
 
     [SerializeField] private Light lanternLight;
+    [SerializeField] private GameObject firePrefab;
 
     private Light globalLight;
+
+    private GameObject fire;
 
     private float countdown;
 
@@ -20,10 +23,18 @@ public class LanternGadget : Gadget
     void Start()
     {
         globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
-        lanternLight.gameObject.SetActive(true);
         countdown = 0f;
         isReady = true;
-        lightOn = (globalLight.intensity < 0.5f);
+        if(globalLight.intensity < 0.5f)
+        {
+            lanternLight.intensity = lanternIntensity;
+            lightOn = true;
+        }
+        else
+        {
+            lanternLight.intensity = 0;
+            lightOn = false;
+        }
     }
 
     // Update is called once per frame
@@ -39,10 +50,8 @@ public class LanternGadget : Gadget
             }
         }
 
-        //StartCoroutine(LanternFade(globalLight.intensity < 0.5f));
         if (globalLight.intensity < 0.5f && !lightOn)
         {
-            //lanternLight.gameObject.SetActive(true);
             lightOn = true;
             StartCoroutine(Helper.FadeLight(lanternLight, 0f, 5f, 1f));
         }
@@ -50,42 +59,40 @@ public class LanternGadget : Gadget
         {
             lightOn = false;
             StartCoroutine(Helper.FadeLight(lanternLight, 5f, 0f, 1f));
-            //lanternLight.gameObject.SetActive(false);
         }
 
-    }
-
-
-    private IEnumerator LanternFade(bool on)
-    {
-        float interval = 0.1f;
-        if (on)
-        {
-            while (lanternLight.intensity <= lanternIntensity)
-            {
-                lanternLight.intensity += 0.02f;
-                yield return new WaitForSeconds(interval);
-            }
-        }
-        else
-        {
-            while (lanternLight.intensity >= 0)
-            {
-                lanternLight.intensity -= 0.02f;
-                yield return new WaitForSeconds(interval);
-            }
-        }
     }
 
     public override void GadgetAction()
     {
         if (isReady)
         {
-            Debug.Log("Activate Lantern Gadget! Cooldown: " + cooldown);
-            countdown = 0f;
-            isReady = false;
+            CreateFire();
         }
         else
             Debug.Log("Gadget on cooldown");
+    }
+
+    private void CreateFire()
+    {
+        fire = Instantiate(firePrefab, transform);
+        fire.transform.localPosition = Vector3.forward;
+        fire.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 8, ForceMode.Impulse);
+        fire.transform.SetParent(null);
+        StartCoroutine(Fire());
+    }
+
+    private IEnumerator Fire()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(fire);
+        fire = null;
+        countdown = 0f;
+        isReady = false;
+    }
+
+    public void SetGlobalLight(Light gl)
+    {
+        globalLight = gl;
     }
 }

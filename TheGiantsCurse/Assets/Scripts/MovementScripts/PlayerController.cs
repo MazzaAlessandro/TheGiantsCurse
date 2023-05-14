@@ -22,17 +22,18 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] protected ArrowBehaviour arrowPrefab;
 
-    [SerializeField] private Gadget gadget;
+    [SerializeField] protected Gadget gadget;
 
     protected float speed;
     protected float arrowCharge;
     protected float chargeStart = 0.8f;
     protected float chargeCap = 1.5f;
     protected int arrowCounter = 10;
+    private float burningDuration;
 
-    protected bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem, fullCharge, ropedArrow;
+    protected bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem, fullCharge, ropedArrow, onFire, nextLevel;
 
-    private GameObject spawnPoint;
+    [SerializeField] protected GameObject spawnPoint;
 
     protected Rigidbody rb;
     private Rigidbody pickup;
@@ -44,10 +45,13 @@ public class PlayerController : MonoBehaviour
     protected Vector3 movementInput;
     private Vector3 aimDirection, mousePosition;
 
-    private Camera mainCamera;
+    protected Camera mainCamera;
+
+    private static PlayerController instance;
 
     private void Awake()
     {
+        onFire = false;
         grappled = false;
         ropedArrow = false;
         movementEnabled = false;
@@ -59,21 +63,30 @@ public class PlayerController : MonoBehaviour
         mainCamera = FindObjectOfType<Camera>();
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         StartCoroutine(MovementEnabler());
+        DontDestroyOnLoad(gameObject);
     }
 
-    private IEnumerator MovementEnabler()
+    protected IEnumerator MovementEnabler()
     {
         yield return new WaitForSeconds(2);
         movementEnabled = true;
         aimingEnabled = true;
+        nextLevel = false;
     }
 
     private void Spawn()
     {
-        Reload();
-        transform.position = spawnPoint.transform.position;
-        movementEnabled = true;
-        aimingEnabled = true;
+        if (health > 0)
+        {
+            Reload();
+            transform.position = spawnPoint.transform.position;
+            movementEnabled = true;
+            aimingEnabled = true;
+        }
+        else
+        {
+            //death
+        }
     }
 
     public void OnTriggerEnter(Collider coll)
@@ -99,6 +112,13 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("New Checkpoint! Now kill yourself");
                 spawnPoint = coll.gameObject;
             }
+        }
+
+        //this is only to test the hazards. Ideally they're activated when a certain message reaches the client
+        if (coll.CompareTag("Hazard"))
+        {
+            HazardEvent.instance.PickRandomEvent();
+            Destroy(coll.gameObject);
         }
     }
 
@@ -240,7 +260,11 @@ public class PlayerController : MonoBehaviour
     {
         pickup.transform.SetParent(null);
         pickup.isKinematic = false;
-        pickup.useGravity = true;
+        pickup.useGravity = false;
+        if (pickup.CompareTag("Explosive"))
+        {
+            pickup.GetComponent<Explosive>().MakeTrigger();
+        }
         pickup.AddForce(transform.forward * arrowSpeed, ForceMode.Impulse);
         pickup = null;
         holdingItem = false;
@@ -345,6 +369,27 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Took damage: " + damage + ". Health is now: " + health);
     }
 
+    public void TakeFireDamage()
+    {
+        if (!onFire)
+        {
+            onFire = true;
+            burningDuration = 5f;
+            StartCoroutine(FireDamage());
+        }
+    }
+
+    private IEnumerator FireDamage()
+    {
+        TakeDamage(1);
+        burningDuration -= 1;
+        yield return new WaitForSeconds(1f);
+        if (burningDuration == 0)
+            onFire = false;
+        else if (burningDuration > 0)
+            StartCoroutine(FireDamage());
+    }
+
     public void PickUpArrow(int arrows)
     {
         arrowCounter += arrows;
@@ -383,5 +428,37 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         movementEnabled = true;
         aimingEnabled = true;
+    }
+
+    public void SetSpawnpoint(GameObject spawn)
+    {
+        spawnPoint = spawn;
+    }
+
+    public void EnterLevel()
+    {
+        rb.useGravity = false;
+        movementEnabled = false;
+        aimingEnabled = false;
+        StartCoroutine(NewLevel());
+    }
+
+    protected virtual IEnumerator NewLevel()
+    {
+        yield return new WaitForSeconds(2f);
+        transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        mainCamera = FindObjectOfType<Camera>();
+        rb.useGravity = true;
+        StartCoroutine(MovementEnabler());
+    }
+
+    public bool CanExit()
+    {
+        return nextLevel;
+    }
+
+    public void TurnOffExit()
+    {
+        nextLevel = true;
     }
 }

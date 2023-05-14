@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 2894894375641251877}
   m_Layer: 3
   m_Name: HealthPickUp
-  m_TagString: HealthPickUp
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

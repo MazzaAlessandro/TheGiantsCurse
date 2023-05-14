@@ -40,4 +40,14 @@ public class CallystoController : PlayerController
         if (arrowCounter > 0)
             Reload();
     }
+
+    protected override IEnumerator NewLevel()
+    {
+        yield return new WaitForSeconds(2f);
+        transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        mainCamera = FindObjectOfType<Camera>();
+        gadget.GetComponent<LanternGadget>().SetGlobalLight(GameObject.FindWithTag("GlobalLight").GetComponent<Light>());
+        rb.useGravity = true;
+        StartCoroutine(MovementEnabler());
+    }
 }

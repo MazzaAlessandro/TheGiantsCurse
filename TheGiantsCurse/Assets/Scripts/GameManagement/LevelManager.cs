@@ -8,8 +8,11 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
+    public Animator transition;
+    public float transitionTime = 1f;
+
     private int currentRoom = 0;
-    private int[] roomsSequence = {0, 1};
+    private int[] roomsSequence = { 0, 1, 2 };
 
     private void Awake()
     {
@@ -29,9 +32,17 @@ public class LevelManager : MonoBehaviour
     {
         roomsSequence = sequence;
     }
-
     public void NextLevel()
     {
+        StartCoroutine(LoadLevel());
+    }
+
+    private IEnumerator LoadLevel()
+    {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(transitionTime);
+
         currentRoom += 1;
         try
         {
@@ -41,5 +52,13 @@ public class LevelManager : MonoBehaviour
         {
             SceneManager.LoadScene("FinalTrack");
         }
+
+        yield return new WaitForSeconds(transitionTime);
+        transition.SetTrigger("End");
+    }
+
+    public void LoadFinalLevel()
+    {
+        SceneManager.LoadScene("FinalTrack");
     }
 }

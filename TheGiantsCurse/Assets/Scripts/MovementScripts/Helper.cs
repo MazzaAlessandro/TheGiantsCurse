@@ -23,6 +23,7 @@ public static class Helper
 
     public static IEnumerator Darkness(Light l, float fadeTime, float duration)
     {
+        Debug.Log("Start Darkness");
         float t = 0.0f;
 
         while (t < fadeTime)

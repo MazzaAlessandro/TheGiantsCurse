@@ -17,8 +17,8 @@ TagManager:
   - Explosive
   - Pickup
   - GlobalLight
-  - Dark
   - Checkpoint
+  - Hazard
   layers:
   - Default
   - TransparentFX
@@ -26,8 +26,8 @@ TagManager:
   - Ignore Light
   - Water
   - UI
-  - 
-  - 
+  - Ground
+  - Chasm
   - 
   - 
   - 

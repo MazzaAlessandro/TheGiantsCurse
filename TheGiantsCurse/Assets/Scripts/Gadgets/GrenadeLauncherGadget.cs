@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GrenadeLauncherGadget : Gadget
 {
-
+    [SerializeField] private Explosive grenadePrefab;
+    [SerializeField] private float grenadeSpeed = 15f;
     [SerializeField] private float cooldown = 6f;
+
+    private Explosive grenade;
 
     private float countdown;
 
@@ -35,11 +38,20 @@ public class GrenadeLauncherGadget : Gadget
     {
         if (isReady)
         {
-            Debug.Log("Activate Grenade Launcher Gadget! Cooldown: " + cooldown);
-            countdown = 0f;
-            isReady = false;
+            ShootGrenade();
         }
         else
             Debug.Log("Gadget on cooldown");
+    }
+
+    private void ShootGrenade()
+    {
+        grenade = Instantiate(grenadePrefab, transform);
+        grenade.transform.localPosition = Vector3.forward;
+        grenade.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * grenadeSpeed, ForceMode.Impulse);
+        grenade = null;
+        Debug.Log("Activate Grenade Launcher Gadget! Cooldown: " + cooldown);
+        countdown = 0f;
+        isReady = false;
     }
 }

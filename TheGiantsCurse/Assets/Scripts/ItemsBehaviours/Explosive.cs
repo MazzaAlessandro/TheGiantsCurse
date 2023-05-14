@@ -41,6 +41,10 @@ public class Explosive : MonoBehaviour
             {
                 objectHit.GetComponent<DestroyableObject>().ObstacleDestruction();
             }
+            if (objectHit.CompareTag("IceBlock"))
+            {
+                objectHit.GetComponent<IceCubeBehaviour>().StartMelting();
+            }
             if (objectHit.CompareTag("Player"))
             {
                 objectHit.GetComponent<PlayerController>().TakeDamage(playerDamage);
@@ -48,5 +52,19 @@ public class Explosive : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Destroyable") || other.gameObject.CompareTag("IceBlock"))
+        {
+            Debug.Log("HIT SOMETHING, I'M GONNA EXPLODE NOW");
+            Explode();
+        }
+    }
+
+    public void MakeTrigger()
+    {
+        this.gameObject.GetComponent<Collider>().isTrigger = true;
     }
 }

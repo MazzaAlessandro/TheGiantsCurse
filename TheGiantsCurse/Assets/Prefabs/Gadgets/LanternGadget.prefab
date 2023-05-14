@@ -139,4 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe99edcf67d45b45b42e60b34f53c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 3
+  cooldown: 5
+  lanternIntensity: 5
+  lanternLight: {fileID: 0}
+  firePrefab: {fileID: 1999752637633421681, guid: 2261ff2cd533a5c4b9fddc5e18ae1790, type: 3}
