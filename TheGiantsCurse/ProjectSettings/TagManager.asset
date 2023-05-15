@@ -19,6 +19,7 @@ TagManager:
   - GlobalLight
   - Checkpoint
   - Hazard
+  - RopePickUp
   layers:
   - Default
   - TransparentFX

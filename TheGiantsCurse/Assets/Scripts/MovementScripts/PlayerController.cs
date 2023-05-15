@@ -7,7 +7,7 @@ interface IInteractable{
 }
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] protected float health = 50f;
+    [SerializeField] protected float maxHealth = 50f;
     [SerializeField] private float fallDamage = 1f;
     [SerializeField] private float healthRegain = 5f;
     [SerializeField] private float movementSpeed = 8f;
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] protected Gadget gadget;
 
+    protected float health;
     protected float speed;
     protected float arrowCharge;
     protected float chargeStart = 0.8f;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     protected int arrowCounter = 10;
     private float burningDuration;
 
-    protected bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem, fullCharge, ropedArrow, onFire, nextLevel;
+    protected bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem, fullCharge, ropedArrow, onFire, nextLevel, fell;
 
     [SerializeField] protected GameObject spawnPoint;
 
@@ -51,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        health = maxHealth;
+        fell = false;
         onFire = false;
         grappled = false;
         ropedArrow = false;
@@ -75,18 +78,12 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Spawn()
-    {
-        if (health > 0)
-        {
-            Reload();
-            transform.position = spawnPoint.transform.position;
-            movementEnabled = true;
-            aimingEnabled = true;
-        }
-        else
-        {
-            //death
-        }
+    {       
+        Reload();
+        transform.position = spawnPoint.transform.position;
+        fell = false;
+        movementEnabled = true;
+        aimingEnabled = true;
     }
 
     public void OnTriggerEnter(Collider coll)
@@ -98,10 +95,19 @@ public class PlayerController : MonoBehaviour
             Destroy(coll.gameObject);
         }
 
-        if (coll.CompareTag("HealthPickUp"))
+        if (coll.CompareTag("HealthPickUp") && !health.Equals(maxHealth))
         {
             health += healthRegain;
+            if (health >= maxHealth)
+                health = maxHealth;
             Debug.Log("Health collected, current health: " + health);
+            Destroy(coll.gameObject);
+        }
+
+        if (coll.CompareTag("RopePickUp"))
+        {
+            MakeRoped();
+            Debug.Log("You now have a rope!");
             Destroy(coll.gameObject);
         }
 
@@ -161,23 +167,31 @@ public class PlayerController : MonoBehaviour
                 Interact();
         }
 
-        //This is a command used just to test the rope immediatly, needs to be removed
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            MakeRoped();
-        }
-
-        if (transform.position.y <= -3)
+        if (transform.position.y <= -3 && !fell)
         {
             TakeDamage(fallDamage);
+            fell = true;
             Debug.Log("Current health: " + health);
-            Spawn();
+            if (health > 0)
+                StartCoroutine(FallCoroutine());
+            else
+            {
+                Death();
+            }
+
         }  
 
         if (pickup == null)
         {
             holdingItem = false;
         }
+    }
+
+    private IEnumerator FallCoroutine()
+    {
+        LevelManager.instance.FallTransition();
+        yield return new WaitForSeconds(1f);
+        Spawn();
     }
 
     private void FixedUpdate()
@@ -366,6 +380,10 @@ public class PlayerController : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
+        if (health <= 0)
+        {
+            Death();
+        }
         Debug.Log("Took damage: " + damage + ". Health is now: " + health);
     }
 
@@ -460,5 +478,15 @@ public class PlayerController : MonoBehaviour
     public void TurnOffExit()
     {
         nextLevel = true;
+    }
+
+    public bool AtMaxHealth()
+    {
+        return health.Equals(maxHealth);
+    }
+
+    private void Death()
+    {
+        Debug.Log("RIP");
     }
 }

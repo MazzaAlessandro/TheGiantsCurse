@@ -59,8 +59,34 @@ public class LevelManager : MonoBehaviour
         circleTransition.OpenBlackScreen();
     }
 
+    public void FallTransition()
+    {
+        StartCoroutine(Fall());
+    }
+
+    private IEnumerator Fall()
+    {
+        circleTransition.CloseBlackScreen();
+        yield return new WaitForSeconds(transitionTime);
+        circleTransition.OpenBlackScreen();
+    }
+
     public void LoadFinalLevel()
     {
+        StartCoroutine(FinalLevel());
+    }
+
+    private IEnumerator FinalLevel()
+    {
+        HazardEvent.instance.Earthquake();
+        yield return new WaitForSeconds(transitionTime);
+
+        circleTransition.CloseBlackScreen();
+        yield return new WaitForSeconds(transitionTime);
+
         SceneManager.LoadScene("FinalTrack");
+        yield return new WaitForSeconds(transitionTime);
+
+        circleTransition.OpenBlackScreen();
     }
 }
