@@ -49,16 +49,18 @@ public class LanternGadget : Gadget
                 Debug.Log("Gadget is ready!");
             }
         }
-
-        if (globalLight.intensity < 0.5f && !lightOn)
+        if (globalLight != null)
         {
-            lightOn = true;
-            StartCoroutine(Helper.FadeLight(lanternLight, 0f, 5f, 1f));
-        }
-        else if (globalLight.intensity >= 0.5f && lightOn)
-        {
-            lightOn = false;
-            StartCoroutine(Helper.FadeLight(lanternLight, 5f, 0f, 1f));
+            if (globalLight.intensity < 0.5f && !lightOn)
+            {
+                lightOn = true;
+                StartCoroutine(Helper.FadeLight(lanternLight, 0f, 5f, 1f));
+            }
+            else if (globalLight.intensity >= 0.5f && lightOn)
+            {
+                lightOn = false;
+                StartCoroutine(Helper.FadeLight(lanternLight, 5f, 0f, 1f));
+            }
         }
 
     }
