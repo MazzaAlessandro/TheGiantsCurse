@@ -8,11 +8,12 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
-    public Animator transition;
     public float transitionTime = 1f;
 
     private int currentRoom = 0;
     private int[] roomsSequence = { 0, 1, 2 };
+
+    [SerializeField] private CircleTransition circleTransition;
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LoadLevel()
     {
-        transition.SetTrigger("Start");
+        circleTransition.CloseBlackScreen();
 
         yield return new WaitForSeconds(transitionTime);
 
@@ -54,7 +55,8 @@ public class LevelManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(transitionTime);
-        transition.SetTrigger("End");
+
+        circleTransition.OpenBlackScreen();
     }
 
     public void LoadFinalLevel()
