@@ -85,6 +85,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene("FinalTrack");
+        currentRoom = roomsSequence.Length;
         yield return new WaitForSeconds(transitionTime);
 
         circleTransition.OpenBlackScreen();

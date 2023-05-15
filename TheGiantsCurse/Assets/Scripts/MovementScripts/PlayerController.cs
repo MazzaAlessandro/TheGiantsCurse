@@ -157,6 +157,12 @@ public class PlayerController : MonoBehaviour
             UseGadget();
         }
 
+        //testing the final level transition for non-Giant players. This has to be removed
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            LevelManager.instance.LoadFinalLevel();
+        }
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (pickup != null)
