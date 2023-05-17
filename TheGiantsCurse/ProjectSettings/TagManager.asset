@@ -20,6 +20,7 @@ TagManager:
   - Checkpoint
   - Hazard
   - RopePickUp
+  - Ground
   layers:
   - Default
   - TransparentFX

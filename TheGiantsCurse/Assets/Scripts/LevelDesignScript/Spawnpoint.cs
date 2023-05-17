@@ -7,5 +7,6 @@ public class Spawnpoint : MonoBehaviour
     private void Awake()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().SetSpawnpoint(this.gameObject);
+        Debug.Log("Spawn point is at: " + transform.position);
     }
 }

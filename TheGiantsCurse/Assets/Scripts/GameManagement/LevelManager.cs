@@ -86,7 +86,8 @@ public class LevelManager : MonoBehaviour
 
         SceneManager.LoadScene("FinalTrack");
         currentRoom = roomsSequence.Length;
-        yield return new WaitForSeconds(transitionTime);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().EnterLevel();
+        yield return new WaitForSeconds(2f);
 
         circleTransition.OpenBlackScreen();
     }

@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected float maxHealth = 50f;
     [SerializeField] private float fallDamage = 1f;
     [SerializeField] private float healthRegain = 5f;
-    [SerializeField] private float movementSpeed = 8f;
-    [SerializeField] private float aimingSpeed = 4f;
+    [SerializeField] protected float movementSpeed = 8f;
+    [SerializeField] protected float aimingSpeed = 4f;
     [SerializeField] private float grappleSpeed = 8f;
     [SerializeField] protected float arrowSpeed = 20f;
     [SerializeField] private float turnSpeed = 720;
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         aimingEnabled = true;
     }
 
-    public void OnTriggerEnter(Collider coll)
+    public virtual void OnTriggerEnter(Collider coll)
     {
         if(coll.gameObject.tag == "ArrowPickUp")
         {
@@ -131,18 +131,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetMouseButton(1) && aimingEnabled)
-        {
-            speed = aimingSpeed;
-            Aiming();
-        }
-        else
-        {
-            arrowCharge = chargeStart;
-            speed = movementSpeed;
-            if(movementEnabled)
-                RotateLook();
-        }
+        SpeedHandling();
 
         if (Input.GetMouseButtonUp(0))
         {
@@ -190,6 +179,22 @@ public class PlayerController : MonoBehaviour
         if (pickup == null)
         {
             holdingItem = false;
+        }
+    }
+
+    public virtual void SpeedHandling()
+    {
+        if (Input.GetMouseButton(1) && aimingEnabled)
+        {
+            speed = aimingSpeed;
+            Aiming();
+        }
+        else
+        {
+            arrowCharge = chargeStart;
+            speed = movementSpeed;
+            if (movementEnabled)
+                RotateLook();
         }
     }
 
@@ -290,7 +295,7 @@ public class PlayerController : MonoBehaviour
         holdingItem = false;
     }
 
-    void RotateLook()
+    protected void RotateLook()
     {
         if (movementInput != Vector3.zero)
         {
@@ -299,7 +304,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Aiming()
+    protected void Aiming()
     {
         ChargeArrow();
 
@@ -440,7 +445,7 @@ public class PlayerController : MonoBehaviour
         return grappled;
     }
 
-    public void Stun(float stunDuration)
+    public virtual void Stun(float stunDuration)
     {
         StartCoroutine(StunCoroutine(stunDuration));
     }
