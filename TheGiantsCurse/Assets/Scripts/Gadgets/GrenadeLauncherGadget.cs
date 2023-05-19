@@ -48,6 +48,7 @@ public class GrenadeLauncherGadget : Gadget
     {
         grenade = Instantiate(grenadePrefab, transform);
         grenade.transform.localPosition = Vector3.forward;
+        grenade.transform.SetParent(null);
         grenade.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * grenadeSpeed, ForceMode.Impulse);
         grenade = null;
         Debug.Log("Activate Grenade Launcher Gadget! Cooldown: " + cooldown);

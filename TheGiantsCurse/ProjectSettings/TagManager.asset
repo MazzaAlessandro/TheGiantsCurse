@@ -21,6 +21,7 @@ TagManager:
   - Hazard
   - RopePickUp
   - Ground
+  - PickaxePickUp
   layers:
   - Default
   - TransparentFX

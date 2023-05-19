@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PickUpType { ARROW, HEALTH, ROPE}
+public enum PickUpType { ARROW, HEALTH, ROPE, PICKAXE}
 
 public class AttractorBehaviour : MonoBehaviour
 {
@@ -26,6 +26,13 @@ public class AttractorBehaviour : MonoBehaviour
             {
                 return;
             }
+
+            if (type.Equals(PickUpType.PICKAXE) && !other.GetComponent<ReaperController>()) 
+            {
+                Debug.Log("Only reaper can pick it up!");
+                return;
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, other.transform.position, attractionSpeed * Time.deltaTime);
         }
     }

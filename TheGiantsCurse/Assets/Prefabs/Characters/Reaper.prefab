@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 5016640745111373494}
   - component: {fileID: 5016640745111373495}
   - component: {fileID: 5016640745111373451}
-  - component: {fileID: 5016640745111373492}
+  - component: {fileID: 5424709525948408998}
   m_Layer: 3
   m_Name: Reaper
   m_TagString: Player
@@ -149,7 +149,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &5016640745111373492
+--- !u!114 &5424709525948408998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,13 +158,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5016640745111373493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e17279d15cd6c6f4a98d9adb29e7b519, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bb6eb3caddb85846b10235a118c2f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  maxHealth: 50
   fallDamage: 1
   healthRegain: 5
-  movementSpeed: 7
+  movementSpeed: 8
   aimingSpeed: 4
   grappleSpeed: 8
   arrowSpeed: 20
@@ -174,6 +174,7 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 5016640746455483121}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   gadget: {fileID: 4965867810939792357}
+  spawnPoint: {fileID: 0}
 --- !u!1 &5016640746455483134
 GameObject:
   m_ObjectHideFlags: 0
