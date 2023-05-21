@@ -17,4 +17,9 @@ public class CameraFollow : MonoBehaviour
     {
         transform.position = new Vector3 (playerGameObject.transform.position.x, 0, playerGameObject.transform.position.z); 
     }
+
+    public void ChangeFollow(GameObject newFocus)
+    {
+        playerGameObject = newFocus;
+    }
 }

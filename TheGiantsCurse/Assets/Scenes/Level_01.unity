@@ -1748,11 +1748,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: -2
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12891,6 +12891,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be732e5d30c8174daf10b2371f49ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionTime: 1
+  circleTransition: {fileID: 0}
 --- !u!1 &1267128160
 GameObject:
   m_ObjectHideFlags: 0

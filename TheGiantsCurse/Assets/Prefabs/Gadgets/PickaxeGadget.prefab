@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickaxePrefab: {fileID: 1908679758388718664, guid: 7aecd0f3c4f5340498b10c24eb36f77c, type: 3}
-  meleePickaxe: {fileID: 0}
+  meleePickaxe: {fileID: 5647005304083600601}
   cooldown: 1
   throwSpeed: 15
   rotationSpeed: 15
@@ -57,6 +57,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 104988359221256515}
     m_Modifications:
+    - target: {fileID: 3740634229029591420, guid: 5f7355e19cbd21544991e96bf4949eb1, type: 3}
+      propertyPath: OnAnimationEventTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 104988359221256524}
     - target: {fileID: 7051307045358122912, guid: 5f7355e19cbd21544991e96bf4949eb1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -112,21 +116,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9077541745582371479, guid: 5f7355e19cbd21544991e96bf4949eb1, type: 3}
   m_PrefabInstance: {fileID: 3722182729711822414}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3725020474124505408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5647005304083600601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6d62ecc68bd33d45829c4abe8aec977, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnAnimationEventTriggered:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &5943800556087054830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7051307045358122912, guid: 5f7355e19cbd21544991e96bf4949eb1, type: 3}

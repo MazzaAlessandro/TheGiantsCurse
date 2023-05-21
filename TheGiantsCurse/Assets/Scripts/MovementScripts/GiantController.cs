@@ -1,0 +1,247 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GiantController : MonoBehaviour
+{
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float turnSpeed;
+    [SerializeField] private float leapCooldown = 5f;
+    [SerializeField] private float clubCooldown = 2f;
+    [SerializeField] private float boulderCooldown = 10f;
+    [SerializeField] private float boulderSpeed = 20f;
+
+    //the club for the melee attack and the boulder that will be thrown
+    [SerializeField] private GameObject club;
+    [SerializeField] private GameObject boulder;
+    [SerializeField] private GameObject leapLandingArea;
+
+    private GameObject boulderInstance, leapLandingInstance;
+
+    private bool movementEnabled, rotationEnabled, leapReady, clubReady, boulderReady, doingAction;
+
+    private Rigidbody rb;
+
+    private Vector3 movementInput;
+    private Camera mainCamera;
+    // Start is called before the first frame update
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        mainCamera = FindObjectOfType<Camera>();
+        club.SetActive(false);
+        movementEnabled = true;
+        rotationEnabled = true;
+        leapReady = true;
+        clubReady = true;
+        boulderReady = true;
+        doingAction = false;
+    }
+
+    private void Start()
+    {
+        mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (clubReady && !doingAction)
+            {
+                ClubAttack();
+            }
+            else
+                Debug.Log("Club is not ready yet");
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (boulderReady && !doingAction)
+            {
+                ThrowBoulder();
+            }
+            else
+                Debug.Log("Boulder is not ready yet");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (leapReady && !doingAction)
+            {
+                Leap();
+            }
+            else
+                Debug.Log("Leap is not ready yet");
+        }
+    }
+
+    
+    private void FixedUpdate()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        movementInput = new Vector3(horizontal, 0, vertical);
+
+        if (movementEnabled)
+            rb.MovePosition(transform.position + movementInput * movementSpeed * Time.fixedDeltaTime);
+        if (rotationEnabled)
+            RotateLook();
+    }
+
+    private void RotateLook()
+    {
+        if (movementInput != Vector3.zero)
+        {
+            var rot = Quaternion.LookRotation(movementInput, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, turnSpeed * Time.deltaTime);
+        }
+    }
+    private void ClubAttack()
+    {
+        Debug.Log("Swing the club");
+        movementEnabled = false;
+        rotationEnabled = false;
+        club.SetActive(true);
+        club.transform.localPosition = new Vector3(0, -0.4f, 0.6f);
+        club.GetComponent<Animator>().SetTrigger("Attack");
+        clubReady = false;
+        doingAction = true;
+    }
+
+    public void ClubAttackEnd()
+    {
+        movementEnabled = true;
+        rotationEnabled = true;
+        doingAction = false;
+        club.SetActive(false);
+        StartCoroutine(ClubRecharge());
+    } 
+
+    private IEnumerator ClubRecharge()
+    {
+        yield return new WaitForSeconds(clubCooldown);
+        Debug.Log("The club is now ready again");
+        clubReady = true;
+    }
+
+    private void Leap()
+    {
+        doingAction = true;
+        leapReady = false;
+        transform.position = new Vector3(transform.position.x, transform.position.y + 17, transform.position.z);
+        StartCoroutine(Jump());
+    }
+
+    private IEnumerator Jump()
+    {
+        movementEnabled = false;
+        rotationEnabled = false;
+
+        float elapsedTime = 0f;
+        float time = 2f;
+
+        Vector3 start = transform.position;
+        Vector3 end = new Vector3(transform.position.x, 20, transform.position.z);
+
+        while (elapsedTime < time)
+        {
+            transform.position = Vector3.Lerp(start, end, elapsedTime/time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        leapLandingInstance = Instantiate(leapLandingArea, transform);
+        //leapLandingInstance.transform.localPosition = new Vector3(0, -1, 0);
+        leapLandingInstance.transform.SetParent(null);
+        leapLandingInstance.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+        movementEnabled = true;
+        rotationEnabled = true;
+
+        StartCoroutine(LeapAction());
+    }
+
+    private IEnumerator LeapAction()
+    {
+        Debug.Log("MIGHT AS WELL JUMP");
+        float elapsedTime = 0f;
+        float time = 5f;
+
+        while (elapsedTime < time)
+        {
+            leapLandingInstance.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        StartCoroutine(LeapEnd());
+    }
+
+    public IEnumerator LeapEnd()
+    {
+        movementEnabled = false;
+        rotationEnabled = false;
+
+        float elapsedTime = 0f;
+        float time = 0.5f;
+
+        Vector3 start = transform.position;
+        Vector3 end = new Vector3(transform.position.x, 3, transform.position.z);
+
+        while (elapsedTime < time)
+        {
+            transform.position = Vector3.Lerp(start, end, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        movementEnabled = true;
+        rotationEnabled = true;
+
+        Destroy(leapLandingInstance);
+        Debug.Log("You should land here");
+        doingAction = false;
+        StartCoroutine(LeapRecharge());
+    }
+
+    private IEnumerator LeapRecharge()
+    {
+        yield return new WaitForSeconds(leapCooldown);
+        Debug.Log("The leap is now ready again");
+        leapReady = true;
+    }
+
+    private void ThrowBoulder()
+    {
+        Debug.Log("Throw the boulder");
+        movementEnabled = false;
+        rotationEnabled = false;
+        boulderReady = false;
+        doingAction = true;
+        boulderInstance = Instantiate(boulder, transform);
+        boulderInstance.transform.localPosition = Vector3.forward;
+        boulderInstance.transform.SetParent(null);
+        boulderInstance.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * boulderSpeed, ForceMode.Impulse);
+        boulderInstance.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right, ForceMode.Impulse);
+        StartCoroutine(BoulderTravel());
+    }
+
+    private IEnumerator BoulderTravel()
+    {
+        yield return new WaitForSeconds(0.5f);
+        movementEnabled = true;
+        rotationEnabled = true;
+        doingAction = false;
+        yield return new WaitForSeconds(4f);
+        Destroy(boulderInstance);
+        StartCoroutine(BoulderRecharge());
+    }
+
+    private IEnumerator BoulderRecharge()
+    {
+        yield return new WaitForSeconds(boulderCooldown);
+        Debug.Log("The boulder is now ready again");
+        boulderReady = true;
+    }
+}

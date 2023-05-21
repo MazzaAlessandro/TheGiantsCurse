@@ -22,6 +22,7 @@ TagManager:
   - RopePickUp
   - Ground
   - PickaxePickUp
+  - Giant
   layers:
   - Default
   - TransparentFX

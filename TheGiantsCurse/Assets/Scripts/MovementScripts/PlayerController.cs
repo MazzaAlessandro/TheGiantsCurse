@@ -48,8 +48,6 @@ public class PlayerController : MonoBehaviour
 
     protected Camera mainCamera;
 
-    private static PlayerController instance;
-
     private void Awake()
     {
         health = maxHealth;

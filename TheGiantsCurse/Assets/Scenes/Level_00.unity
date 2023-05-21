@@ -1886,11 +1886,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: -2
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -26222,6 +26222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightCrystalSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 1135270948087478881, guid: e1a9ccdf6908e4a4f8e9bf460cf7b704, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1135270948087478883, guid: e1a9ccdf6908e4a4f8e9bf460cf7b704, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -26265,6 +26269,10 @@ PrefabInstance:
     - target: {fileID: 1135270948087478883, guid: e1a9ccdf6908e4a4f8e9bf460cf7b704, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1135270948892185840, guid: e1a9ccdf6908e4a4f8e9bf460cf7b704, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1a9ccdf6908e4a4f8e9bf460cf7b704, type: 3}
