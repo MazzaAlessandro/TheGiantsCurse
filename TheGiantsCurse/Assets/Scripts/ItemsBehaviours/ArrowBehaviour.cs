@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ArrowBehaviour : MonoBehaviour
 {
+    [SerializeField] private float damage = 5f;
+
     [SerializeField] private GameObject arrowPickupPrefab;
     [SerializeField] private GameObject tipLight;
 
@@ -102,6 +104,14 @@ public class ArrowBehaviour : MonoBehaviour
                 Debug.Log("Explosive barrel was hit");
                 coll.GetComponent<Explosive>().Ignite();
                 SpawnAmmoPickup();
+                break;
+            case "Player":
+                Debug.Log("Hit a player");
+                coll.GetComponent<PlayerController>().Stun(0.5f);
+                if (fireArrow)
+                    coll.GetComponent<PlayerController>().TakeFireDamage();
+                else
+                    coll.GetComponent<PlayerController>().TakeDamage(5f);
                 break;
         }
     }

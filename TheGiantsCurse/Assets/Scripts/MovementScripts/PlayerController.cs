@@ -494,7 +494,7 @@ public class PlayerController : MonoBehaviour
         return health.Equals(maxHealth);
     }
 
-    private void Death()
+    public void Death()
     {
         Debug.Log("RIP");
     }

@@ -134,6 +134,7 @@ MonoBehaviour:
   clubCooldown: 2
   boulderCooldown: 10
   boulderSpeed: 20
+  leapCrushRange: 8
   club: {fileID: 8194290278422001568}
   boulder: {fileID: 5748187089747987225, guid: 449d45862242a57449ec1c347a86f89d, type: 3}
   leapLandingArea: {fileID: 6608151584160924760, guid: dd5b78b9726510a48b912a9210eaa34d, type: 3}

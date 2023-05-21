@@ -48,6 +48,7 @@ public class Explosive : MonoBehaviour
             if (objectHit.CompareTag("Player"))
             {
                 objectHit.GetComponent<PlayerController>().TakeDamage(playerDamage);
+                objectHit.GetComponent<PlayerController>().Stun(0.5f);
             }
         }
 

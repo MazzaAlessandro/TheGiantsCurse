@@ -10,6 +10,7 @@ public class GiantController : MonoBehaviour
     [SerializeField] private float clubCooldown = 2f;
     [SerializeField] private float boulderCooldown = 10f;
     [SerializeField] private float boulderSpeed = 20f;
+    [SerializeField] private float leapCrashRange = 8f;
 
     //the club for the melee attack and the boulder that will be thrown
     [SerializeField] private GameObject club;
@@ -36,6 +37,20 @@ public class GiantController : MonoBehaviour
         clubReady = true;
         boulderReady = true;
         doingAction = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, 0, transform.position.z), leapCrashRange);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerController>().Death();
+        }
     }
 
     private void Start()
@@ -139,7 +154,7 @@ public class GiantController : MonoBehaviour
         rotationEnabled = false;
 
         float elapsedTime = 0f;
-        float time = 2f;
+        float time = 0.5f;
 
         Vector3 start = transform.position;
         Vector3 end = new Vector3(transform.position.x, 20, transform.position.z);
@@ -152,7 +167,6 @@ public class GiantController : MonoBehaviour
         }
 
         leapLandingInstance = Instantiate(leapLandingArea, transform);
-        //leapLandingInstance.transform.localPosition = new Vector3(0, -1, 0);
         leapLandingInstance.transform.SetParent(null);
         leapLandingInstance.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
@@ -196,6 +210,8 @@ public class GiantController : MonoBehaviour
             yield return null;
         }
 
+        LandingCrash();
+
         movementEnabled = true;
         rotationEnabled = true;
 
@@ -203,6 +219,18 @@ public class GiantController : MonoBehaviour
         Debug.Log("You should land here");
         doingAction = false;
         StartCoroutine(LeapRecharge());
+    }
+
+    private void LandingCrash()
+    {
+        Collider[] objectsInRange = Physics.OverlapSphere(transform.position, leapCrashRange);
+        foreach (var objectHit in objectsInRange)
+        {
+            if (objectHit.CompareTag("Player"))
+            {
+                objectHit.GetComponent<PlayerController>().Stun(1f);
+            }
+        }
     }
 
     private IEnumerator LeapRecharge()
