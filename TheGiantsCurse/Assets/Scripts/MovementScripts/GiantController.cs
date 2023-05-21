@@ -51,6 +51,11 @@ public class GiantController : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerController>().Death();
         }
+
+        if (collision.gameObject.CompareTag("Destroyable"))
+        {
+            collision.gameObject.GetComponent<DestroyableObject>().ObstacleDestruction();
+        }
     }
 
     private void Start()
@@ -154,7 +159,7 @@ public class GiantController : MonoBehaviour
         rotationEnabled = false;
 
         float elapsedTime = 0f;
-        float time = 0.5f;
+        float time = 0.25f;
 
         Vector3 start = transform.position;
         Vector3 end = new Vector3(transform.position.x, 20, transform.position.z);
@@ -198,7 +203,7 @@ public class GiantController : MonoBehaviour
         rotationEnabled = false;
 
         float elapsedTime = 0f;
-        float time = 0.5f;
+        float time = 0.25f;
 
         Vector3 start = transform.position;
         Vector3 end = new Vector3(transform.position.x, 3, transform.position.z);
