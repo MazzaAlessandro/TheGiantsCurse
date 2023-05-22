@@ -15,15 +15,11 @@ public class LanternGadget : Gadget
 
     private GameObject fire;
 
-    private float countdown;
-
-    private bool isReady;
     private bool lightOn;
     // Start is called before the first frame update
     void Start()
     {
         globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
-        countdown = 0f;
         isReady = true;
         if(globalLight.intensity < 0.5f)
         {
@@ -40,15 +36,6 @@ public class LanternGadget : Gadget
     // Update is called once per frame
     void Update()
     {
-        if (!isReady)
-        {
-            countdown += Time.deltaTime;
-            if (countdown >= cooldown)
-            {
-                isReady = true;
-                Debug.Log("Gadget is ready!");
-            }
-        }
         if (globalLight != null)
         {
             if (globalLight.intensity < 0.5f && !lightOn)
@@ -78,7 +65,7 @@ public class LanternGadget : Gadget
     private void CreateFire()
     {
         fire = Instantiate(firePrefab, transform);
-        fire.transform.localPosition = Vector3.forward;
+        fire.transform.localPosition = Vector3.forward * 1.5f;
         fire.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 8, ForceMode.Impulse);
         fire.transform.SetParent(null);
         StartCoroutine(Fire());
@@ -89,8 +76,8 @@ public class LanternGadget : Gadget
         yield return new WaitForSeconds(1f);
         Destroy(fire);
         fire = null;
-        countdown = 0f;
         isReady = false;
+        StartCooldown(cooldown);
     }
 
     public void SetGlobalLight(Light gl)

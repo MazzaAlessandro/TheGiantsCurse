@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GiantController : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float turnSpeed;
+    [SerializeField] private float movementSpeed = 7f;
+    [SerializeField] private float turnSpeed = 720;
+    [SerializeField] private float jumpSpeed = 11f;
     [SerializeField] private float leapCooldown = 5f;
     [SerializeField] private float clubCooldown = 2f;
     [SerializeField] private float boulderCooldown = 10f;
@@ -20,6 +21,8 @@ public class GiantController : MonoBehaviour
     private GameObject boulderInstance, leapLandingInstance;
 
     private bool movementEnabled, rotationEnabled, leapReady, clubReady, boulderReady, doingAction;
+
+    private float speed;
 
     private Rigidbody rb;
 
@@ -37,6 +40,7 @@ public class GiantController : MonoBehaviour
         clubReady = true;
         boulderReady = true;
         doingAction = false;
+        speed = movementSpeed;
     }
 
     private void OnDrawGizmos()
@@ -104,7 +108,7 @@ public class GiantController : MonoBehaviour
         movementInput = new Vector3(horizontal, 0, vertical);
 
         if (movementEnabled)
-            rb.MovePosition(transform.position + movementInput * movementSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
         if (rotationEnabled)
             RotateLook();
     }
@@ -184,6 +188,8 @@ public class GiantController : MonoBehaviour
     private IEnumerator LeapAction()
     {
         Debug.Log("MIGHT AS WELL JUMP");
+        speed = jumpSpeed;
+
         float elapsedTime = 0f;
         float time = 5f;
 
@@ -219,6 +225,8 @@ public class GiantController : MonoBehaviour
 
         movementEnabled = true;
         rotationEnabled = true;
+
+        speed = movementSpeed;
 
         Destroy(leapLandingInstance);
         Debug.Log("You should land here");

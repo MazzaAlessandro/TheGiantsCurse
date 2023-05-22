@@ -363,6 +363,7 @@ public class PlayerController : MonoBehaviour
         if (ropedArrow)
             currentArrow.MakeRoped();
         currentArrow.Shoot(transform.forward * finalArrowSpeed);
+        currentArrow.SetOwner(this.gameObject);
         //currentArrow.Shoot(transform.forward, finalArrowSpeed);
         ropedArrow = false;
         currentArrow = null;

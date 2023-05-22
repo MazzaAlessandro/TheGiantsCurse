@@ -193,8 +193,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.0646677}
+  m_Center: {x: 0, y: 0, z: -0.46766615}
 --- !u!54 &6920112574298119208
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00d075941683a44cadb12d016f8dfde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 5
   arrowPickupPrefab: {fileID: 2415334366847784064, guid: 36c5d90fe7d5d8e49ab1363f26e535a9, type: 3}
   tipLight: {fileID: 5146100241224129227}
 --- !u!120 &2130344976126068900

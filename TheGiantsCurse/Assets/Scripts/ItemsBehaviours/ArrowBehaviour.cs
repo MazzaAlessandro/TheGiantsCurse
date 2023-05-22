@@ -11,6 +11,7 @@ public class ArrowBehaviour : MonoBehaviour
 
     private Rigidbody rb;
     private GameObject arrowPickup;
+    private GameObject owner;
     private LineRenderer lineRenderer;
 
     private bool fireArrow = false;
@@ -106,12 +107,15 @@ public class ArrowBehaviour : MonoBehaviour
                 SpawnAmmoPickup();
                 break;
             case "Player":
-                Debug.Log("Hit a player");
-                coll.GetComponent<PlayerController>().Stun(0.5f);
-                if (fireArrow)
-                    coll.GetComponent<PlayerController>().TakeFireDamage();
-                else
-                    coll.GetComponent<PlayerController>().TakeDamage(5f);
+                if (coll.gameObject != owner)
+                {
+                    Debug.Log("Hit a player");
+                    coll.GetComponent<PlayerController>().Stun(0.5f);
+                    if (fireArrow)
+                        coll.GetComponent<PlayerController>().TakeFireDamage();
+                    else
+                        coll.GetComponent<PlayerController>().TakeDamage(5f);
+                }
                 break;
         }
     }
@@ -133,5 +137,10 @@ public class ArrowBehaviour : MonoBehaviour
     public void MakeRoped()
     {
         ropedArrow = true;
+    }
+
+    public void SetOwner(GameObject own)
+    {
+        owner = own;
     }
 }

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class FireBehaviour : MonoBehaviour
 {
+    private GameObject owner;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerController>().TakeFireDamage();
+            if(other.gameObject!=owner)
+                other.gameObject.GetComponent<PlayerController>().TakeFireDamage();
         }
         if (other.gameObject.CompareTag("Torch"))
         {
@@ -21,5 +24,10 @@ public class FireBehaviour : MonoBehaviour
             Debug.Log("hit an ice cube");
             other.GetComponent<IceCubeBehaviour>().StartMelting();
         }
+    }
+
+    public void SetOwner(GameObject own)
+    {
+        owner = own;
     }
 }

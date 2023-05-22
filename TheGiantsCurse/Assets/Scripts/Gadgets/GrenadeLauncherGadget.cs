@@ -10,28 +10,10 @@ public class GrenadeLauncherGadget : Gadget
 
     private Explosive grenade;
 
-    private float countdown;
-
-    private bool isReady;
     // Start is called before the first frame update
     void Start()
     {
-        countdown = 0f;
         isReady = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isReady)
-        {
-            countdown += Time.deltaTime;
-            if (countdown >= cooldown)
-            {
-                isReady = true;
-                Debug.Log("Gadget is ready!");
-            }
-        }
     }
 
     public override void GadgetAction()
@@ -52,7 +34,7 @@ public class GrenadeLauncherGadget : Gadget
         grenade.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * grenadeSpeed, ForceMode.Impulse);
         grenade = null;
         Debug.Log("Activate Grenade Launcher Gadget! Cooldown: " + cooldown);
-        countdown = 0f;
         isReady = false;
+        StartCooldown(cooldown);
     }
 }

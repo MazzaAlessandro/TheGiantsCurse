@@ -5,31 +5,16 @@ using UnityEngine;
 public class DrillGadget : Gadget
 {
 
-    [SerializeField] private float cooldown = 5f;
+    [SerializeField] private float cooldown = 11f;
 
-    private float countdown;
+    private bool canBeCanceled;
 
-    private bool isReady;
     // Start is called before the first frame update
     void Start()
     {
-        countdown = 0f;
         isReady = true;
+        canBeCanceled = false;
         Debug.Log("Is Ready: " + isReady);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(!isReady)
-        {
-            countdown += Time.deltaTime;
-            if (countdown >= cooldown)
-            {
-                isReady = true;
-                Debug.Log("Gadget is ready!");
-            }
-        }
     }
 
     public override void GadgetAction()
@@ -38,8 +23,16 @@ public class DrillGadget : Gadget
         if (isReady)
         {
             Debug.Log("Activate Drill Gadget! Cooldown: " + cooldown);
-            countdown = 0f;
             isReady = false;
+            canBeCanceled = true;
+            GetComponentInParent<ChasmController>().Dig();
+            StartCooldown(cooldown);
+        }
+        else if (canBeCanceled)
+        {
+            Debug.Log("cancel");
+            GetComponentInParent<ChasmController>().ForcedEndDig();
+            canBeCanceled = false;
         }
         else
             Debug.Log("Gadget on cooldown");

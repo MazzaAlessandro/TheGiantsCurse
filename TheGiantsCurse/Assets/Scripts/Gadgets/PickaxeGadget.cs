@@ -9,32 +9,14 @@ public class PickaxeGadget : Gadget
     [SerializeField] private float cooldown = 1f;
     [SerializeField] private float throwSpeed = 15f;
     [SerializeField] private float rotationSpeed = 15f;
-    private float countdown;
-
+    
     private PickaxeBehaviour paInstance;
     
-
-    private bool isReady;
     // Start is called before the first frame update
     void Start()
     {
         meleePickaxe.SetActive(false);
-        countdown = 0f;
         isReady = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isReady)
-        {
-            countdown += Time.deltaTime;
-            if (countdown >= cooldown)
-            {
-                isReady = true;
-                Debug.Log("Gadget is ready!");
-            }
-        }
     }
 
     public override void GadgetAction()
@@ -42,8 +24,8 @@ public class PickaxeGadget : Gadget
         if (isReady)
         {
             MeleeAttack();
-            countdown = 0f;
             isReady = false;
+            StartCooldown(cooldown);
         }
         else
             Debug.Log("Gadget on cooldown");

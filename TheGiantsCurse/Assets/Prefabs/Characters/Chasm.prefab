@@ -65,7 +65,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8781800995706011107}
-  - {fileID: 1799655067776828742}
+  - {fileID: 7113371149109631042}
   - {fileID: 3729326205148281301}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0856e2b3f944e47b663370c839995f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  maxHealth: 50
   fallDamage: 1
   healthRegain: 5
   movementSpeed: 8
@@ -173,9 +173,11 @@ MonoBehaviour:
   interactRange: 1
   arrowSpawnPoint: {fileID: 8781800995706011107}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
-  gadget: {fileID: 7267306045194943863, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
+  gadget: {fileID: 7443320723548067970}
+  spawnPoint: {fileID: 0}
   runningSpeed: 10
   runDelay: 5
+  hole: {fileID: 370216603024334147, guid: 0e07214cb61a7cc4e9bc352fb7db646f, type: 3}
 --- !u!1 &8781800995706011116
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +209,7 @@ Transform:
   m_Father: {fileID: 8781800994898835866}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &8781800995193010417
+--- !u!1001 &257079677855098357
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -262,14 +264,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: DrillGadget
       objectReference: {fileID: 0}
-    - target: {fileID: 9108511304421981353, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
---- !u!4 &1799655067776828742 stripped
+--- !u!4 &7113371149109631042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7000442950110379447, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
-  m_PrefabInstance: {fileID: 8781800995193010417}
+  m_PrefabInstance: {fileID: 257079677855098357}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7443320723548067970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7267306045194943863, guid: 031ea1ca9b7102c41b6b9f96c7a2768f, type: 3}
+  m_PrefabInstance: {fileID: 257079677855098357}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19827c30e692ab4f96e8eaa3e0a213f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
