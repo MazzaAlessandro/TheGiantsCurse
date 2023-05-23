@@ -131,3 +131,4 @@ MonoBehaviour:
   explosionRange: 1.5
   playerDamage: 5
   explosionDelay: 3
+  explosionEffect: {fileID: 5260253809853014618, guid: 21fa785430acdbf4abb7166e73a928e5, type: 3}

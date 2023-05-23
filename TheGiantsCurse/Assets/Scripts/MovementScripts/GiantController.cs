@@ -153,7 +153,7 @@ public class GiantController : MonoBehaviour
     {
         doingAction = true;
         leapReady = false;
-        transform.position = new Vector3(transform.position.x, transform.position.y + 17, transform.position.z);
+        //transform.position = new Vector3(transform.position.x, transform.position.y + 17, transform.position.z);
         StartCoroutine(Jump());
     }
 
@@ -177,7 +177,7 @@ public class GiantController : MonoBehaviour
 
         leapLandingInstance = Instantiate(leapLandingArea, transform);
         leapLandingInstance.transform.SetParent(null);
-        leapLandingInstance.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        leapLandingInstance.transform.position = new Vector3(transform.position.x, 0.01f, transform.position.z);
 
         movementEnabled = true;
         rotationEnabled = true;

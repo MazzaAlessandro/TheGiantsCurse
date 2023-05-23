@@ -8,6 +8,10 @@ public class Explosive : MonoBehaviour
     [SerializeField] private float playerDamage = 5f;
     [SerializeField] private float explosionDelay = 3f;
 
+    [SerializeField] private GameObject explosionEffect;
+
+    private GameObject explosionInstance;
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -34,6 +38,11 @@ public class Explosive : MonoBehaviour
 
     public void Explode()
     {
+        float explosionScale = explosionRange * 0.7f;
+
+        explosionInstance = Instantiate(explosionEffect, transform.position, transform.rotation);
+        explosionInstance.transform.localScale = new Vector3(explosionScale, explosionScale, explosionScale);
+
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, explosionRange);
         foreach(var objectHit in objectsInRange)
         {
@@ -41,14 +50,22 @@ public class Explosive : MonoBehaviour
             {
                 objectHit.GetComponent<DestroyableObject>().ObstacleDestruction();
             }
+
             if (objectHit.CompareTag("IceBlock"))
             {
                 objectHit.GetComponent<IceCubeBehaviour>().StartMelting();
             }
+
             if (objectHit.CompareTag("Player"))
             {
                 objectHit.GetComponent<PlayerController>().TakeDamage(playerDamage);
                 objectHit.GetComponent<PlayerController>().Stun(0.5f);
+                objectHit.GetComponent<Rigidbody>().AddExplosionForce(5, transform.position, explosionRange);
+            }
+
+            if (objectHit.CompareTag("Explosive") && objectHit.gameObject!=this.gameObject)
+            {
+                objectHit.GetComponent<Explosive>().Ignite();
             }
         }
 
@@ -57,7 +74,7 @@ public class Explosive : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Destroyable") || other.gameObject.CompareTag("IceBlock"))
+        if(other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Destroyable") || other.gameObject.CompareTag("IceBlock") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Explosive"))
         {
             Debug.Log("HIT SOMETHING, I'M GONNA EXPLODE NOW");
             Explode();
