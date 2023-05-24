@@ -9,8 +9,11 @@ public class Explosive : MonoBehaviour
     [SerializeField] private float explosionDelay = 3f;
 
     [SerializeField] private GameObject explosionEffect;
-
     private GameObject explosionInstance;
+
+    [SerializeField] private AudioClip explosionSound;
+    [SerializeField] private AudioClip tickingSound;
+    [SerializeField] private AudioClip fallSound;
 
     private void OnDrawGizmos()
     {
@@ -19,14 +22,16 @@ public class Explosive : MonoBehaviour
     }
     private void Update()
     {
-        if (transform.position.y <= -3)
+        if (transform.position.y <= -2)
         {
+            SoundManager.instance.PlayEffect(fallSound);
             Destroy(this.gameObject);
         }
     }
     public void Ignite()
     {
         Debug.Log("The barrel will explode in: " + explosionDelay);
+        SoundManager.instance.PlayMultipleTimes(tickingSound, tickingSound.length, 3);
         StartCoroutine(Countdown());
     }
 
@@ -42,6 +47,8 @@ public class Explosive : MonoBehaviour
 
         explosionInstance = Instantiate(explosionEffect, transform.position, transform.rotation);
         explosionInstance.transform.localScale = new Vector3(explosionScale, explosionScale, explosionScale);
+
+        SoundManager.instance.PlayEffect(explosionSound);
 
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, explosionRange);
         foreach(var objectHit in objectsInRange)

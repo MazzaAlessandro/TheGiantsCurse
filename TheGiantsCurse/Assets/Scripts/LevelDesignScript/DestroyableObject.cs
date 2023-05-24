@@ -7,6 +7,8 @@ public class DestroyableObject : MonoBehaviour
     [SerializeField] private GameObject healthPickUpPrefab;
     [SerializeField] private int health = 20;
 
+    [SerializeField] private AudioClip destroySound;
+
     private GameObject healthPickUp;
     // Start is called before the first frame update
     void Start()
@@ -31,10 +33,17 @@ public class DestroyableObject : MonoBehaviour
 
     public void ObstacleDestruction()
     {
-        healthPickUp = Instantiate(healthPickUpPrefab, transform);
-        healthPickUp.transform.localPosition = Vector3.zero;
-        healthPickUp.transform.SetParent(null);
-        healthPickUp.transform.localScale = Vector3.one;
+        SoundManager.instance.PlayEffect(destroySound);
+        float dropChance = Random.Range(0, 5);
+        Debug.Log("You got: " + dropChance);
+        if (dropChance == 0)
+        {
+            Debug.Log("Spawn it!");
+            healthPickUp = Instantiate(healthPickUpPrefab, transform);
+            healthPickUp.transform.localPosition = Vector3.zero;
+            healthPickUp.transform.SetParent(null);
+            healthPickUp.transform.localScale = Vector3.one;
+        }
         Destroy(this.gameObject);
     }
 }

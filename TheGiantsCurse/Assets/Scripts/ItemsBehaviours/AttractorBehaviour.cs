@@ -9,11 +9,14 @@ public class AttractorBehaviour : MonoBehaviour
     [SerializeField] private float attractionSpeed = 10f;
     [SerializeField] private PickUpType type;
 
+    [SerializeField] private AudioClip pickupSound;
+
     // Update is called once per frame
     void Update()
     {
         if (transform.childCount < 1)
         {
+            SoundManager.instance.PlayEffect(pickupSound);
             Destroy(this.gameObject);
         }
     }

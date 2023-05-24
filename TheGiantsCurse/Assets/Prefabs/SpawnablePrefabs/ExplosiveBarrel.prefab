@@ -147,6 +147,9 @@ MonoBehaviour:
   playerDamage: 5
   explosionDelay: 3
   explosionEffect: {fileID: 5260253809853014618, guid: 21fa785430acdbf4abb7166e73a928e5, type: 3}
+  explosionSound: {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
+  tickingSound: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
+  fallSound: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
 --- !u!54 &-1545185268460117922
 Rigidbody:
   m_ObjectHideFlags: 0

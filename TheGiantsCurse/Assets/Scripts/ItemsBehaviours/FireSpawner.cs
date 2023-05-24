@@ -5,6 +5,7 @@ using UnityEngine;
 public class FireSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject fire;
+    [SerializeField] private AudioClip fireSound;
     
     private float interval = 0.125f;
 
@@ -18,6 +19,7 @@ public class FireSpawner : MonoBehaviour
 
     private IEnumerator FireSpawn()
     {
+        SoundManager.instance.PlayEffect(fireSound);
         fireInstance = Instantiate(fire, transform);
         fireInstance.transform.SetParent(null);
         Destroy(fireInstance, 0.5f);

@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2daa1d08ecd016a4492a128591cbd026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  maxHealth: 50
   fallDamage: 1
   healthRegain: 5
   movementSpeed: 8
@@ -143,6 +143,8 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 5301940995013330526}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   gadget: {fileID: 8474210474143250708}
+  spawnPoint: {fileID: 0}
+  fall: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
 --- !u!1 &5301940995013330513
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,10 +214,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5301940993673544231}
     m_Modifications:
-    - target: {fileID: 4327456461835748628, guid: ec387fbc82df58c4d8c3c39dfd56b87f, type: 3}
-      propertyPath: Hook
-      value: 
-      objectReference: {fileID: 3317342736168845347, guid: 79c07d9ddba763b4bbf73cd0e1cce39c, type: 3}
     - target: {fileID: 5624939583370894385, guid: ec387fbc82df58c4d8c3c39dfd56b87f, type: 3}
       propertyPath: m_RootOrder
       value: 1

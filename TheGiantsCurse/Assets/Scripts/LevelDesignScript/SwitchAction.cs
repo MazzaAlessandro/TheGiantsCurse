@@ -6,6 +6,11 @@ public class SwitchAction : MonoBehaviour
 {
     [SerializeField] private float slidingDoorSpeed = 1f;
 
+    [SerializeField] private AudioClip activateSwitch;
+    [SerializeField] private AudioClip slidingEnd;
+
+    [SerializeField] private Material switchMaterial;
+
     private float dist;
 
     private bool isActive;
@@ -13,6 +18,7 @@ public class SwitchAction : MonoBehaviour
     private GameObject door;
 
     private Vector3 destination;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -32,13 +38,21 @@ public class SwitchAction : MonoBehaviour
                 door.transform.position = Vector3.Lerp(door.transform.position, destination, slidingDoorSpeed * Time.deltaTime);
             }
             else
+            {
+                //SoundManager.instance.PlayEffect(slidingEnd);
                 Destroy(door.gameObject);
+            }
         }
     }
 
     public void SetActive()
     {
         if (!isActive)
+        {
             isActive = true;
+            SoundManager.instance.PlayEffect(activateSwitch);
+            GetComponent<MeshRenderer>().material = switchMaterial;
+        }
+            
     }
 }

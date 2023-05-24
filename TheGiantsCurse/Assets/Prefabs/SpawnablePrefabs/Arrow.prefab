@@ -226,6 +226,7 @@ MonoBehaviour:
   damage: 5
   arrowPickupPrefab: {fileID: 2415334366847784064, guid: 36c5d90fe7d5d8e49ab1363f26e535a9, type: 3}
   tipLight: {fileID: 5146100241224129227}
+  fireSound: {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
 --- !u!120 &2130344976126068900
 LineRenderer:
   m_ObjectHideFlags: 0

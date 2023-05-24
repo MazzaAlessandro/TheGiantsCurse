@@ -112,3 +112,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPickUpPrefab: {fileID: 3083067469862925649, guid: cee76ac1a6cdc344085a87894e849b3b, type: 3}
   health: 20
+  destroySound: {fileID: 8300000, guid: cdfae31f0b58546d3ac1015effc38f01, type: 3}

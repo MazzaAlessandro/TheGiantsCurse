@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
     protected Camera mainCamera;
 
+    [SerializeField] private AudioClip fall;
+
     private void Awake()
     {
         health = maxHealth;
@@ -160,8 +162,9 @@ public class PlayerController : MonoBehaviour
                 Interact();
         }
 
-        if (transform.position.y <= -3 && !fell)
+        if (transform.position.y <= -2 && !fell)
         {
+            SoundManager.instance.PlayEffect(fall);
             TakeDamage(fallDamage);
             fell = true;
             Debug.Log("Current health: " + health);

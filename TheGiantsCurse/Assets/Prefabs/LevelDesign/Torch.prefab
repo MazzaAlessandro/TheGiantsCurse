@@ -97,7 +97,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 1, z: 3}
+  m_Size: {x: 4, y: 1, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &771869072896454518
 MonoBehaviour:
@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLit: 1
   fire: {fileID: 771869073935716608}
+  fireSound: {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
 --- !u!1 &771869073935716608
 GameObject:
   m_ObjectHideFlags: 0

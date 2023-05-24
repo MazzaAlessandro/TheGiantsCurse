@@ -5,6 +5,7 @@ using UnityEngine;
 public class LightCrystal : MonoBehaviour
 {
     [SerializeField] private float crystalIntensity = 4f;
+    [SerializeField] private AudioClip fallSound;
 
     private Light crystalLight;
     private Light globalLight;
@@ -45,6 +46,7 @@ public class LightCrystal : MonoBehaviour
 
         if (transform.position.y < -3)
         {
+            SoundManager.instance.PlayEffect(fallSound);
             Destroy(this.gameObject);
         }
     }

@@ -62,4 +62,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fire: {fileID: 3869235239040702389, guid: 25ae93b5c9f53c144959982cd5a82fc4, type: 3}
-  interval: 0.25
+  fireSound: {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}

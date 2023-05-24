@@ -24,6 +24,10 @@ public class FireBehaviour : MonoBehaviour
             Debug.Log("hit an ice cube");
             other.GetComponent<IceCubeBehaviour>().StartMelting();
         }
+        if (other.gameObject.CompareTag("Explosive"))
+        {
+            other.GetComponent<Explosive>().Explode();
+        }
     }
 
     public void SetOwner(GameObject own)

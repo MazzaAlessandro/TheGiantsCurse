@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crystalIntensity: 4
+  fallSound: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
 --- !u!1 &5965324685687979655
 GameObject:
   m_ObjectHideFlags: 0

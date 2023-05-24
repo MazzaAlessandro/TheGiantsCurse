@@ -8,6 +8,8 @@ public class GrenadeLauncherGadget : Gadget
     [SerializeField] private float grenadeSpeed = 15f;
     [SerializeField] private float cooldown = 6f;
 
+    [SerializeField] private AudioClip throwSound;
+
     private Explosive grenade;
 
     // Start is called before the first frame update
@@ -32,6 +34,7 @@ public class GrenadeLauncherGadget : Gadget
         grenade.transform.localPosition = Vector3.forward;
         grenade.transform.SetParent(null);
         grenade.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * grenadeSpeed, ForceMode.Impulse);
+        SoundManager.instance.PlayEffect(throwSound);
         grenade = null;
         Debug.Log("Activate Grenade Launcher Gadget! Cooldown: " + cooldown);
         isReady = false;

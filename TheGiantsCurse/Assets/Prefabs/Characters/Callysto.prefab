@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f9a0e6219299f144b3c12af43b1b581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  maxHealth: 50
   fallDamage: 1
   healthRegain: 5
   movementSpeed: 7
@@ -143,6 +143,8 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 1832006099889838182}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   gadget: {fileID: 9068910078053485137}
+  spawnPoint: {fileID: 0}
+  fall: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
 --- !u!1 &1832006099889838185
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,10 +258,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7257456782309366458, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
-      propertyPath: lanternLight
-      value: 
-      objectReference: {fileID: 450954241469354395}
     - target: {fileID: 8037984184615930136, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
       propertyPath: m_Name
       value: LanternGadget
@@ -270,11 +268,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
---- !u!108 &450954241469354395 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 2246886822349537648, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}
-  m_PrefabInstance: {fileID: 1832006099651924203}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5117987999760247759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6803295470789720868, guid: 0356f7b39ae9f794fbc63bfc9016983f, type: 3}

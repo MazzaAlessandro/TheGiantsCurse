@@ -9,6 +9,8 @@ public class ArrowBehaviour : MonoBehaviour
     [SerializeField] private GameObject arrowPickupPrefab;
     [SerializeField] private GameObject tipLight;
 
+    [SerializeField] private AudioClip fireSound;
+
     private Rigidbody rb;
     private GameObject arrowPickup;
     private GameObject owner;
@@ -103,7 +105,10 @@ public class ArrowBehaviour : MonoBehaviour
                 break;
             case "Explosive":
                 Debug.Log("Explosive barrel was hit");
-                coll.GetComponent<Explosive>().Ignite();
+                if (fireArrow)
+                    coll.GetComponent<Explosive>().Explode();
+                else
+                    coll.GetComponent<Explosive>().Ignite();
                 SpawnAmmoPickup();
                 break;
             case "Player":
@@ -132,6 +137,7 @@ public class ArrowBehaviour : MonoBehaviour
     public void MakeFireArrow()
     {
         tipLight.SetActive(true);
+        SoundManager.instance.PlayEffect(fireSound);
         fireArrow = true;
     }
     public void MakeRoped()

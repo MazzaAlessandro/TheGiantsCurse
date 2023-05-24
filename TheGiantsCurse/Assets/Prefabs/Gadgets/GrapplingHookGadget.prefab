@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hookSpeed: 10
   cooldown: 3
-  Hook: {fileID: 0}
+  Hook: {fileID: 3317342736168845347, guid: 79c07d9ddba763b4bbf73cd0e1cce39c, type: 3}
