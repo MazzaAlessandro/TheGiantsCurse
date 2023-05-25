@@ -43,17 +43,11 @@ public class LevelManager : MonoBehaviour
         circleTransition.CloseBlackScreen();
 
         yield return new WaitForSeconds(transitionTime);
-
-        currentRoom += 1;
-        try
-        {
-            SceneManager.LoadScene(roomsSequence[currentRoom]);
-        }
-        catch (IndexOutOfRangeException e)
-        {
-            SceneManager.LoadScene("FinalTrack");
-        }
-
+        
+        if(currentRoom<=roomsSequence.Length)
+            currentRoom += 1;
+        SceneManager.LoadScene(roomsSequence[currentRoom]);
+        
         yield return new WaitForSeconds(transitionTime);
 
         circleTransition.OpenBlackScreen();
@@ -71,6 +65,28 @@ public class LevelManager : MonoBehaviour
         circleTransition.OpenBlackScreen();
     }
 
+    //this one is called when a player finishes the dungeon crawl, it should signal the others that he finished and turn him into a giant
+    public void LastRoomFinished(GameObject player)
+    {
+        StartCoroutine(EndReached(player));
+    }
+
+    private IEnumerator EndReached(GameObject player)
+    {
+        HazardEvent.instance.Earthquake();
+        yield return new WaitForSeconds(transitionTime);
+
+        circleTransition.CloseBlackScreen();
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene("FinalTrack");
+        Destroy(player);
+        yield return new WaitForSeconds(2f);
+
+        circleTransition.OpenBlackScreen();
+    }
+
+    //this is called by any player that did not get to the core, it cuts right to the Final Track
     public void LoadFinalLevel()
     {
         StartCoroutine(FinalLevel());

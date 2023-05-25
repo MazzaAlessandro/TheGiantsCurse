@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ExitLevel : MonoBehaviour
 {
+    [SerializeField] private bool isFinalRoom;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -13,7 +14,10 @@ public class ExitLevel : MonoBehaviour
             {
                 other.gameObject.GetComponent<PlayerController>().TurnOffExit();
                 other.gameObject.GetComponent<PlayerController>().EnterLevel();
-                CompleteLevel();
+                if (isFinalRoom)
+                    EndReached(other.gameObject);
+                else
+                    CompleteLevel();
             }
             
         }
@@ -24,5 +28,11 @@ public class ExitLevel : MonoBehaviour
         Debug.Log("The Player has reached the end of the level");
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
         LevelManager.instance.NextLevel();
+    }
+
+    private void EndReached(GameObject player)
+    {
+        Debug.Log("The Player has reached the end of the sequence");
+        LevelManager.instance.LastRoomFinished(player);
     }
 }
