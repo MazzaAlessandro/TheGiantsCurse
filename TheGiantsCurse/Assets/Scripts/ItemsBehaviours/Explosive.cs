@@ -32,12 +32,16 @@ public class Explosive : MonoBehaviour
     {
         Debug.Log("The barrel will explode in: " + explosionDelay);
         SoundManager.instance.PlayMultipleTimes(tickingSound, tickingSound.length, 3);
-        StartCoroutine(Countdown());
+        StartCoroutine(Countdown(explosionDelay));
     }
 
-    private IEnumerator Countdown()
+    public void DelayedExplosion(float delay)
     {
-        yield return new WaitForSeconds(explosionDelay);
+        StartCoroutine(Countdown(delay));
+    }
+    private IEnumerator Countdown(float countdown)
+    {
+        yield return new WaitForSeconds(countdown);
         Explode();
     }
 
@@ -72,7 +76,7 @@ public class Explosive : MonoBehaviour
 
             if (objectHit.CompareTag("Explosive") && objectHit.gameObject!=this.gameObject)
             {
-                objectHit.GetComponent<Explosive>().Ignite();
+                objectHit.GetComponent<Explosive>().DelayedExplosion(0.5f);
             }
         }
 

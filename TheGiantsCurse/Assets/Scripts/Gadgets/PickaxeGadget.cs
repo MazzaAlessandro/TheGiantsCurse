@@ -23,6 +23,7 @@ public class PickaxeGadget : Gadget
     {
         if (isReady)
         {
+            GetComponentInParent<ReaperController>().SetMovement(false);
             MeleeAttack();
             isReady = false;
             StartCooldown(cooldown);
@@ -54,6 +55,6 @@ public class PickaxeGadget : Gadget
     public void AttackEnd()
     {
         meleePickaxe.SetActive(false);
-        GetComponentInParent<ReaperController>().EnableMovement();
+        GetComponentInParent<ReaperController>().SetMovement(true);
     }
 }

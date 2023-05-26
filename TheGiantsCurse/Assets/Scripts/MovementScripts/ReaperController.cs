@@ -31,16 +31,14 @@ public class ReaperController : PlayerController
             }
             else
             {
-                movementEnabled = false;
-                aimingEnabled = false;
                 pickaxe.GadgetAction();
             }
         }
     }
 
-    public void EnableMovement()
+    public void SetMovement(bool status)
     {
-        movementEnabled = true;
-        aimingEnabled = true;
+        movementEnabled = status;
+        aimingEnabled = status;
     }
 }

@@ -25,6 +25,7 @@ public class DestroyableObject : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        Debug.Log("Took damage: " + damage + ". Remaining health: " + health);
         if(health <= 0)
         {
             ObstacleDestruction();

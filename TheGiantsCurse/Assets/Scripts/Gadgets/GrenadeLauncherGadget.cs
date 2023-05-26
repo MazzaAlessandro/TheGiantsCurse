@@ -31,7 +31,7 @@ public class GrenadeLauncherGadget : Gadget
     private void ShootGrenade()
     {
         grenade = Instantiate(grenadePrefab, transform);
-        grenade.transform.localPosition = Vector3.forward;
+        grenade.transform.localPosition = Vector3.forward * 1.5f;
         grenade.transform.SetParent(null);
         grenade.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * grenadeSpeed, ForceMode.Impulse);
         SoundManager.instance.PlayEffect(throwSound);

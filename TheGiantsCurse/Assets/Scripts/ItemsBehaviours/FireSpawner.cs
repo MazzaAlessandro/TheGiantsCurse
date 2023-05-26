@@ -22,7 +22,7 @@ public class FireSpawner : MonoBehaviour
         SoundManager.instance.PlayEffect(fireSound);
         fireInstance = Instantiate(fire, transform);
         fireInstance.transform.SetParent(null);
-        Destroy(fireInstance, 0.5f);
+        Destroy(fireInstance, 1f);
         fireInstance = null;
         yield return new WaitForSeconds(interval);
         StartCoroutine(FireSpawn());
