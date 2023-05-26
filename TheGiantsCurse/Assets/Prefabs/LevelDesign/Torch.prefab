@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 771869072896454516}
   - component: {fileID: 771869072896454517}
   - component: {fileID: 771869072896454518}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Torch
   m_TagString: Torch
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 771869073935716621}
   - component: {fileID: 771869073935716622}
   - component: {fileID: 771869073935716623}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1423207890763766806}
   - component: {fileID: 4584089846757005925}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

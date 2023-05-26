@@ -34,7 +34,7 @@ public class DestroyableObject : MonoBehaviour
     public void ObstacleDestruction()
     {
         SoundManager.instance.PlayEffect(destroySound);
-        float dropChance = Random.Range(0, 5);
+        float dropChance = Random.Range(0, 10);
         Debug.Log("You got: " + dropChance);
         if (dropChance == 0)
         {

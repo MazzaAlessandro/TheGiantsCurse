@@ -16,12 +16,15 @@ public class TimedSwitchAction : MonoBehaviour, IInteractable
 
     private GameObject door;
 
+    [SerializeField] private Animator animator;
+
     private Vector3 origin;
     private Vector3 destination;
 
     // Start is called before the first frame update
     void Awake()
     {
+        animator = GetComponent<Animator>();
         isActive = false;
         isOpen = false;
         door = this.gameObject.transform.GetChild(0).gameObject;
@@ -63,6 +66,7 @@ public class TimedSwitchAction : MonoBehaviour, IInteractable
                 {
                     isOpen = false;
                     isActive = false;
+                    animator.SetTrigger("SwitchOff");
                     Debug.Log("Door is closed");
                 }
             }
@@ -78,6 +82,10 @@ public class TimedSwitchAction : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (!isActive)
+        {
             isActive = true;
+            animator.SetTrigger("SwitchOn");
+        }
+            
     }
 }
