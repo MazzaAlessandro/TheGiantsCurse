@@ -67,6 +67,7 @@ public class ChasmController : PlayerController
     {
         if (canTakeDamage)
         {
+            isRunning = false;
             base.TakeDamage(damage);
         }
     }

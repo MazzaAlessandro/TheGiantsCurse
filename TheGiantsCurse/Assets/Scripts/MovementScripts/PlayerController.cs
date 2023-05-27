@@ -43,10 +43,12 @@ public class PlayerController : MonoBehaviour
 
     protected ArrowBehaviour currentArrow;
 
-    protected Vector3 movementInput;
+    protected Vector3 movementInput, grappleDestination;
     private Vector3 aimDirection, mousePosition;
 
     protected Camera mainCamera;
+
+    protected LineRenderer lineRenderer;
 
     [SerializeField] private AudioClip fall;
 
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
         pickupTransform = transform.GetChild(2);
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
+        lineRenderer = GetComponent<LineRenderer>();
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         StartCoroutine(MovementEnabler());
         DontDestroyOnLoad(gameObject);
@@ -181,6 +184,17 @@ public class PlayerController : MonoBehaviour
         {
             holdingItem = false;
         }
+
+        if (grappled)
+        {
+            Vector3[] positions = new Vector3[]
+            {
+                grappleDestination,
+                transform.position
+            };
+
+            lineRenderer.SetPositions(positions);
+        }
     }
 
     public virtual void SpeedHandling()
@@ -234,6 +248,7 @@ public class PlayerController : MonoBehaviour
             rb.useGravity = true;
             rb.isKinematic = false;
             aimingEnabled = true;
+            lineRenderer.enabled = false;
         }
         else
         {
@@ -364,7 +379,12 @@ public class PlayerController : MonoBehaviour
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
         currentArrow.transform.localPosition = Vector3.zero;
         if (ropedArrow)
+        {
             currentArrow.MakeRoped();
+            aimingEnabled = false;
+            movementEnabled = false;
+        }
+            
         currentArrow.Shoot(transform.forward * finalArrowSpeed);
         currentArrow.SetOwner(this.gameObject);
         //currentArrow.Shoot(transform.forward, finalArrowSpeed);
@@ -437,6 +457,8 @@ public class PlayerController : MonoBehaviour
         aimingEnabled = false;
         rb.useGravity = false;
         transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+        lineRenderer.enabled = true;
+        grappleDestination = destination;
         //rb.isKinematic = true;
         grappled = true;
         movementInput = destination;
@@ -501,5 +523,11 @@ public class PlayerController : MonoBehaviour
     public void Death()
     {
         Debug.Log("RIP");
+    }
+
+    public void EnableMovement()
+    {
+        movementEnabled = true;
+        aimingEnabled = true;
     }
 }

@@ -18,6 +18,8 @@ public class MoonriseController : PlayerController
         aimingEnabled = false;
         rb.useGravity = false;
         transform.position = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+        lineRenderer.enabled = true;
+        grappleDestination = destination;
         //rb.isKinematic = true;
         grappled = true;
         movementInput = destination;
@@ -30,6 +32,7 @@ public class MoonriseController : PlayerController
             grappled = false;
             rb.useGravity = true;
             rb.isKinematic = false;
+            lineRenderer.enabled = false;
             SetMovement(true);
         }
         else

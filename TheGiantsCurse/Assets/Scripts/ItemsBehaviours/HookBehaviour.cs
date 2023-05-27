@@ -4,18 +4,36 @@ using UnityEngine;
 
 public class HookBehaviour : MonoBehaviour
 {
+    private bool shoot;
 
     private Rigidbody rb;
     private MoonriseController moonrise;
+    private LineRenderer lineRenderer;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         moonrise = GetComponentInParent<MoonriseController>();
+        lineRenderer = GetComponent<LineRenderer>();
+    }
+
+    private void Update()
+    {
+        if (shoot)
+        {
+            Vector3[] positions = new Vector3[]
+            {
+                moonrise.transform.position,
+                transform.position
+            };
+
+            lineRenderer.SetPositions(positions);
+        }
     }
 
     public void Shoot(Vector3 force)
     {
+        shoot = true;
         rb.isKinematic = false;
         rb.AddForce(force, ForceMode.Impulse);
     }

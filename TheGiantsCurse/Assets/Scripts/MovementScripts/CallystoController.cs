@@ -31,7 +31,11 @@ public class CallystoController : PlayerController
         if (fullCharge)
             currentArrow.MakeFireArrow();
         if (ropedArrow)
+        {
             currentArrow.MakeRoped();
+            aimingEnabled = false;
+            movementEnabled = false;
+        }
         currentArrow.Shoot(transform.forward * finalArrowSpeed);
         currentArrow.SetOwner(this.gameObject);
         //currentArrow.Shoot(transform.forward, finalArrowSpeed);

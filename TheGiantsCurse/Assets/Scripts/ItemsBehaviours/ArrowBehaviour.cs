@@ -34,8 +34,8 @@ public class ArrowBehaviour : MonoBehaviour
         {
             Vector3[] positions = new Vector3[]
             {
-                transform.position,
-                this.gameObject.GetComponentInParent<Transform>().position
+                owner.transform.position,
+                transform.position
             };
 
             lineRenderer.SetPositions(positions);
@@ -61,6 +61,12 @@ public class ArrowBehaviour : MonoBehaviour
         {
             case "Wall":
                 Debug.Log("Arrow hit a wall!");
+                SpawnAmmoPickup();
+                break;
+            case "Destroyable":
+                SpawnAmmoPickup();
+                break;
+            case "Pickup":
                 SpawnAmmoPickup();
                 break;
             case "Switch":
@@ -129,6 +135,8 @@ public class ArrowBehaviour : MonoBehaviour
     {
         arrowPickup = Instantiate(arrowPickupPrefab, transform);
         arrowPickup.transform.localPosition = new Vector3(0, 0, -1);
+        if (ropedArrow)
+            owner.GetComponent<PlayerController>().EnableMovement();
         arrowPickup.transform.SetParent(null);
         arrowPickup.transform.localScale = Vector3.one;
         Destroy(this.gameObject);
