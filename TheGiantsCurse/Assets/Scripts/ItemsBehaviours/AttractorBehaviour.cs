@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PickUpType { ARROW, HEALTH, ROPE, PICKAXE}
+public enum PickUpType { ARROW, HEALTH, ROPE, PICKAXE, HAZARD}
 
 public class AttractorBehaviour : MonoBehaviour
 {

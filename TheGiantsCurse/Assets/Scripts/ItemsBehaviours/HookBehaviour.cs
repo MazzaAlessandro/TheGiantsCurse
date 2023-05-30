@@ -40,7 +40,7 @@ public class HookBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Destroyable"))
         {
             Debug.Log("Hook hit a grapple point");
             moonrise.PullTowards(collision.transform.position);

@@ -64,6 +64,11 @@ public class ArrowBehaviour : MonoBehaviour
                 SpawnAmmoPickup();
                 break;
             case "Destroyable":
+                if (ropedArrow)
+                {
+                    GetComponentInParent<PlayerController>().PullTowards(coll.transform.position);
+                }
+                SpawnAmmoPickup();
                 SpawnAmmoPickup();
                 break;
             case "Pickup":
@@ -138,7 +143,7 @@ public class ArrowBehaviour : MonoBehaviour
         if (ropedArrow)
             owner.GetComponent<PlayerController>().EnableMovement();
         arrowPickup.transform.SetParent(null);
-        arrowPickup.transform.localScale = Vector3.one;
+        arrowPickup.transform.localScale = new Vector3(1, 1, 0.25f);
         Destroy(this.gameObject);
     }
 
