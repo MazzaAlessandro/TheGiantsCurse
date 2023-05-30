@@ -236,6 +236,8 @@ public class GiantController : MonoBehaviour
 
     private void LandingCrash()
     {
+        mainCamera.GetComponent<CameraShake>().SmallShake(0.5f, 1f);
+
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, leapCrashRange);
         foreach (var objectHit in objectsInRange)
         {

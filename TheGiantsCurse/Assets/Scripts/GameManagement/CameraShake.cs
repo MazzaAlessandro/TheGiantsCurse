@@ -54,4 +54,20 @@ public class CameraShake : MonoBehaviour
         totalDuration = duration;
         shakeDuration = duration;
     }
+
+    public void SmallShake(float duration, float strenght)
+    {
+        StartCoroutine(SmallShakeCoroutine(duration, strenght));
+    }
+
+    private IEnumerator SmallShakeCoroutine(float duration, float strenght)
+    {
+        for(float i = 0; i < duration; i += Time.deltaTime)
+        {
+            camTransform.localPosition = originalPos + Random.insideUnitSphere * strenght;
+            yield return null;
+        }
+
+        camTransform.localPosition = originalPos;
+    }
 }

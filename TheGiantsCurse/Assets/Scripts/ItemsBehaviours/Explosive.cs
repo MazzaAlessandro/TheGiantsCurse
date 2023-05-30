@@ -52,6 +52,8 @@ public class Explosive : MonoBehaviour
         explosionInstance = Instantiate(explosionEffect, transform.position, transform.rotation);
         explosionInstance.transform.localScale = new Vector3(explosionScale, explosionScale, explosionScale);
 
+        GameObject.FindWithTag("MainCamera").GetComponent<CameraShake>().SmallShake(0.3f, 0.5f);
+
         SoundManager.instance.PlayEffect(explosionSound);
 
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, explosionRange);
