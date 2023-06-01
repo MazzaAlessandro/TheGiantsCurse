@@ -6,6 +6,13 @@ using UnityEngine.SceneManagement;
 public class ExitLevel : MonoBehaviour
 {
     [SerializeField] private bool isFinalRoom;
+
+    private void Awake()
+    {
+        if (LevelManager.instance.isLastRoom())
+            isFinalRoom = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

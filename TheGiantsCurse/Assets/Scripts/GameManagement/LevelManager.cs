@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     public float transitionTime = 1f;
 
     private int currentRoom = 0;
-    private int[] roomsSequence = { 0, 1, 2 };
+    private int[] roomsSequence = { 0, 3, 2, 1 };
 
     [SerializeField] private CircleTransition circleTransition;
 
@@ -106,5 +106,10 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         circleTransition.OpenBlackScreen();
+    }
+
+    public bool isLastRoom()
+    {
+        return currentRoom == roomsSequence.Length - 1;
     }
 }

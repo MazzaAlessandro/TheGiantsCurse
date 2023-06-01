@@ -268,6 +268,7 @@ public class PlayerController : MonoBehaviour
         {
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
             {
+                Debug.Log("interact");
                 interactObj.Interact();
             }
 

@@ -222,8 +222,8 @@ GameObject:
   - component: {fileID: 9022749855455763639}
   - component: {fileID: 9022749855455763636}
   - component: {fileID: 9022749855455763637}
-  - component: {fileID: 9022749855455763634}
   - component: {fileID: 9022749855455763635}
+  - component: {fileID: 3301448821268043499}
   m_Layer: 2
   m_Name: Switch
   m_TagString: Switch
@@ -300,19 +300,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &9022749855455763634
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9022749855455763632}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9022749855455763635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +316,20 @@ MonoBehaviour:
   activateSwitch: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   slidingEnd: {fileID: 8300000, guid: b7f8695cf65a4f24eb37544298821146, type: 3}
   switchMaterial: {fileID: 2100000, guid: 7dc61041e72c10b4c84ff3c93efbc5bf, type: 2}
+--- !u!136 &3301448821268043499
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9022749855455763632}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3790835
+  m_Height: 2.2
+  m_Direction: 1
+  m_Center: {x: -0.0214345, y: 0.071287006, z: 0.1076725}
 --- !u!1 &9205545443220105580
 GameObject:
   m_ObjectHideFlags: 0
