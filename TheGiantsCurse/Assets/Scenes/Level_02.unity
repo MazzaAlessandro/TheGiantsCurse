@@ -25440,6 +25440,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosiveBarrelSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 9157209730065463195, guid: d72f98f97ba99054fb80078b7da4b305, type: 3}
+      propertyPath: spawnDelay
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d72f98f97ba99054fb80078b7da4b305, type: 3}
 --- !u!4 &2138423325 stripped
@@ -25541,13 +25545,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3542944276342434931, guid: b1827a3555d0aa948b34e5bf7e99ff2f, type: 3}
       propertyPath: writtenOnSign.Array.data[1]
-      value: Interact with a lever to open a door, but look out, it will close on
-        its own after a couple of seconds!
+      value: Brick walls can be destroyed by an explosion or by hitting them enough
+        time with a pickaxe, so if you don't have one find an explosive barrel, pick
+        it up and throw it!
       objectReference: {fileID: 0}
     - target: {fileID: 3542944276342434931, guid: b1827a3555d0aa948b34e5bf7e99ff2f, type: 3}
       propertyPath: writtenOnSign.Array.data[2]
-      value: Interact with a lever to open a door, but look out, it will close on
-        its own after a couple of seconds!
+      value: Shoot at purple crystal to activate doors! Each door is linked to a
+        specific crystal, and don't worry, once they're open they will never close
+        again
       objectReference: {fileID: 0}
     - target: {fileID: 3542944276342434931, guid: b1827a3555d0aa948b34e5bf7e99ff2f, type: 3}
       propertyPath: writtenOnSign.Array.data[3]

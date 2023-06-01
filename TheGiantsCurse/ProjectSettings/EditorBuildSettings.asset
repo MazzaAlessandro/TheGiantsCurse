@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Level_02.unity
     guid: 4c327648c3a8dad41ba9b603f8daba5f
   - enabled: 1
+    path: Assets/Scenes/Level_03.unity
+    guid: 8812208a8475f8742aa59afcc30f884c
+  - enabled: 1
     path: Assets/Scenes/FinalTrack.unity
     guid: ca4178392d424874d87a1db374ef95a8
   - enabled: 1

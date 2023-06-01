@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupPrefab: {fileID: 3330397945069904869, guid: be08e1df1f65e1c46991660b74ff915a, type: 3}
-  spawnDelay: 5
+  spawnDelay: 2
 --- !u!1001 &2447347548329817877
 PrefabInstance:
   m_ObjectHideFlags: 0
