@@ -9,11 +9,13 @@ public class DestroyableObject : MonoBehaviour
 
     [SerializeField] private AudioClip destroySound;
 
+    private Vector3 originalPos;
+
     private GameObject healthPickUp;
     // Start is called before the first frame update
     void Start()
     {
-        
+        originalPos = transform.position;
     }
 
     // Update is called once per frame
@@ -26,10 +28,22 @@ public class DestroyableObject : MonoBehaviour
     {
         health -= damage;
         Debug.Log("Took damage: " + damage + ". Remaining health: " + health);
+        StartCoroutine(Shake());
         if(health <= 0)
         {
             ObstacleDestruction();
         }
+    }
+
+    private IEnumerator Shake()
+    {
+        for (float i = 0; i < 0.2f; i += Time.deltaTime)
+        {
+            transform.position = originalPos + Random.insideUnitSphere * 0.1f;
+            yield return null;
+        }
+
+        transform.position = originalPos;
     }
 
     public void ObstacleDestruction()

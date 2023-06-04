@@ -34,8 +34,9 @@ public class PickaxeGadget : Gadget
 
     public void ThrowGadget()
     {
-        Debug.Log("Throwing the Pickaxe");
+        Debug.Log("Throwing the Pickaxe with rot speed: " + rotationSpeed);
         paInstance = Instantiate(pickaxePrefab, transform);
+        paInstance.SetOwner(this.transform.parent.gameObject);
         paInstance.SetThrown();
         paInstance.transform.localPosition = Vector3.forward;
         paInstance.transform.SetParent(null);

@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
 
     private int currentRoom = 0;
 
-    private List<int> roomsSet = new List<int> { 1, 2, 3, 4, 5, 6};
+    private List<int> roomsSet = new List<int> { 1, 2, 3, 4, 5, 6, 7};
     private List<int> roomsSequence = new List<int> { 0 };
 
     [SerializeField] private CircleTransition circleTransition;

@@ -314,6 +314,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5016640745111373448}
     m_Modifications:
+    - target: {fileID: 35890092920209282, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 104988359221256515, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -362,13 +366,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickaxeGadget
       objectReference: {fileID: 0}
-    - target: {fileID: 104988359221256525, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+    - target: {fileID: 5647005304083600601, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5943800556087054830, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943800556087054830, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943800556087054830, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943800556087054830, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943800556087054830, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943800556087054830, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7170610849028542992, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 5016640745111373493}
     - target: {fileID: 7170610849028542992, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
       propertyPath: pickaxeDamage
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566105905347152589, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 555527f44cccaab45b491f8a74603d11, type: 3}

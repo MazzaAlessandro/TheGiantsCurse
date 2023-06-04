@@ -8,6 +8,7 @@ public class PickaxeBehaviour : MonoBehaviour
     [SerializeField] private int pickaxeDamage;
 
     private GameObject pickup;
+    [SerializeField] private GameObject owner;
     private bool thrown = false;
 
     private void OnTriggerEnter(Collider other)
@@ -25,11 +26,40 @@ public class PickaxeBehaviour : MonoBehaviour
                 break;
             case "Player":
                 //damages the player, is not destroyed but passes through it
+                if(other.gameObject != owner)
+                {
+                    other.gameObject.GetComponent<PlayerController>().TakeDamage(pickaxeDamage);
+                    other.gameObject.GetComponent<PlayerController>().Stun(1f);
+                }
                 break;
-            default:
+            case "Wall":
                 if (thrown)
                     SpawnPickUp();
                 break;
+            case "Pickup":
+                if (thrown)
+                    SpawnPickUp();
+                break;
+            case "IceBlock":
+                other.gameObject.GetComponent<IceCubeBehaviour>().StartMelting();
+                if (thrown)
+                    SpawnPickUp();
+                break;
+            case "Grapple":
+                if (thrown)
+                    SpawnPickUp();
+                break;
+            case "Explosive":
+                other.gameObject.GetComponent<Explosive>().Explode();
+                if (thrown)
+                    SpawnPickUp();
+                break;
+            case "Switch":
+                other.gameObject.GetComponent<SwitchAction>().SetActive();
+                if (thrown)
+                    SpawnPickUp();
+                break;
+
         }
     }
 
@@ -46,5 +76,10 @@ public class PickaxeBehaviour : MonoBehaviour
     public void SetThrown()
     {
         thrown = true;
+    }
+
+    public void SetOwner(GameObject own)
+    {
+        owner = own;
     }
 }
