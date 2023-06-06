@@ -57,6 +57,21 @@ public class LevelManager : MonoBehaviour
     {
         roomsSequence = sequence;
     }
+
+    public void FirstLevel()
+    {
+        StartCoroutine(LoadFirstLevel());
+    }
+
+    private IEnumerator LoadFirstLevel()
+    {
+        SceneManager.LoadScene(roomsSequence[0]);
+
+        yield return new WaitForSeconds(transitionTime);
+
+        circleTransition.OpenBlackScreen();
+    }
+
     public void NextLevel()
     {
         StartCoroutine(LoadLevel());
