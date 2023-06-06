@@ -1574,7 +1574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5016640745111373448, guid: dc316fd3185dc1047870810213547ab4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.374598
+      value: 9.74
       objectReference: {fileID: 0}
     - target: {fileID: 5016640745111373448, guid: dc316fd3185dc1047870810213547ab4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1607,6 +1607,10 @@ PrefabInstance:
     - target: {fileID: 5016640745111373493, guid: dc316fd3185dc1047870810213547ab4, type: 3}
       propertyPath: m_Name
       value: Reaper
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595440222459013938, guid: dc316fd3185dc1047870810213547ab4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc316fd3185dc1047870810213547ab4, type: 3}

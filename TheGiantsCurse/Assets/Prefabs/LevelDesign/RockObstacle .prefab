@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5637004728480075076}
-  - component: {fileID: 5637004728480075073}
   - component: {fileID: 5637004728480075072}
   - component: {fileID: 6092471015135272783}
   - component: {fileID: 3158396009417872221}
+  - component: {fileID: 2082578225091720692}
   m_Layer: 2
-  m_Name: DestroyableObstacle
+  m_Name: 'RockObstacle '
   m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,25 +29,12 @@ Transform:
   m_GameObject: {fileID: 5637004728480075071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -19.02, y: 0.5, z: -6.78}
-  m_LocalScale: {x: 1.5, y: 1, z: 6}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5637004728480075073
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5637004728480075071}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.362935, y: 4.4090905, z: 0.22787993}
-  m_Center: {x: -0.00086752576, y: 1.7045453, z: 0.098412}
 --- !u!114 &5637004728480075072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +57,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5637004728480075071}
-  m_Mesh: {fileID: 4300000, guid: 657987f19f0767d4f81541198f8e3eff, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 60f028e7a1b594a4bac0ffeaea1dec3c, type: 3}
 --- !u!23 &3158396009417872221
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -91,7 +78,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e5d0fe8d1ecac9c4e98b445b40961485, type: 2}
+  - {fileID: 2100000, guid: 429ff6bc9fbad274db8f826656248afc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,3 +100,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &2082578225091720692
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5637004728480075071}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 12.217051
+  m_Center: {x: 2.2684703, y: -0.41045523, z: -0.015044689}

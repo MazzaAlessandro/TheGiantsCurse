@@ -12337,8 +12337,8 @@ Transform:
   - {fileID: 1027192688}
   - {fileID: 1503393343}
   - {fileID: 716428268}
-  - {fileID: 873211790}
   - {fileID: 2067176093}
+  - {fileID: 873211790}
   - {fileID: 236625327}
   m_Father: {fileID: 1893916984}
   m_RootOrder: 3
@@ -12841,7 +12841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3542944276342434931, guid: b1827a3555d0aa948b34e5bf7e99ff2f, type: 3}
       propertyPath: writtenOnSign.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3542944276342434931, guid: b1827a3555d0aa948b34e5bf7e99ff2f, type: 3}
       propertyPath: writtenOnSign.Array.data[0]
@@ -12851,8 +12851,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3542944276342434931, guid: b1827a3555d0aa948b34e5bf7e99ff2f, type: 3}
       propertyPath: writtenOnSign.Array.data[1]
-      value: "\rShoot an arrow through a lit torch to light the arrow on fire! Burning
-        arrows can lit up other torches and melt ice cubes that block your way."
+      value: Interact with a crate to get a rope! Your next arrow can be used to
+        pull yourself towards columns without worrying of falling down.
       objectReference: {fileID: 0}
     - target: {fileID: 3542944276342434931, guid: b1827a3555d0aa948b34e5bf7e99ff2f, type: 3}
       propertyPath: writtenOnSign.Array.data[2]
