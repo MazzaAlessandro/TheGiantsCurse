@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private AudioClip fall;
 
+    [SerializeField] private Animator animator;
+
     private void Awake()
     {
         health = maxHealth;
@@ -68,13 +70,15 @@ public class PlayerController : MonoBehaviour
         mainCamera = FindObjectOfType<Camera>();
         lineRenderer = GetComponent<LineRenderer>();
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        animator.SetBool("isFalling", true);
         StartCoroutine(MovementEnabler());
         DontDestroyOnLoad(gameObject);
     }
 
     protected IEnumerator MovementEnabler()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.25f);
+        animator.SetBool("isFalling", false);
         movementEnabled = true;
         aimingEnabled = true;
         nextLevel = false;
@@ -84,9 +88,11 @@ public class PlayerController : MonoBehaviour
     {       
         Reload();
         transform.position = spawnPoint.transform.position;
+        transform.rotation = Quaternion.identity;
         fell = false;
         movementEnabled = true;
         aimingEnabled = true;
+        animator.SetBool("isFalling", false);
     }
 
     public virtual void OnTriggerEnter(Collider coll)
@@ -136,6 +142,9 @@ public class PlayerController : MonoBehaviour
     {
         SpeedHandling();
 
+        if(Input.GetMouseButtonUp(1))
+            animator.SetBool("isAiming", false);
+
         if (Input.GetMouseButtonUp(0))
         {
             if (holdingItem)
@@ -163,6 +172,11 @@ public class PlayerController : MonoBehaviour
             }
             else
                 Interact();
+        }
+
+        if (transform.position.y < -0.2f)
+        {
+            animator.SetBool("isFalling", true);
         }
 
         if (transform.position.y <= -2 && !fell)
@@ -201,6 +215,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(1) && aimingEnabled)
         {
+            animator.SetBool("isAiming", true);
+            float dir = Vector3.Dot(transform.forward, movementInput);
+            Debug.Log(dir);
+            animator.SetFloat("dir", dir);
             speed = aimingSpeed;
             Aiming();
         }
@@ -218,6 +236,7 @@ public class PlayerController : MonoBehaviour
         LevelManager.instance.FallTransition();
         yield return new WaitForSeconds(1f);
         Spawn();
+        
     }
 
     private void FixedUpdate()
@@ -233,7 +252,16 @@ public class PlayerController : MonoBehaviour
             movementInput = new Vector3(horizontal, 0, vertical);
 
             if (movementEnabled)
+            {
+                if (movementInput != Vector3.zero)
+                {
+                    animator.SetBool("isMoving", true);
+                }
+                else
+                    animator.SetBool("isMoving", false);
                 rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
+            }
+                
         }
 
         if (holdingItem)
@@ -377,6 +405,7 @@ public class PlayerController : MonoBehaviour
         fullCharge = false;
         arrowCounter--;
         Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
+        animator.SetTrigger("Shoot");
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
         currentArrow.transform.localPosition = Vector3.zero;
         if (ropedArrow)

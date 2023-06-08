@@ -8,6 +8,8 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource musicSource, effectSource;
 
+    private bool playingMusic = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -45,7 +47,18 @@ public class SoundManager : MonoBehaviour
 
     public void PlayMusic(AudioClip clip)
     {
-        musicSource.clip = clip;
+        if (playingMusic)
+        {
+            musicSource.Stop();
+            musicSource.clip = clip;
+            musicSource.Play();
+        }
+        else
+        {
+            playingMusic = true;
+            musicSource.clip = clip;
+        }
+        
     }
 
     public void SetMasterVolume(float volume)
