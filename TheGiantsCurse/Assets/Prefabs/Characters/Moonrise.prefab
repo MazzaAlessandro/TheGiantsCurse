@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5301940993673544228}
   - component: {fileID: 1823653420653489193}
   - component: {fileID: 2030244127904066665}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Moonrise
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -146,6 +146,7 @@ MonoBehaviour:
   gadget: {fileID: 8474210474143250708}
   spawnPoint: {fileID: 0}
   fall: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
+  animator: {fileID: 0}
 --- !u!120 &2030244127904066665
 LineRenderer:
   m_ObjectHideFlags: 0

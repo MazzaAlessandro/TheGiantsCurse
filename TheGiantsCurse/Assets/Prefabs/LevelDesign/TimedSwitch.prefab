@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1235933034291621134}
   - component: {fileID: 6685250386930311441}
   - component: {fileID: 3878429791316971505}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Pommel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 5100742627491780291}
   - component: {fileID: 5100742627491780290}
   - component: {fileID: 5100742627491780289}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SlidingDoor
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 5726718626012288029}
   - component: {fileID: 5100742629092065978}
   - component: {fileID: 8909107457895819535}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: TimedSwitch
   m_TagString: TimedSwitch
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7843361072465033924}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: DoorDestination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 4516550166807845922}
   - component: {fileID: 5986412932156719201}
   - component: {fileID: 7093919284546341729}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 1966225052765930251}
   - component: {fileID: 6932361418723615149}
   - component: {fileID: 8739121358289572522}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}

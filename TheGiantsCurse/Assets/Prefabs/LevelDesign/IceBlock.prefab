@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7100792968932394796}
   - component: {fileID: 5763949106576232702}
   - component: {fileID: 4824909684301274462}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: IceBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7501204157557658076}
   - component: {fileID: 7501204157557658073}
   - component: {fileID: 7501204157557658077}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: IceBlock
   m_TagString: IceBlock
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 3309921610510920729}
   - component: {fileID: 1247534684442934386}
   - component: {fileID: 6568798934646010891}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: IceBody (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

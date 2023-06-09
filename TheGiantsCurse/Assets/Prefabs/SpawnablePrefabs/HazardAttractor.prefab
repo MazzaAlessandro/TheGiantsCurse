@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 145369566054854344}
   - component: {fileID: 1124592140491220585}
   - component: {fileID: 4723356985996388842}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: HazardPickUp
   m_TagString: Hazard
   m_Icon: {fileID: 0}
@@ -19408,7 +19408,7 @@ GameObject:
   - component: {fileID: 5976773624479579139}
   - component: {fileID: 8426764537074919109}
   - component: {fileID: 4730003328613883134}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: HazardAttractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

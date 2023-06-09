@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5016640745111373451}
   - component: {fileID: 5424709525948408998}
   - component: {fileID: 5595440222459013938}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Reaper
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -177,6 +177,7 @@ MonoBehaviour:
   gadget: {fileID: 4965867810939792357}
   spawnPoint: {fileID: 0}
   fall: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
+  animator: {fileID: 0}
 --- !u!120 &5595440222459013938
 LineRenderer:
   m_ObjectHideFlags: 0

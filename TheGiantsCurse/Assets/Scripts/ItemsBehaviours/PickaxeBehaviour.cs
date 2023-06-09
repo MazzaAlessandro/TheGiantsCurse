@@ -29,7 +29,7 @@ public class PickaxeBehaviour : MonoBehaviour
                 if(other.gameObject != owner)
                 {
                     other.gameObject.GetComponent<PlayerController>().TakeDamage(pickaxeDamage);
-                    other.gameObject.GetComponent<PlayerController>().Stun(1f);
+                    other.gameObject.GetComponent<PlayerController>().Stun(2f);
                 }
                 break;
             case "Wall":

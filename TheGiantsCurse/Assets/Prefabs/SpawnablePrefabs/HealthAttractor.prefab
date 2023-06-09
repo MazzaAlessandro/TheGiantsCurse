@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4274413912506783180}
   - component: {fileID: 2112723191830318858}
   - component: {fileID: 2883534978174498097}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: HealthAttractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 7756451890625840903}
   - component: {fileID: 7366584593255747494}
   - component: {fileID: 2894894375641251877}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: HealthPickUp
   m_TagString: HealthPickUp
   m_Icon: {fileID: 0}

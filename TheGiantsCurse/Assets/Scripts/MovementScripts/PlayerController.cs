@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private float burningDuration;
 
     protected bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem, fullCharge, ropedArrow, onFire, nextLevel, fell;
+    [SerializeField] protected bool dead;
 
     [SerializeField] protected GameObject spawnPoint;
 
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour
         movementEnabled = false;
         aimingEnabled = false;
         fullCharge = false;
+        dead = false;
         spawnPoint = GameObject.FindWithTag("Respawn");
         pickupTransform = transform.GetChild(2);
         rb = GetComponent<Rigidbody>();
@@ -97,117 +99,124 @@ public class PlayerController : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider coll)
     {
-        if(coll.gameObject.tag == "ArrowPickUp")
+        if (!dead)
         {
-            PickUpArrow(1);
-            Debug.Log("Arrow collected, current arrow count: " + arrowCounter);
-            Destroy(coll.gameObject);
-        }
-
-        if (coll.CompareTag("HealthPickUp") && !health.Equals(maxHealth))
-        {
-            health += healthRegain;
-            if (health >= maxHealth)
-                health = maxHealth;
-            Debug.Log("Health collected, current health: " + health);
-            Destroy(coll.gameObject);
-        }
-
-        if (coll.CompareTag("RopePickUp"))
-        {
-            MakeRoped();
-            Debug.Log("You now have a rope!");
-            Destroy(coll.gameObject);
-        }
-
-        if (coll.CompareTag("Checkpoint"))
-        {
-            if (spawnPoint != coll.gameObject)
+            if (coll.gameObject.tag == "ArrowPickUp")
             {
-                Debug.Log("New Checkpoint! Now kill yourself");
-                spawnPoint = coll.gameObject;
+                PickUpArrow(1);
+                Debug.Log("Arrow collected, current arrow count: " + arrowCounter);
+                Destroy(coll.gameObject);
+            }
+
+            if (coll.CompareTag("HealthPickUp") && !health.Equals(maxHealth))
+            {
+                health += healthRegain;
+                if (health >= maxHealth)
+                    health = maxHealth;
+                Debug.Log("Health collected, current health: " + health);
+                Destroy(coll.gameObject);
+            }
+
+            if (coll.CompareTag("RopePickUp"))
+            {
+                MakeRoped();
+                Debug.Log("You now have a rope!");
+                Destroy(coll.gameObject);
+            }
+
+            if (coll.CompareTag("Checkpoint"))
+            {
+                if (spawnPoint != coll.gameObject)
+                {
+                    Debug.Log("New Checkpoint! Now kill yourself");
+                    spawnPoint = coll.gameObject;
+                }
+            }
+
+            //this is only to test the hazards. Ideally they're activated when a certain message reaches the client
+            if (coll.CompareTag("Hazard"))
+            {
+                HazardEvent.instance.PickRandomEvent();
+                Destroy(coll.gameObject);
             }
         }
-
-        //this is only to test the hazards. Ideally they're activated when a certain message reaches the client
-        if (coll.CompareTag("Hazard"))
-        {
-            HazardEvent.instance.PickRandomEvent();
-            Destroy(coll.gameObject);
-        }
+        
     }
 
     // Update is called once per frame
     private void Update()
     {
-        SpeedHandling();
-
-        if(Input.GetMouseButtonUp(1))
-            animator.SetBool("isAiming", false);
-
-        if (Input.GetMouseButtonUp(0))
+        if (!dead)
         {
-            if (holdingItem)
-                Throw();
-            else
-                ShootArrow();
-        }
+            SpeedHandling();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UseGadget();
-        }
+            if (Input.GetMouseButtonUp(1))
+                animator.SetBool("isAiming", false);
 
-        //testing the final level transition for non-Giant players. This has to be removed
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            LevelManager.instance.LoadFinalLevel();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (pickup != null)
+            if (Input.GetMouseButtonUp(0))
             {
-                Drop();
-            }
-            else
-                Interact();
-        }
-
-        if (transform.position.y < -0.2f)
-        {
-            animator.SetBool("isFalling", true);
-        }
-
-        if (transform.position.y <= -2 && !fell)
-        {
-            SoundManager.instance.PlayEffect(fall);
-            TakeDamage(fallDamage);
-            fell = true;
-            Debug.Log("Current health: " + health);
-            if (health > 0)
-                StartCoroutine(FallCoroutine());
-            else
-            {
-                Death();
+                if (holdingItem)
+                    Throw();
+                else
+                    ShootArrow();
             }
 
-        }  
-
-        if (pickup == null)
-        {
-            holdingItem = false;
-        }
-
-        if (grappled)
-        {
-            Vector3[] positions = new Vector3[]
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                UseGadget();
+            }
+
+            //testing the final level transition for non-Giant players. This has to be removed
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                LevelManager.instance.LoadFinalLevel();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (pickup != null)
+                {
+                    Drop();
+                }
+                else
+                    Interact();
+            }
+
+            if (transform.position.y < -0.2f)
+            {
+                animator.SetBool("isFalling", true);
+            }
+
+            if (transform.position.y <= -2 && !fell)
+            {
+                SoundManager.instance.PlayEffect(fall);
+                TakeDamage(fallDamage);
+                fell = true;
+                Debug.Log("Current health: " + health);
+                if (health > 0)
+                    StartCoroutine(FallCoroutine());
+                else
+                {
+                    Death();
+                }
+
+            }
+
+            if (pickup == null)
+            {
+                holdingItem = false;
+            }
+
+            if (grappled)
+            {
+                Vector3[] positions = new Vector3[]
+                {
                 grappleDestination,
                 transform.position
-            };
+                };
 
-            lineRenderer.SetPositions(positions);
+                lineRenderer.SetPositions(positions);
+            }
         }
     }
 
@@ -241,31 +250,34 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (grappled)
+        if (!dead)
         {
-            GrappledMovement();
-        }
-        else
-        {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            movementInput = new Vector3(horizontal, 0, vertical);
-
-            if (movementEnabled)
+            if (grappled)
             {
-                if (movementInput != Vector3.zero)
-                {
-                    animator.SetBool("isMoving", true);
-                }
-                else
-                    animator.SetBool("isMoving", false);
-                rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
+                GrappledMovement();
             }
-                
-        }
+            else
+            {
+                float horizontal = Input.GetAxisRaw("Horizontal");
+                float vertical = Input.GetAxisRaw("Vertical");
+                movementInput = new Vector3(horizontal, 0, vertical);
 
-        if (holdingItem)
-            pickup.transform.position = pickupTransform.position;
+                if (movementEnabled)
+                {
+                    if (movementInput != Vector3.zero)
+                    {
+                        animator.SetBool("isMoving", true);
+                    }
+                    else
+                        animator.SetBool("isMoving", false);
+                    rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
+                }
+
+            }
+
+            if (holdingItem)
+                pickup.transform.position = pickupTransform.position;
+        }
     }
 
     public virtual void GrappledMovement()
@@ -442,22 +454,29 @@ public class PlayerController : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
+        if (!dead)
         {
-            Death();
+            health -= damage;
+            if (health <= 0)
+            {
+                Death();
+            }
+            Debug.Log("Took damage: " + damage + ". Health is now: " + health);
         }
-        Debug.Log("Took damage: " + damage + ". Health is now: " + health);
     }
 
     public void TakeFireDamage()
     {
-        if (!onFire)
+        if (!dead)
         {
-            onFire = true;
-            burningDuration = 5f;
-            StartCoroutine(FireDamage());
+            if (!onFire)
+            {
+                onFire = true;
+                burningDuration = 5f;
+                StartCoroutine(FireDamage());
+            }
         }
+        
     }
 
     private IEnumerator FireDamage()
@@ -501,13 +520,15 @@ public class PlayerController : MonoBehaviour
 
     public virtual void Stun(float stunDuration)
     {
-        StartCoroutine(StunCoroutine(stunDuration));
+        if(!dead)
+            StartCoroutine(StunCoroutine(stunDuration));
     }
 
     private IEnumerator StunCoroutine(float duration)
     {
         movementEnabled = false;
         aimingEnabled = false;
+        animator.SetTrigger("Stun");
         yield return new WaitForSeconds(duration);
         movementEnabled = true;
         aimingEnabled = true;
@@ -552,6 +573,8 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
+        dead = true;
+        animator.SetTrigger("Death");
         Debug.Log("RIP");
     }
 

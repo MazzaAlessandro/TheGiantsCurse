@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 8781800994898835865}
   - component: {fileID: -670323699480627753}
   - component: {fileID: 2711535016428838813}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Chasm
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -177,6 +177,7 @@ MonoBehaviour:
   gadget: {fileID: 7443320723548067970}
   spawnPoint: {fileID: 0}
   fall: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
+  animator: {fileID: 0}
   runningSpeed: 10
   runDelay: 5
   hole: {fileID: 370216603024334147, guid: 0e07214cb61a7cc4e9bc352fb7db646f, type: 3}

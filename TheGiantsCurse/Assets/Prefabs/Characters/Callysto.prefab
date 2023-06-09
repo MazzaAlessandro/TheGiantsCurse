@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1832006099087121436}
   - component: {fileID: -7926966588473449984}
   - component: {fileID: 7452217230726162877}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Callysto
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -146,6 +146,7 @@ MonoBehaviour:
   gadget: {fileID: 9068910078053485137}
   spawnPoint: {fileID: 0}
   fall: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
+  animator: {fileID: 0}
 --- !u!120 &7452217230726162877
 LineRenderer:
   m_ObjectHideFlags: 0

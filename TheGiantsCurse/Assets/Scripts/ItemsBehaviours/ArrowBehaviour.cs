@@ -126,7 +126,7 @@ public class ArrowBehaviour : MonoBehaviour
                 if (coll.gameObject != owner)
                 {
                     Debug.Log("Hit a player");
-                    coll.GetComponent<PlayerController>().Stun(0.5f);
+                    coll.GetComponent<PlayerController>().Stun(1.2f);
                     if (fireArrow)
                         coll.GetComponent<PlayerController>().TakeFireDamage();
                     else

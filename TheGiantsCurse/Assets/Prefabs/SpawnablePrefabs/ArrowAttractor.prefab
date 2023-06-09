@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2415334366847784125}
   - component: {fileID: 2415334366847784066}
   - component: {fileID: 2415334366847784067}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ArrowAttractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 6037503986756421789}
   - component: {fileID: 6482827569929915700}
   - component: {fileID: 3963052149058637885}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: ArrowPickUp
   m_TagString: ArrowPickUp
   m_Icon: {fileID: 0}

@@ -18,6 +18,8 @@ public class GiantController : MonoBehaviour
     [SerializeField] private GameObject boulder;
     [SerializeField] private GameObject leapLandingArea;
 
+    [SerializeField] private AudioClip destroySound;
+
     private GameObject boulderInstance, leapLandingInstance;
 
     private bool movementEnabled, rotationEnabled, leapReady, clubReady, boulderReady, doingAction;
@@ -59,6 +61,11 @@ public class GiantController : MonoBehaviour
         if (collision.gameObject.CompareTag("Destroyable"))
         {
             collision.gameObject.GetComponent<DestroyableObject>().ObstacleDestruction();
+        }
+
+        if (collision.gameObject.CompareTag("Explosive"))
+        {
+            collision.gameObject.GetComponent<Explosive>().Explode();
         }
     }
 
@@ -243,7 +250,7 @@ public class GiantController : MonoBehaviour
         {
             if (objectHit.CompareTag("Player"))
             {
-                objectHit.GetComponent<PlayerController>().Stun(1f);
+                objectHit.GetComponent<PlayerController>().Stun(1.2f);
             }
         }
     }
