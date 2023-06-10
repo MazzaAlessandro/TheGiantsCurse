@@ -18,6 +18,8 @@ public class GiantController : MonoBehaviour
     [SerializeField] private GameObject boulder;
     [SerializeField] private GameObject leapLandingArea;
 
+    [SerializeField] private Animator animator;
+
     [SerializeField] private AudioClip destroySound;
 
     private GameObject boulderInstance, leapLandingInstance;
@@ -27,7 +29,7 @@ public class GiantController : MonoBehaviour
     private float speed;
 
     private Rigidbody rb;
-
+    
     private Vector3 movementInput;
     private Camera mainCamera;
     // Start is called before the first frame update
@@ -58,14 +60,19 @@ public class GiantController : MonoBehaviour
             collision.gameObject.GetComponent<PlayerController>().Death();
         }
 
-        if (collision.gameObject.CompareTag("Destroyable"))
+        else if (collision.gameObject.CompareTag("Destroyable"))
         {
             collision.gameObject.GetComponent<DestroyableObject>().ObstacleDestruction();
         }
 
-        if (collision.gameObject.CompareTag("Explosive"))
+        else if (collision.gameObject.CompareTag("Explosive"))
         {
             collision.gameObject.GetComponent<Explosive>().Explode();
+        }
+
+        else if(collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("IceBlock") || collision.gameObject.CompareTag("Torch"))
+        {
+            Destroy(collision.gameObject);
         }
     }
 
@@ -115,7 +122,16 @@ public class GiantController : MonoBehaviour
         movementInput = new Vector3(horizontal, 0, vertical);
 
         if (movementEnabled)
+        {
+            if (movementInput != Vector3.zero)
+            {
+                animator.SetBool("run", true);
+            }
+            else
+                animator.SetBool("run", false);
             rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
+        }
+
         if (rotationEnabled)
             RotateLook();
     }
@@ -173,7 +189,7 @@ public class GiantController : MonoBehaviour
         float time = 0.25f;
 
         Vector3 start = transform.position;
-        Vector3 end = new Vector3(transform.position.x, 20, transform.position.z);
+        Vector3 end = new Vector3(transform.position.x, 30, transform.position.z);
 
         while (elapsedTime < time)
         {
@@ -270,7 +286,8 @@ public class GiantController : MonoBehaviour
         boulderReady = false;
         doingAction = true;
         boulderInstance = Instantiate(boulder, transform);
-        boulderInstance.transform.localPosition = Vector3.forward;
+        boulderInstance.transform.localPosition = new Vector3(0, 2, 1.2f);
+        boulderInstance.transform.localScale = new Vector3(1, 1.33f, 1);
         boulderInstance.transform.SetParent(null);
         boulderInstance.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * boulderSpeed, ForceMode.Impulse);
         boulderInstance.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right, ForceMode.Impulse);
