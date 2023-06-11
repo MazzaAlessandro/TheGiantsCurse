@@ -14,6 +14,7 @@ public class DrillGadget : Gadget
     {
         isReady = true;
         canBeCanceled = false;
+        gadgetUI.SetFillAmount(0);
         Debug.Log("Is Ready: " + isReady);
     }
 
@@ -22,6 +23,7 @@ public class DrillGadget : Gadget
         Debug.Log("Is Ready: " + isReady);
         if (isReady)
         {
+            gadgetUI.SetFillAmount(1);
             Debug.Log("Activate Drill Gadget! Cooldown: " + cooldown);
             isReady = false;
             canBeCanceled = true;

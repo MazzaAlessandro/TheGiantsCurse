@@ -15,6 +15,7 @@ public class PickaxeGadget : Gadget
     // Start is called before the first frame update
     void Start()
     {
+        gadgetUI.SetFillAmount(0);
         meleePickaxe.SetActive(false);
         isReady = true;
     }
@@ -35,6 +36,7 @@ public class PickaxeGadget : Gadget
     public void ThrowGadget()
     {
         Debug.Log("Throwing the Pickaxe with rot speed: " + rotationSpeed);
+        gadgetUI.SetFillAmount(1);
         paInstance = Instantiate(pickaxePrefab, transform);
         paInstance.SetOwner(this.transform.parent.gameObject);
         paInstance.SetThrown();

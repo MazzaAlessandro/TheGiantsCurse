@@ -13,6 +13,7 @@ public class ReaperController : PlayerController
         {
             Debug.Log("The gadget is now ready again");
             hasPickaxe = true;
+            gadget.gadgetUI.SetFillAmount(0);
             Destroy(coll.gameObject);
         }
         base.OnTriggerEnter(coll);

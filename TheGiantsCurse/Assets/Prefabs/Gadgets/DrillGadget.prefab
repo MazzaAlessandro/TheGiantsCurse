@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19827c30e692ab4f96e8eaa3e0a213f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 11
+  gadgetUI: {fileID: 0}
+  cooldown: 20

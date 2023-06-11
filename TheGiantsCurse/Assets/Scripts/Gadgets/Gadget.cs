@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gadget : MonoBehaviour
 {
+    public GadgetUIBehaviour gadgetUI;
     protected bool isReady;
 
     public virtual void GadgetAction()
@@ -13,6 +14,7 @@ public class Gadget : MonoBehaviour
 
     public void StartCooldown(float cooldown)
     {
+        gadgetUI.Cooldown(cooldown);
         StartCoroutine(Cooldown(cooldown));
     }
 

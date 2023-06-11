@@ -15,6 +15,7 @@ public class GrenadeLauncherGadget : Gadget
     // Start is called before the first frame update
     void Start()
     {
+        gadgetUI.SetFillAmount(0);
         isReady = true;
     }
 
@@ -38,6 +39,7 @@ public class GrenadeLauncherGadget : Gadget
         grenade = null;
         Debug.Log("Activate Grenade Launcher Gadget! Cooldown: " + cooldown);
         isReady = false;
+        
         StartCooldown(cooldown);
     }
 }

@@ -14,6 +14,7 @@ public class GrapplingHookGadget : Gadget
     // Start is called before the first frame update
     void Start()
     {
+        gadgetUI.SetFillAmount(0);
         isReady = true;
     }
 

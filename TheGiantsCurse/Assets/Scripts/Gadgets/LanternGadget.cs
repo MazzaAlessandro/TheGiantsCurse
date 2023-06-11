@@ -31,6 +31,7 @@ public class LanternGadget : Gadget
             lanternLight.intensity = 0;
             lightOn = false;
         }
+        gadgetUI.SetFillAmount(0);
     }
 
     // Update is called once per frame
@@ -64,6 +65,7 @@ public class LanternGadget : Gadget
 
     private void CreateFire()
     {
+        gadgetUI.SetFillAmount(1);
         fire = Instantiate(firePrefab, transform);
         fire.transform.localPosition = Vector3.forward * 1.5f;
         fire.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 8, ForceMode.Impulse);
