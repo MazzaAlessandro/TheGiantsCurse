@@ -71,7 +71,7 @@ PrefabInstance:
       objectReference: {fileID: 104988359221256524}
     - target: {fileID: 5775015412584002654, guid: 5f7355e19cbd21544991e96bf4949eb1, type: 3}
       propertyPath: pickaxeDamage
-      value: 25
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7051307045358122912, guid: 5f7355e19cbd21544991e96bf4949eb1, type: 3}
       propertyPath: m_RootOrder

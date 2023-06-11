@@ -35,10 +35,20 @@ public class ChasmController : PlayerController
                 isRunning = false;
                 runCounter = 0f;
             }
+        } 
+
+        if (movementInput.Equals(Vector3.zero))
+        {
+            isRunning = false;
+            runCounter = 0f;
         }
 
         if (Input.GetMouseButton(1) && aimingEnabled)
         {
+            animator.SetBool("isAiming", true);
+            float dir = Vector3.Dot(transform.forward, movementInput);
+            Debug.Log(dir);
+            animator.SetFloat("dir", dir);
             speed = aimingSpeed;
             Aiming();
         }
@@ -54,11 +64,23 @@ public class ChasmController : PlayerController
         }
     }
 
+    public override IEnumerator StopMovement(float duration)
+    {
+        movementEnabled = false;
+        aimingEnabled = false;
+        isRunning = false;
+        runCounter = 0f;
+        yield return new WaitForSeconds(duration);
+        movementEnabled = true;
+        aimingEnabled = true;
+    }
+
     public override void Stun(float stunDuration)
     {
         if (canTakeDamage)
         {
             isRunning = false;
+            runCounter = 0f;
             base.Stun(stunDuration + 1f);
         }
     }
@@ -68,6 +90,7 @@ public class ChasmController : PlayerController
         if (canTakeDamage)
         {
             isRunning = false;
+            runCounter = 0f;
             base.TakeDamage(damage);
         }
     }
@@ -75,7 +98,11 @@ public class ChasmController : PlayerController
     public override void Shoot()
     {
         if (canTakeDamage)
+        {
+            isRunning = false;
+            runCounter = 0f;
             base.Shoot();
+        }
         else
             Debug.Log("You can't shoot arrows underground!");
     }
@@ -87,12 +114,13 @@ public class ChasmController : PlayerController
 
     private IEnumerator StartDig()
     {
+        movementEnabled = false;
         float elapsedTime = 0f;
         float time = 0.25f;
         canTakeDamage = false;
 
         Vector3 start = transform.position;
-        Vector3 end = new Vector3(transform.position.x, -0.51f, transform.position.z);
+        Vector3 end = new Vector3(transform.position.x, -1f, transform.position.z);
 
         while (elapsedTime < time)
         {
@@ -110,6 +138,7 @@ public class ChasmController : PlayerController
 
     private IEnumerator Digging()
     {
+        movementEnabled = true;
         speed = runningSpeed;
 
         float elapsedTime = 0f;
@@ -122,6 +151,7 @@ public class ChasmController : PlayerController
             yield return null;
         }
 
+        movementEnabled = false;
         speed = movementSpeed;
 
         StartCoroutine(EndDig());
@@ -149,7 +179,9 @@ public class ChasmController : PlayerController
         }
 
         canTakeDamage = true;
+        movementEnabled = true;
 
+        animator.SetBool("isFalling", false);
         Destroy(holeInstance);
     }
 

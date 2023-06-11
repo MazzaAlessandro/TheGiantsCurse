@@ -149,6 +149,7 @@ public class GiantController : MonoBehaviour
         Debug.Log("Swing the club");
         movementEnabled = false;
         rotationEnabled = false;
+        animator.SetTrigger("attack1");
         club.SetActive(true);
         club.transform.localPosition = new Vector3(0, -0.4f, 0.6f);
         club.GetComponent<Animator>().SetTrigger("Attack");
@@ -235,7 +236,7 @@ public class GiantController : MonoBehaviour
         float time = 0.25f;
 
         Vector3 start = transform.position;
-        Vector3 end = new Vector3(transform.position.x, 3, transform.position.z);
+        Vector3 end = new Vector3(transform.position.x, -0.2f, transform.position.z);
 
         while (elapsedTime < time)
         {
@@ -285,12 +286,18 @@ public class GiantController : MonoBehaviour
         rotationEnabled = false;
         boulderReady = false;
         doingAction = true;
+        animator.SetTrigger("attack2");
+        
+    }
+
+    public void Boulder()
+    {
         boulderInstance = Instantiate(boulder, transform);
-        boulderInstance.transform.localPosition = new Vector3(0, 2, 1.2f);
-        boulderInstance.transform.localScale = new Vector3(1, 1.33f, 1);
+        boulderInstance.transform.localPosition = new Vector3(0, 1, 3f);
+        boulderInstance.transform.localScale = new Vector3(0.005f, 0.005f, 0.005f);
         boulderInstance.transform.SetParent(null);
         boulderInstance.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * boulderSpeed, ForceMode.Impulse);
-        boulderInstance.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right, ForceMode.Impulse);
+        boulderInstance.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right * 5, ForceMode.Impulse);
         StartCoroutine(BoulderTravel());
     }
 

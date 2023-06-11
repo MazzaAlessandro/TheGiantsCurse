@@ -130,7 +130,7 @@ public class ArrowBehaviour : MonoBehaviour
                     if (fireArrow)
                         coll.GetComponent<PlayerController>().TakeFireDamage();
                     else
-                        coll.GetComponent<PlayerController>().TakeDamage(5f);
+                        coll.GetComponent<PlayerController>().TakeDamage(damage);
                 }
                 break;
         }

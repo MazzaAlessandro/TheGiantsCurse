@@ -7,7 +7,7 @@ public class ExitLevel : MonoBehaviour
 {
     [SerializeField] private bool isFinalRoom;
 
-    private void Awake()
+    private void Start()
     {
         if (LevelManager.instance.isLastRoom())
             isFinalRoom = true;

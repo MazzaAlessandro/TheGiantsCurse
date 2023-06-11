@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     protected Rigidbody rb;
     private Rigidbody pickup;
 
-    private Transform pickupTransform;
+    private Transform pickupTransform, throwTransform;
 
     protected ArrowBehaviour currentArrow;
 
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private AudioClip fall;
 
-    [SerializeField] private Animator animator;
+    [SerializeField] protected Animator animator;
 
     private void Awake()
     {
@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
         dead = false;
         spawnPoint = GameObject.FindWithTag("Respawn");
         pickupTransform = transform.GetChild(2);
+        throwTransform = transform.GetChild(3);
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
         lineRenderer = GetComponent<LineRenderer>();
@@ -187,7 +188,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("isFalling", true);
             }
 
-            if (transform.position.y <= -2 && !fell)
+            if (transform.position.y <= -3 && !fell)
             {
                 SoundManager.instance.PlayEffect(fall);
                 TakeDamage(fallDamage);
@@ -331,6 +332,8 @@ public class PlayerController : MonoBehaviour
 
     void Drop()
     {
+        StartCoroutine(StopMovement(0.25f));
+        pickup.transform.position = throwTransform.position;
         pickup.transform.SetParent(null);
         pickup.isKinematic = false;
         pickup.useGravity = true;
@@ -340,6 +343,9 @@ public class PlayerController : MonoBehaviour
 
     void Throw()
     {
+        animator.SetTrigger("throw");
+        StartCoroutine(StopMovement(0.25f));
+        pickup.transform.position = throwTransform.position;
         pickup.transform.SetParent(null);
         pickup.isKinematic = false;
         pickup.useGravity = false;
@@ -350,6 +356,15 @@ public class PlayerController : MonoBehaviour
         pickup.AddForce(transform.forward * arrowSpeed, ForceMode.Impulse);
         pickup = null;
         holdingItem = false;
+    }
+
+    public virtual IEnumerator StopMovement(float duration)
+    {
+        movementEnabled = false;
+        aimingEnabled = false;
+        yield return new WaitForSeconds(duration);
+        movementEnabled = true;
+        aimingEnabled = true;
     }
 
     protected void RotateLook()
@@ -520,7 +535,7 @@ public class PlayerController : MonoBehaviour
 
     public virtual void Stun(float stunDuration)
     {
-        if(!dead)
+        if(!dead || !grappled)
             StartCoroutine(StunCoroutine(stunDuration));
     }
 
