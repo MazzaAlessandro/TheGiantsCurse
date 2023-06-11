@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected Animator animator;
 
     public Healthbar healthbar;
+    public ArrowCounter arrowUI;
+
     private void Awake()
     {
         health = maxHealth;
@@ -68,6 +70,8 @@ public class PlayerController : MonoBehaviour
         fullCharge = false;
         dead = false;
         healthbar.SetMaxHealth(maxHealth);
+        arrowUI.UpdateArrowNumber(arrowCounter);
+        arrowUI.SetRopeImage(false);
         spawnPoint = GameObject.FindWithTag("Respawn");
         pickupTransform = transform.GetChild(2);
         throwTransform = transform.GetChild(3);
@@ -434,6 +438,7 @@ public class PlayerController : MonoBehaviour
         arrowCharge = chargeStart;
         fullCharge = false;
         arrowCounter--;
+        arrowUI.UpdateArrowNumber(arrowCounter);
         Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
         animator.SetTrigger("Shoot");
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
@@ -441,6 +446,7 @@ public class PlayerController : MonoBehaviour
         if (ropedArrow)
         {
             currentArrow.MakeRoped();
+            arrowUI.SetRopeImage(false);
             aimingEnabled = false;
             movementEnabled = false;
         }
@@ -512,11 +518,13 @@ public class PlayerController : MonoBehaviour
     public void PickUpArrow(int arrows)
     {
         arrowCounter += arrows;
+        arrowUI.UpdateArrowNumber(arrowCounter);
     }
 
     public void MakeRoped()
     {
         ropedArrow = true;
+        arrowUI.SetRopeImage(true);
     }
 
     public virtual void PullTowards(Vector3 destination)
