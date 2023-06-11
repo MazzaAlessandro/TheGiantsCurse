@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,22 @@ public class ExitLevel : MonoBehaviour
 {
     [SerializeField] private bool isFinalRoom;
 
-    private void Start()
+    private void Awake()
     {
-        if (LevelManager.instance.isLastRoom())
-            isFinalRoom = true;
+        try
+        {
+            if (LevelManager.instance.isLastRoom())
+                isFinalRoom = true;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("don't break");
+        }
+    }
+
+    public void MakeFinalRoom()
+    {
+        isFinalRoom = true;
     }
 
     private void OnTriggerEnter(Collider other)

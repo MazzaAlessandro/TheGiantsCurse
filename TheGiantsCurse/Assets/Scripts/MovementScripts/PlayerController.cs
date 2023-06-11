@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] protected Animator animator;
 
+    public Healthbar healthbar;
     private void Awake()
     {
         health = maxHealth;
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
         aimingEnabled = false;
         fullCharge = false;
         dead = false;
+        healthbar.SetMaxHealth(maxHealth);
         spawnPoint = GameObject.FindWithTag("Respawn");
         pickupTransform = transform.GetChild(2);
         throwTransform = transform.GetChild(3);
@@ -114,6 +116,7 @@ public class PlayerController : MonoBehaviour
                 health += healthRegain;
                 if (health >= maxHealth)
                     health = maxHealth;
+                healthbar.SetHealth(health);
                 Debug.Log("Health collected, current health: " + health);
                 Destroy(coll.gameObject);
             }
@@ -472,6 +475,7 @@ public class PlayerController : MonoBehaviour
         if (!dead)
         {
             health -= damage;
+            healthbar.SetHealth(health);
             if (health <= 0)
             {
                 Death();

@@ -6,9 +6,8 @@ public class MoonriseController : PlayerController
 {
     public override void TakeDamage(float damage)
     {
-        if (!grappled) { 
-            health -= damage;
-            Debug.Log("Took damage: " + damage + ". Health is now: " + health);
+        if (!grappled) {
+            base.TakeDamage(damage);
         }
     }
 
