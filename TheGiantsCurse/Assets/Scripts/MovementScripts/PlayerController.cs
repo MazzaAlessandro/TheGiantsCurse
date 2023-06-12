@@ -602,6 +602,8 @@ public class PlayerController : MonoBehaviour
     {
         dead = true;
         animator.SetTrigger("Death");
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(GetComponent<BoxCollider>());
         Debug.Log("RIP");
     }
 

@@ -50,4 +50,9 @@ public class LightCrystal : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GetComponent<Rigidbody>().useGravity = true;
+    }
 }

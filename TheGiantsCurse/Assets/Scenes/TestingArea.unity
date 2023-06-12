@@ -12452,7 +12452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2233193742316790245, guid: c21a8792222360d44a5196e1d0d2b1b6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2773620047796431197, guid: c21a8792222360d44a5196e1d0d2b1b6, type: 3}
       propertyPath: m_RootOrder
@@ -12484,11 +12484,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5861132170787049211, guid: c21a8792222360d44a5196e1d0d2b1b6, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5861132170787049211, guid: c21a8792222360d44a5196e1d0d2b1b6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6477978914748947403, guid: c21a8792222360d44a5196e1d0d2b1b6, type: 3}
       propertyPath: m_RootOrder
