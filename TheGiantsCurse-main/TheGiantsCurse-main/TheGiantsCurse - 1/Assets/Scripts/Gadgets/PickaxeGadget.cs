@@ -1,0 +1,63 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PickaxeGadget : Gadget
+{
+    [SerializeField] private PickaxeBehaviour pickaxePrefab;
+    [SerializeField] private GameObject meleePickaxe;
+    [SerializeField] private float cooldown = 1f;
+    [SerializeField] private float throwSpeed = 15f;
+    [SerializeField] private float rotationSpeed = 15f;
+    
+    private PickaxeBehaviour paInstance;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        gadgetUI.SetFillAmount(0);
+        meleePickaxe.SetActive(false);
+        isReady = true;
+    }
+
+    public override void GadgetAction()
+    {
+        if (isReady)
+        {
+            GetComponentInParent<ReaperController>().SetMovement(false);
+            MeleeAttack();
+            isReady = false;
+            StartCooldown(cooldown);
+        }
+        else
+            Debug.Log("Gadget on cooldown");
+    }
+
+    public void ThrowGadget()
+    {
+        Debug.Log("Throwing the Pickaxe with rot speed: " + rotationSpeed);
+        gadgetUI.SetFillAmount(1);
+        paInstance = Instantiate(pickaxePrefab, transform);
+        paInstance.SetOwner(this.transform.parent.gameObject);
+        paInstance.SetThrown();
+        paInstance.transform.localPosition = Vector3.forward;
+        paInstance.transform.SetParent(null);
+        paInstance.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * throwSpeed, ForceMode.Impulse);
+        paInstance.gameObject.GetComponent<Rigidbody>().AddTorque(transform.up * rotationSpeed, ForceMode.Impulse);
+    }
+
+    private void MeleeAttack()
+    {
+        Debug.Log("Activate Pickaxe Gadget! Cooldown: " + cooldown);
+        //meleeInstance = Instantiate(meleePickaxe, transform);
+        meleePickaxe.SetActive(true);
+        meleePickaxe.transform.localPosition = Vector3.zero;
+        meleePickaxe.GetComponent<Animator>().SetTrigger("Attack");
+    }
+
+    public void AttackEnd()
+    {
+        meleePickaxe.SetActive(false);
+        GetComponentInParent<ReaperController>().SetMovement(true);
+    }
+}
