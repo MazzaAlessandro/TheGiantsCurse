@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    public enum Phases { MENU, PUZZLE, RACING};
+
     public static SoundManager instance;
 
     [SerializeField] private AudioSource musicSource, effectSource;
 
+    [SerializeField] private AudioClip menuMusic, puzzleMusic, racingMusic;
+
     private bool playingMusic = false;
+    private Phases currPhase;
 
     private void Awake()
     {
@@ -45,20 +50,41 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayMusic(AudioClip clip)
+    public void PlayMusic(Phases phase)
     {
         if (playingMusic)
         {
-            musicSource.Stop();
-            musicSource.clip = clip;
-            musicSource.Play();
+            if (phase != currPhase)
+            {
+                musicSource.Stop();
+                musicSource.clip = GetRespectiveClip(phase);
+                musicSource.Play();
+                currPhase = phase;
+            }
         }
         else
         {
             playingMusic = true;
-            musicSource.clip = clip;
+            musicSource.clip = GetRespectiveClip(phase);
+            musicSource.Play();
+            currPhase = phase;
         }
         
+    }
+
+    private AudioClip GetRespectiveClip(Phases phase)
+    {
+        switch (phase)
+        {
+            case Phases.MENU:
+                return menuMusic;
+            case Phases.PUZZLE:
+                return puzzleMusic;
+            case Phases.RACING:
+                return racingMusic;
+            default:
+                return menuMusic;
+        }
     }
 
     public void SetMasterVolume(float volume)

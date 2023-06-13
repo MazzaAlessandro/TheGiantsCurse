@@ -1816,30 +1816,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DestroyableObstacle (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 5637004728480075073, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
-      propertyPath: m_Size.x
-      value: 5.6238713
-      objectReference: {fileID: 0}
-    - target: {fileID: 5637004728480075073, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
-      propertyPath: m_Size.y
-      value: 4.535476
-      objectReference: {fileID: 0}
-    - target: {fileID: 5637004728480075073, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
-      propertyPath: m_Size.z
-      value: 0.23267524
-      objectReference: {fileID: 0}
-    - target: {fileID: 5637004728480075073, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
-      propertyPath: m_Center.x
-      value: -0.23742436
-      objectReference: {fileID: 0}
-    - target: {fileID: 5637004728480075073, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
-      propertyPath: m_Center.y
-      value: 1.7677381
-      objectReference: {fileID: 0}
-    - target: {fileID: 5637004728480075073, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
-      propertyPath: m_Center.z
-      value: 0.09731213
-      objectReference: {fileID: 0}
     - target: {fileID: 5637004728480075076, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1850,7 +1826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5637004728480075076, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 5637004728480075076, guid: 7b3ec0bba3bf5744d896416b652ee6bc, type: 3}
       propertyPath: m_LocalPosition.z

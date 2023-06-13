@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         RoomsSetup();
+        SoundManager.instance.PlayMusic(SoundManager.Phases.PUZZLE);
     }
 
     private void RoomsSetup()
