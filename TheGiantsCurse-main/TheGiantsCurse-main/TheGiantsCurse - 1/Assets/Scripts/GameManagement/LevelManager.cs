@@ -123,6 +123,7 @@ public class LevelManager : MonoBehaviour
         Destroy(player);
         yield return new WaitForSeconds(2f);
 
+        SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
         circleTransition.OpenBlackScreen();
     }
 
