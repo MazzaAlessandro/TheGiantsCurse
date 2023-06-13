@@ -8,6 +8,8 @@ public class OpeningVideo : MonoBehaviour
     [SerializeField]
     private float delayBeforeLoarding = 38f;
 
+    [SerializeField] int followingScene;
+
     private float timeEsapsed;
 
     // Update is called once per frame
@@ -15,7 +17,7 @@ public class OpeningVideo : MonoBehaviour
         timeEsapsed += Time.deltaTime;
 
         if(timeEsapsed > delayBeforeLoarding){
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(followingScene);
         }
     }
 }
