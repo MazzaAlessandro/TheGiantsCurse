@@ -9,6 +9,7 @@ public class OpeningVideo : MonoBehaviour
     private float delayBeforeLoarding = 38f;
 
     [SerializeField] int followingScene;
+    [SerializeField] bool goingToMenu;
 
     private float timeEsapsed;
 
@@ -18,6 +19,22 @@ public class OpeningVideo : MonoBehaviour
 
         if(timeEsapsed > delayBeforeLoarding){
             SceneManager.LoadScene(followingScene);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (goingToMenu)
+        {
+            Debug.Log("onDestroy was called");
+            if (LevelManager.instance != null)
+            {
+                Destroy(LevelManager.instance);
+            }
+            if (HazardEvent.instance != null)
+            {
+                Destroy(HazardEvent.instance);
+            }
         }
     }
 }
