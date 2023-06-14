@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4231098351632100060}
   - component: {fileID: 4231098351632100051}
   - component: {fileID: 4231098351632100061}
-  - component: {fileID: 4231098351632100062}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -64,23 +63,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionTime: 1
   circleTransition: {fileID: 4231098351826415597}
---- !u!114 &4231098351632100062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4231098351632100050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b7155f8f9d682f458194402120f31d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: {fileID: 4231098353327942930}
-  effectSource: {fileID: 4231098352707072382}
-  menuMusic: {fileID: 8300000, guid: e8e5ba15d4414ea46879a6f7de9946b8, type: 3}
-  puzzleMusic: {fileID: 8300000, guid: 220292c53b51e604b96bbd2305c8a5cb, type: 3}
-  racingMusic: {fileID: 0}
 --- !u!1 &4231098351826415584
 GameObject:
   m_ObjectHideFlags: 0

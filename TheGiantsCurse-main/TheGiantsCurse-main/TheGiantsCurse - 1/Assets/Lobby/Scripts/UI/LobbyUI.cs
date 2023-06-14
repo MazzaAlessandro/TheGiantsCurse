@@ -16,11 +16,6 @@ public class LobbyUI : NetworkBehaviour {
     [SerializeField] private Transform playerSingleTemplate;
     [SerializeField] private Transform container;
     [SerializeField] private TextMeshProUGUI lobbyNameText;
-    [SerializeField] private Button changeFirstButton;
-    [SerializeField] private Button changeSecondButton;
-    [SerializeField] private Button changeThirdButton;
-    [SerializeField] private Button changeForthButton;
-    [SerializeField] private Button changeFifthButton;
     [SerializeField] private Button leaveLobbyButton;
     [SerializeField] private Button startGameButton;
 
@@ -30,22 +25,6 @@ public class LobbyUI : NetworkBehaviour {
         Instance = this;
 
         playerSingleTemplate.gameObject.SetActive(false);
-
-        changeFirstButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.First);
-        });
-        changeSecondButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Second);
-        });
-        changeThirdButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Third);
-        });
-        changeForthButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Forth);
-        });
-        changeFifthButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Fifth);
-        });
 
         leaveLobbyButton.onClick.AddListener(() => {
             LobbyManager.Instance.LeaveLobby();
@@ -85,13 +64,6 @@ public class LobbyUI : NetworkBehaviour {
         LobbyManager.Instance.OnJoinedLobbyUpdate += UpdateLobby_Event;
         LobbyManager.Instance.OnLeftLobby += LobbyManager_OnLeftLobby;
         LobbyManager.Instance.OnKickedFromLobby += LobbyManager_OnLeftLobby;
-
-        if(IsHost){
-            startGameButton.gameObject.SetActive(true);
-        }
-        else{
-            startGameButton.gameObject.SetActive(false);
-        }
 
         Hide();
     }
@@ -143,6 +115,11 @@ public class LobbyUI : NetworkBehaviour {
 
     private void Show() {
         gameObject.SetActive(true);
+
+        if(IsHost){
+            startGameButton.gameObject.SetActive(true);
+        }
+
     }
 
     private void HandleClientConnected(ulong clientId)
@@ -169,7 +146,7 @@ public class LobbyUI : NetworkBehaviour {
             }
         }
 
-        [ServerRpc(RequireOwnership = true)]
+        [ServerRpc(RequireOwnership = false)]
         private void StartGameServerRpc(ServerRpcParams serverRpcParams = default)
         {
             if (serverRpcParams.Receive.SenderClientId != NetworkManager.Singleton.LocalClientId) { return; }
