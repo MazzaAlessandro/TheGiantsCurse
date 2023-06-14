@@ -44,8 +44,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.38431373, b: 0.15686275, a: 1}
-  m_Intensity: 5
-  m_Range: 40
+  m_Intensity: 4
+  m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe99edcf67d45b45b42e60b34f53c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gadgetUI: {fileID: 0}
   cooldown: 5
   lanternIntensity: 5
   lanternLight: {fileID: 2246886822349537648}
