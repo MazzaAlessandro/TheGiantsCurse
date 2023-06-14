@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour
 
     private bool playingMusic = false;
     private Phases currPhase;
+    private float currVolume = 1;
 
     private void Awake()
     {
@@ -90,15 +91,23 @@ public class SoundManager : MonoBehaviour
     public void SetMasterVolume(float volume)
     {
         AudioListener.volume = volume;
+        currVolume = volume;
     }
 
     public void SetMusicVolume(float volume)
     {
         musicSource.volume = volume;
+        currVolume = volume;
     }
 
     public void SetEffectVolume(float volume)
     {
         effectSource.volume = volume;
+        currVolume = volume;
+    }
+
+    public float GetCurrVolume()
+    {
+        return currVolume;
     }
 }

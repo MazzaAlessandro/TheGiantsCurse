@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2061a1c7aab22bb45bdaece4be23637a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gadgetUI: {fileID: 0}
   grenadePrefab: {fileID: 2188943435603485458, guid: f22e92fcb48a43e46a9a685316848e77, type: 3}
-  grenadeSpeed: 12
+  grenadeSpeed: 16
   cooldown: 15
   throwSound: {fileID: 8300000, guid: 8ad8e1b7041dd394aa92aad52c8636e5, type: 3}

@@ -2922,9 +2922,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb86afe86e35264fb1c06c1eb274931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 7
   turnSpeed: 720
-  jumpSpeed: 11
+  jumpSpeed: 12
   leapCooldown: 15
   clubCooldown: 5
   boulderCooldown: 10

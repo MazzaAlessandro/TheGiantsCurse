@@ -1379,7 +1379,7 @@ MonoBehaviour:
   healthRegain: 5
   movementSpeed: 8
   aimingSpeed: 4
-  grappleSpeed: 8
+  grappleSpeed: 15
   arrowSpeed: 20
   turnSpeed: 720
   reloadTime: 1

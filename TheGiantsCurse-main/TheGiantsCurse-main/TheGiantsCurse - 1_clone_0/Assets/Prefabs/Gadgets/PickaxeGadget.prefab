@@ -45,10 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711005581b1f8204f88c7014121d33a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gadgetUI: {fileID: 0}
   pickaxePrefab: {fileID: 1908679758388718664, guid: 7aecd0f3c4f5340498b10c24eb36f77c, type: 3}
   meleePickaxe: {fileID: 5647005304083600601}
   cooldown: 1
-  throwSpeed: 15
+  throwSpeed: 20
   rotationSpeed: 15
 --- !u!1001 &3722182729711822414
 PrefabInstance:

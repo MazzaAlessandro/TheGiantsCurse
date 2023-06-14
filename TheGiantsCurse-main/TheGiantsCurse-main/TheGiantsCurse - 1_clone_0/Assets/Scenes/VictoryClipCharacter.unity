@@ -477,6 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayBeforeLoarding: 10
   followingScene: 0
+  goingToMenu: 1
 --- !u!1 &2012854172
 GameObject:
   m_ObjectHideFlags: 0

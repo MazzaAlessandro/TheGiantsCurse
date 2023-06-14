@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SettingMenu : MonoBehaviour{
 
-    public AudioMixer mainMixer;
+    public Slider volumeSlider;
+
+    private void Start()
+    {
+        SoundManager.instance.PlayMusic(SoundManager.Phases.MENU);
+        volumeSlider.value = SoundManager.instance.GetCurrVolume();
+    }
 
     public void SetVolume(float volume){
-        mainMixer.SetFloat("volume", volume);
+        SoundManager.instance.SetMasterVolume(volume);
     }
 
     public void SetFullscreen(bool isFullscreen){

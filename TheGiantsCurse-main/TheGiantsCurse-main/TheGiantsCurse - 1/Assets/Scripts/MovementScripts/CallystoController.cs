@@ -24,6 +24,7 @@ public class CallystoController : PlayerController
         float finalArrowSpeed = arrowSpeed * arrowCharge;
         arrowCharge = chargeStart;
         arrowCounter--;
+        arrowUI.UpdateArrowNumber(arrowCounter);
         Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
         var force = transform.TransformDirection(Vector3.forward);
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
@@ -33,6 +34,7 @@ public class CallystoController : PlayerController
         if (ropedArrow)
         {
             currentArrow.MakeRoped();
+            arrowUI.SetRopeImage(false);
             aimingEnabled = false;
             movementEnabled = false;
         }

@@ -153,4 +153,56 @@ public class LevelManager : MonoBehaviour
     {
         return currentRoom == roomsSequence.Count - 1;
     }
+
+    public void Death()
+    {
+        StartCoroutine(DeathCoroutine());
+    }
+
+    private IEnumerator DeathCoroutine()
+    {
+        circleTransition.CloseBlackScreen();
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(14);
+    }
+
+    public void GiantDefeat()
+    {
+        StartCoroutine(GiantDefeatCoroutine());
+    }
+
+    private IEnumerator GiantDefeatCoroutine()
+    {
+        circleTransition.CloseBlackScreen();
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(15);
+    }
+
+    public void Victory()
+    {
+        StartCoroutine(VictoryCoroutine());
+    }
+
+    private IEnumerator VictoryCoroutine()
+    {
+        circleTransition.CloseBlackScreen();
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(16);
+    }
+
+    public void GiantVictory()
+    {
+        StartCoroutine(GiantVictoryCoroutine());
+    }
+
+    private IEnumerator GiantVictoryCoroutine()
+    {
+        circleTransition.CloseBlackScreen();
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(17);
+    }
 }

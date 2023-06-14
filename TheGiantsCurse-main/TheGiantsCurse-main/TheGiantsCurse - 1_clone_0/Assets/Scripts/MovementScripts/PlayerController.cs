@@ -178,7 +178,8 @@ public class PlayerController : NetworkBehaviour
             //testing the final level transition for non-Giant players. This has to be removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                LevelManager.instance.LoadFinalLevel();
+                //LevelManager.instance.LoadFinalLevel();
+                Death();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -602,10 +603,35 @@ public class PlayerController : NetworkBehaviour
     public void Death()
     {
         dead = true;
+        movementEnabled = false;
+        aimingEnabled = false;
+        FinalTrackManagement.instance.PlayerDied(this.gameObject);
         animator.SetTrigger("Death");
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
+        LevelManager.instance.Death();
         Debug.Log("RIP");
+    }
+
+    public void Defeat()
+    {
+        movementEnabled = false;
+        aimingEnabled = false;
+        animator.SetTrigger("Death");
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(GetComponent<BoxCollider>());
+        LevelManager.instance.Death();
+    }
+
+    public void Victory()
+    {
+        dead = true;
+        movementEnabled = false;
+        aimingEnabled = false;
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(GetComponent<BoxCollider>());
+        LevelManager.instance.Victory();
+        Debug.Log("LESS GOOOOO");
     }
 
     public void EnableMovement()

@@ -69,7 +69,6 @@ public class ArrowBehaviour : MonoBehaviour
                     GetComponentInParent<PlayerController>().PullTowards(coll.transform.position);
                 }
                 SpawnAmmoPickup();
-                SpawnAmmoPickup();
                 break;
             case "Pickup":
                 SpawnAmmoPickup();
