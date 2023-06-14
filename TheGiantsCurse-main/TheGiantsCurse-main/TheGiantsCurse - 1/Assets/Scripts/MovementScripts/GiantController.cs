@@ -48,11 +48,11 @@ public class GiantController : NetworkBehaviour
         speed = movementSpeed;
     }
 
-    /*public override void OnNetworkSpawn()
+    public override void OnNetworkSpawn()
     {
         if (!IsOwner)
             Destroy(this);
-    }*/
+    }
 
     private void OnDrawGizmos()
     {
@@ -85,7 +85,8 @@ public class GiantController : NetworkBehaviour
 
     private void Start()
     {
-        mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
+        if(IsOwner) 
+            mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
     }
     // Update is called once per frame
     void Update()

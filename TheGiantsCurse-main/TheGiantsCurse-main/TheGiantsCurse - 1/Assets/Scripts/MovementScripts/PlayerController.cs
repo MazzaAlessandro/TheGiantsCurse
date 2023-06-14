@@ -62,7 +62,16 @@ public class PlayerController : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
-            Destroy(this);
+        {
+            foreach(Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
+            {
+                i.enabled = false;
+            }
+            enabled = false;
+        }
+        else
+            mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
+
     }
 
     private void Awake()
@@ -84,6 +93,7 @@ public class PlayerController : NetworkBehaviour
         throwTransform = transform.GetChild(3);
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
+        mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
         lineRenderer = GetComponent<LineRenderer>();
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         animator.SetBool("isFalling", true);
