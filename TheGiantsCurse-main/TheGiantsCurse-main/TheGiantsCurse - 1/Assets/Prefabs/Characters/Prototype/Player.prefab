@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 7707586423640186268}
   - component: {fileID: 7707586423640186275}
   - component: {fileID: 6421733877715032486}
+  - component: {fileID: -6660901169654226714}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -206,9 +207,12 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 7707586424980494822}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   gadget: {fileID: 0}
+  dead: 0
   spawnPoint: {fileID: 0}
   fall: {fileID: 0}
   animator: {fileID: 0}
+  healthbar: {fileID: 0}
+  arrowUI: {fileID: 0}
 --- !u!120 &6421733877715032486
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -308,6 +312,26 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &-6660901169654226714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707586423640186274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &7707586424980494825
 GameObject:
   m_ObjectHideFlags: 0

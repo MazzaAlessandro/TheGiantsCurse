@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class GiantController : MonoBehaviour
+public class GiantController : NetworkBehaviour
 {
     [SerializeField] private float movementSpeed = 7f;
     [SerializeField] private float turnSpeed = 720;
@@ -46,6 +47,12 @@ public class GiantController : MonoBehaviour
         doingAction = false;
         speed = movementSpeed;
     }
+
+    /*public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+            Destroy(this);
+    }*/
 
     private void OnDrawGizmos()
     {

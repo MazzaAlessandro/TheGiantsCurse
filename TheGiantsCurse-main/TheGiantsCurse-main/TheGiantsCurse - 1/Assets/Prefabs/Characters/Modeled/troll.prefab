@@ -2828,6 +2828,7 @@ GameObject:
   - component: {fileID: 1027698611376988018}
   - component: {fileID: 1027698611376988019}
   - component: {fileID: 1027698611376988012}
+  - component: {fileID: 4885242233412713221}
   m_Layer: 0
   m_Name: troll
   m_TagString: Untagged
@@ -2935,6 +2936,26 @@ MonoBehaviour:
   leapLandingArea: {fileID: 6608151584160924760, guid: dd5b78b9726510a48b912a9210eaa34d, type: 3}
   animator: {fileID: 1027698611376988013}
   destroySound: {fileID: 0}
+--- !u!114 &4885242233412713221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087365073303109029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1087369596453062023
 GameObject:
   m_ObjectHideFlags: 0

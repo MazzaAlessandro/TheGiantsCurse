@@ -59,6 +59,12 @@ public class PlayerController : NetworkBehaviour
     public Healthbar healthbar;
     public ArrowCounter arrowUI;
 
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+            Destroy(this);
+    }
+
     private void Awake()
     {
         health = maxHealth;
@@ -605,7 +611,8 @@ public class PlayerController : NetworkBehaviour
         dead = true;
         movementEnabled = false;
         aimingEnabled = false;
-        FinalTrackManagement.instance.PlayerDied(this.gameObject);
+        if(FinalTrackManagement.instance!=null)
+            FinalTrackManagement.instance.PlayerDied(this.gameObject);
         animator.SetTrigger("Death");
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
