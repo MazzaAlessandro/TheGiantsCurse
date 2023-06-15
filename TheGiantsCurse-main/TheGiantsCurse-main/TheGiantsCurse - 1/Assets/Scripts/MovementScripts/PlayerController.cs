@@ -201,6 +201,7 @@ public class PlayerController : NetworkBehaviour
             //testing the final level transition for non-Giant players. This has to be removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
+                NetworkMatchManager.instance.Test();
                 //LevelManager.instance.LoadFinalLevel();
                 //HazardEvent.instance.Earthquake();
                 //Death();
