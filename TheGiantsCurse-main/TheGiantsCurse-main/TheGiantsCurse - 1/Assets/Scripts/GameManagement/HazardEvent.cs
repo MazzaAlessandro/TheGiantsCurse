@@ -27,9 +27,12 @@ public class HazardEvent : MonoBehaviour
         {
             instance = this;
         }
+    }
 
+    private void Start()
+    {
         globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
-        globalCamera = GameObject.FindWithTag("MainCamera").GetComponent<CameraShake>();
+        //globalCamera = GameObject.FindWithTag("MainCamera").GetComponent<CameraShake>();
     }
 
     private void Update()
@@ -38,7 +41,7 @@ public class HazardEvent : MonoBehaviour
         {
             affectedByWind = GameObject.FindGameObjectsWithTag("Arrow");
             foreach (GameObject arrow in affectedByWind) {
-                Debug.Log(windDirection);
+                //Debug.Log(windDirection);
                 arrow.GetComponent<Rigidbody>().AddForce(windDirection * 0.1f, ForceMode.Impulse);
             }
         }
@@ -89,5 +92,11 @@ public class HazardEvent : MonoBehaviour
         Debug.Log("Start wind with direction: " + windDirection);
         yield return new WaitForSeconds(hazardDuration);
         windDirection = Vector3.zero;
+        Debug.Log("Now wind direction: " + windDirection);
+    }
+
+    public void SetCamera(GameObject camera)
+    {
+        globalCamera = camera.GetComponent<CameraShake>();
     }
 }

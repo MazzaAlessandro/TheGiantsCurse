@@ -32,12 +32,20 @@ public class GiantController : NetworkBehaviour
     private Rigidbody rb;
     
     private Vector3 movementInput;
+
+    [SerializeField] private GameObject cameraPrefab;
+    protected GameObject cameraInstance;
     private Camera mainCamera;
+
     // Start is called before the first frame update
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        mainCamera = FindObjectOfType<Camera>();
+        /*cameraInstance = Instantiate(cameraPrefab, null);
+        mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+        cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+        GameObject.FindWithTag("tmpCam").SetActive(false);
+        HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);*/
         club.SetActive(false);
         movementEnabled = true;
         rotationEnabled = true;
@@ -52,6 +60,15 @@ public class GiantController : NetworkBehaviour
     {
         if (!IsOwner)
             Destroy(this);
+        else
+        {
+            cameraInstance = Instantiate(cameraPrefab, null);
+            mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+            cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+            GameObject.FindWithTag("tmpCam").SetActive(false);
+            HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+        }
+        //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
     }
 
     private void OnDrawGizmos()

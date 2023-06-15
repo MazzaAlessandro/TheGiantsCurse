@@ -37,6 +37,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] protected bool dead;
 
     [SerializeField] protected GameObject spawnPoint;
+    [SerializeField] private GameObject cameraPrefab;
 
     protected Rigidbody rb;
     private Rigidbody pickup;
@@ -48,7 +49,8 @@ public class PlayerController : NetworkBehaviour
     protected Vector3 movementInput, grappleDestination;
     private Vector3 aimDirection, mousePosition;
 
-    protected Camera mainCamera;
+    protected GameObject cameraInstance;
+    [SerializeField] protected Camera mainCamera;
 
     protected LineRenderer lineRenderer;
 
@@ -70,7 +72,14 @@ public class PlayerController : NetworkBehaviour
             enabled = false;
         }
         else
-            mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
+        {
+            cameraInstance = Instantiate(cameraPrefab, null);
+            mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+            cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+            GameObject.FindWithTag("tmpCam").SetActive(false);
+            HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+        }
+            //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
 
     }
 
@@ -92,8 +101,6 @@ public class PlayerController : NetworkBehaviour
         pickupTransform = transform.GetChild(2);
         throwTransform = transform.GetChild(3);
         rb = GetComponent<Rigidbody>();
-        mainCamera = FindObjectOfType<Camera>();
-        mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
         lineRenderer = GetComponent<LineRenderer>();
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         animator.SetBool("isFalling", true);
@@ -195,7 +202,8 @@ public class PlayerController : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
                 //LevelManager.instance.LoadFinalLevel();
-                Death();
+                //HazardEvent.instance.Earthquake();
+                //Death();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -212,6 +220,8 @@ public class PlayerController : NetworkBehaviour
             {
                 animator.SetBool("isFalling", true);
             }
+            else
+                animator.SetBool("isFalling", false);
 
             if (transform.position.y <= -3 && !fell)
             {
@@ -252,7 +262,6 @@ public class PlayerController : NetworkBehaviour
         {
             animator.SetBool("isAiming", true);
             float dir = Vector3.Dot(transform.forward, movementInput);
-            Debug.Log(dir);
             animator.SetFloat("dir", dir);
             speed = aimingSpeed;
             Aiming();
@@ -595,8 +604,12 @@ public class PlayerController : NetworkBehaviour
     protected virtual IEnumerator NewLevel()
     {
         yield return new WaitForSeconds(2f);
+        cameraInstance = Instantiate(cameraPrefab, null);
+        mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+        cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+        GameObject.FindWithTag("tmpCam").SetActive(false);
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
-        mainCamera = FindObjectOfType<Camera>();
+        //mainCamera = FindObjectOfType<Camera>();
         rb.useGravity = true;
         StartCoroutine(MovementEnabler());
     }

@@ -686,6 +686,8 @@ MonoBehaviour:
   gadget: {fileID: 3498471852854299945}
   dead: 0
   spawnPoint: {fileID: 0}
+  cameraPrefab: {fileID: 6572922849473397061, guid: 70e621aae58826d4fa6447d037e1ec8d, type: 3}
+  mainCamera: {fileID: 0}
   fall: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
   animator: {fileID: 5858659635813489436}
   healthbar: {fileID: 3499366031329483057}
