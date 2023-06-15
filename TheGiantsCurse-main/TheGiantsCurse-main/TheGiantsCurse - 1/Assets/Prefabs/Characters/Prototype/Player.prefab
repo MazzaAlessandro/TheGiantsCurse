@@ -77,7 +77,11 @@ GameObject:
   - component: {fileID: 7707586423640186268}
   - component: {fileID: 7707586423640186275}
   - component: {fileID: 6421733877715032486}
+<<<<<<< HEAD
   - component: {fileID: 7228809443639304576}
+=======
+  - component: {fileID: -6660901169654226714}
+>>>>>>> 2d5dcb40b7d5e84f091d264b69dd7bbd1024b06b
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -312,7 +316,11 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+<<<<<<< HEAD
 --- !u!114 &7228809443639304576
+=======
+--- !u!114 &-6660901169654226714
+>>>>>>> 2d5dcb40b7d5e84f091d264b69dd7bbd1024b06b
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

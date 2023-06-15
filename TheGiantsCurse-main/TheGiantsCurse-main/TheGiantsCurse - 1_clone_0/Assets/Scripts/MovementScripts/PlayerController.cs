@@ -59,6 +59,21 @@ public class PlayerController : NetworkBehaviour
     public Healthbar healthbar;
     public ArrowCounter arrowUI;
 
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            foreach(Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
+            {
+                i.enabled = false;
+            }
+            enabled = false;
+        }
+        else
+            mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
+
+    }
+
     private void Awake()
     {
         health = maxHealth;
@@ -78,6 +93,7 @@ public class PlayerController : NetworkBehaviour
         throwTransform = transform.GetChild(3);
         rb = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
+        mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
         lineRenderer = GetComponent<LineRenderer>();
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         animator.SetBool("isFalling", true);
@@ -605,7 +621,8 @@ public class PlayerController : NetworkBehaviour
         dead = true;
         movementEnabled = false;
         aimingEnabled = false;
-        FinalTrackManagement.instance.PlayerDied(this.gameObject);
+        if(FinalTrackManagement.instance!=null)
+            FinalTrackManagement.instance.PlayerDied(this.gameObject);
         animator.SetTrigger("Death");
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());

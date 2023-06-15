@@ -2075,6 +2075,8 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 8860b33687eb96545af622f5bc0438cd, type: 3}
   - prefab: {fileID: 2233193742316790245, guid: c21a8792222360d44a5196e1d0d2b1b6, type: 3}
     icon: {fileID: 21300000, guid: e7a956bf625a8e645862ecb9396b5528, type: 3}
+  - prefab: {fileID: 1087365073303109029, guid: e89eca4002e24e745907097124b0bcd3, type: 3}
+    icon: {fileID: 0}
   currentCharacter:
     prefab: {fileID: 0}
     icon: {fileID: 0}

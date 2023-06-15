@@ -11,6 +11,10 @@ public class OpeningVideo : MonoBehaviour
     [SerializeField] int followingScene;
     [SerializeField] bool goingToMenu;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2d5dcb40b7d5e84f091d264b69dd7bbd1024b06b
     private float timeEsapsed;
 
     // Update is called once per frame

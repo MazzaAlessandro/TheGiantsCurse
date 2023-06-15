@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
     {
         int cursor;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             cursor = UnityEngine.Random.Range(0, roomsSet.Count);
             roomsSequence.Add(roomsSet[cursor]);
@@ -120,7 +120,6 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene("FinalTrack");
-        Destroy(player);
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);

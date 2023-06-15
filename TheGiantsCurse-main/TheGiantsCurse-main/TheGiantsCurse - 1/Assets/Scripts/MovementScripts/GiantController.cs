@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class GiantController : MonoBehaviour
+public class GiantController : NetworkBehaviour
 {
     [SerializeField] private float movementSpeed = 7f;
     [SerializeField] private float turnSpeed = 720;
@@ -47,6 +48,12 @@ public class GiantController : MonoBehaviour
         speed = movementSpeed;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+            Destroy(this);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -78,7 +85,8 @@ public class GiantController : MonoBehaviour
 
     private void Start()
     {
-        mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
+        if(IsOwner) 
+            mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
     }
     // Update is called once per frame
     void Update()
