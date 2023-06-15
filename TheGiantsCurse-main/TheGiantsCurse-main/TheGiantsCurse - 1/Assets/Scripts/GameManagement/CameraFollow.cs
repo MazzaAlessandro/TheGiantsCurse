@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow : NetworkBehaviour
 {
     private GameObject playerGameObject;
 
     //USe this one only in local testing
-    private void Awake()
+    /*private void Awake()
     {
         playerGameObject = GameObject.FindWithTag("Player");
-    }
+    }*/
 
     // This version should correctly handle the camera follow in the NetCode Envrionment
     /*void Start()
@@ -22,6 +23,12 @@ public class CameraFollow : MonoBehaviour
         }
         
     }*/
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner) 
+            enabled = false;
+    }
 
     // Update is called once per frame
     void FixedUpdate()

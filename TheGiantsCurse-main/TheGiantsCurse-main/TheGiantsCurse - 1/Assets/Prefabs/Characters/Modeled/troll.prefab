@@ -2935,7 +2935,8 @@ MonoBehaviour:
   boulder: {fileID: 5748187089747987225, guid: 449d45862242a57449ec1c347a86f89d, type: 3}
   leapLandingArea: {fileID: 6608151584160924760, guid: dd5b78b9726510a48b912a9210eaa34d, type: 3}
   animator: {fileID: 1027698611376988013}
-  destroySound: {fileID: 0}
+  destroySound: {fileID: 8300000, guid: cdfae31f0b58546d3ac1015effc38f01, type: 3}
+  cameraPrefab: {fileID: 6572922849473397061, guid: 70e621aae58826d4fa6447d037e1ec8d, type: 3}
 --- !u!114 &4885242233412713221
 MonoBehaviour:
   m_ObjectHideFlags: 0

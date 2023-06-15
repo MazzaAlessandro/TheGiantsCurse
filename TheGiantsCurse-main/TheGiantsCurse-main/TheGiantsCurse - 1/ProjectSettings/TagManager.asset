@@ -24,6 +24,7 @@ TagManager:
   - PickaxePickUp
   - Giant
   - MusicGame
+  - tmpCam
   layers:
   - Default
   - TransparentFX

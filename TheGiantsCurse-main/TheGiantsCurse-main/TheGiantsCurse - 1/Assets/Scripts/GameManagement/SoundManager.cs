@@ -76,7 +76,10 @@ public class SoundManager : MonoBehaviour
     public void StopMusic()
     {
         if (playingMusic)
+        {
             musicSource.Stop();
+            playingMusic = false;
+        }  
     }
 
     private AudioClip GetRespectiveClip(Phases phase)
