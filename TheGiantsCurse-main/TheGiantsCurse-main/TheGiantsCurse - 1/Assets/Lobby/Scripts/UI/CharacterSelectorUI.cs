@@ -25,4 +25,8 @@ public class CharacterSelectorUI : MonoBehaviour{
 
         }
     }
+
+    private void Upload(){
+        
+    }
 }

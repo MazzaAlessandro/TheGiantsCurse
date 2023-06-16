@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+        SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void Start()
@@ -203,5 +204,10 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene(17);
+    }
+
+    public void Test()
+    {
+        Debug.Log("You called NMM, this is the client side");
     }
 }

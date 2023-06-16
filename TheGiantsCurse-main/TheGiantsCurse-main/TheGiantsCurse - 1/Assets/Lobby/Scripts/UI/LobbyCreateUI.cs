@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Francesca.UMT.Lobby.Networking;
 
 public class LobbyCreateUI : MonoBehaviour {
 
@@ -15,7 +16,6 @@ public class LobbyCreateUI : MonoBehaviour {
     [SerializeField] private Button publicPrivateButton;
     [SerializeField] private TextMeshProUGUI lobbyNameText;
     [SerializeField] private TextMeshProUGUI publicPrivateText;
-
 
     private string lobbyName;
     private bool isPrivate;
@@ -48,6 +48,10 @@ public class LobbyCreateUI : MonoBehaviour {
         });
 
         Hide();
+    }
+
+    private void Start(){
+        GameNetPortal.Instance.StartHost();
     }
 
     private void UpdateText() {

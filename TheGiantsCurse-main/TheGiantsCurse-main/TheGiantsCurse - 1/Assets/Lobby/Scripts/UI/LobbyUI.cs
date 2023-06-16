@@ -146,7 +146,7 @@ public class LobbyUI : NetworkBehaviour {
             }
         }
 
-        [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(RequireOwnership = true)]
         private void StartGameServerRpc(ServerRpcParams serverRpcParams = default)
         {
             if (serverRpcParams.Receive.SenderClientId != NetworkManager.Singleton.LocalClientId) { return; }

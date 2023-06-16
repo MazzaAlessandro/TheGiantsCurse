@@ -68,9 +68,8 @@ public class LobbyListUI : MonoBehaviour {
         LobbyManager.Instance.RefreshLobbyList();
     }
 
-    private void CreateLobbyButtonClick() {
+    private void CreateLobbyButtonClick(){
         LobbyCreateUI.Instance.Show();
-        GameNetPortal.Instance.StartHost();
     }
 
     private void Hide() {

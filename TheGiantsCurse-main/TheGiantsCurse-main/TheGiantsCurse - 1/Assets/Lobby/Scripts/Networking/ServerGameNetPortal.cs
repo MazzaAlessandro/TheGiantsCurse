@@ -11,7 +11,7 @@ namespace Francesca.UMT.Lobby.Networking
     public class ServerGameNetPortal : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private int maxPlayers = 2;
+        [SerializeField] private int maxPlayers = 5;
 
         public static ServerGameNetPortal Instance => instance;
         private static ServerGameNetPortal instance;
@@ -106,7 +106,7 @@ namespace Francesca.UMT.Lobby.Networking
             NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnect;
             gameNetPortal.OnClientSceneChanged += HandleClientSceneChanged;
 
-            NetworkManager.Singleton.SceneManager.LoadScene("SecondMenu", LoadSceneMode.Single); //SecondMenu
+            //NetworkManager.Singleton.SceneManager.LoadScene("SecondMenu", LoadSceneMode.Single); //SecondMenu
 
             if (NetworkManager.Singleton.IsHost)
             {
@@ -195,5 +195,6 @@ namespace Francesca.UMT.Lobby.Networking
 
             NetworkManager.Singleton.DisconnectClient(clientId);
         }
+
     }
 }
