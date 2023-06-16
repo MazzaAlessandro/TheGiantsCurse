@@ -19,6 +19,17 @@ public class FinalTrackManagement: NetworkBehaviour
     private ulong giantClientId;
     private bool alreadySent = false;
 
+    //This struct is needed to send the list on NetCode since NetCode doesn't support Serializable items as parameters
+    public struct ListToSend : INetworkSerializeByMemcpy
+    {
+        public List<int> pCodes;
+
+        public ListToSend(List<int> list)
+        {
+            this.pCodes = list;
+        }
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -43,15 +54,16 @@ public class FinalTrackManagement: NetworkBehaviour
 
         if (IsServer)
         {
-            SyncPlayerCodesClientRpc(playerCodes);
+            ListToSend list = new ListToSend(playerCodes);
+            SyncPlayerCodesClientRpc(list);
         }
     }
 
     //this is to assure that everyone has the same playerCodes list
     [ClientRpc]
-    private void SyncPlayerCodesClientRpc(List<int> codesList, ClientRpcParams clientRpcParams = default)
+    private void SyncPlayerCodesClientRpc(ListToSend codesList, ClientRpcParams clientRpcParams = default)
     {
-        playerCodes = codesList;
+        playerCodes = codesList.pCodes;
     }
 
     //Assign a spawnpoint to one of the non-giant players
@@ -84,7 +96,7 @@ public class FinalTrackManagement: NetworkBehaviour
         }
     }
 
-
+    //Called by this when the player list is empty
     public void GiantVictory()
     {
         Debug.Log("The last player died");
