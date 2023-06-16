@@ -370,7 +370,8 @@ public class PlayerController : NetworkBehaviour
     void Drop()
     {
         StartCoroutine(StopMovement(0.25f));
-        pickup.transform.position = throwTransform.position;
+        //pickup.transform.position = throwTransform.position;
+        pickup.transform.position = pickupTransform.position;
         pickup.transform.SetParent(null);
         pickup.isKinematic = false;
         pickup.useGravity = true;
