@@ -67,6 +67,7 @@ public class GiantController : NetworkBehaviour
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
             GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+            FinalTrackManagement.instance.AssignGiantCliendId();
         }
         //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
     }

@@ -19,6 +19,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float reloadTime = 1f;
     [SerializeField] private float interactRange = 1f;
 
+    [SerializeField] private int serverCode;
+
     [SerializeField] protected Transform arrowSpawnPoint; 
 
     [SerializeField] protected ArrowBehaviour arrowPrefab;
@@ -635,23 +637,33 @@ public class PlayerController : NetworkBehaviour
         dead = true;
         movementEnabled = false;
         aimingEnabled = false;
-        if(FinalTrackManagement.instance!=null)
-            FinalTrackManagement.instance.PlayerDied(this.gameObject);
+        if (FinalTrackManagement.instance != null)
+        {
+            if (IsOwner)
+            {
+                FinalTrackManagement.instance.PlayerDied(this.gameObject);
+                DeathAction();
+                Debug.Log("RIP");
+            }
+                
+        }
+        
+    }
+
+    public void DeathAction()
+    {
         animator.SetTrigger("Death");
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
         LevelManager.instance.Death();
-        Debug.Log("RIP");
+        Destroy(this.gameObject);
     }
 
     public void Defeat()
     {
         movementEnabled = false;
         aimingEnabled = false;
-        animator.SetTrigger("Death");
-        Destroy(GetComponent<Rigidbody>());
-        Destroy(GetComponent<BoxCollider>());
-        LevelManager.instance.Death();
+        DeathAction();
     }
 
     public void Victory()
@@ -661,13 +673,26 @@ public class PlayerController : NetworkBehaviour
         aimingEnabled = false;
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
-        LevelManager.instance.Victory();
-        Debug.Log("LESS GOOOOO");
+        if (FinalTrackManagement.instance != null)
+        {
+            if (IsOwner)
+            {
+                FinalTrackManagement.instance.PlayerEscaped(this.gameObject);
+                LevelManager.instance.Victory();
+                Debug.Log("LESS GOOOOO");
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     public void EnableMovement()
     {
         movementEnabled = true;
         aimingEnabled = true;
+    }
+
+    public int GetServerCode()
+    {
+        return serverCode;
     }
 }

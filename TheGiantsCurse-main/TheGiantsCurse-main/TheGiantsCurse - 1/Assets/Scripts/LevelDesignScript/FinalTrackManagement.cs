@@ -14,6 +14,10 @@ public class FinalTrackManagement: NetworkBehaviour
     [SerializeField] public GameObject giantSpawnpoint;
 
     public List<GameObject> players;
+    private List<int> playerCodes;
+
+    private ulong giantClientId;
+    private bool alreadySent = false;
 
     private void Awake()
     {
@@ -34,41 +38,186 @@ public class FinalTrackManagement: NetworkBehaviour
         for(int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerController>().SetSpawnpoint(playersSpawnPoints[i]);
+            playerCodes.Add(players[i].GetComponent<PlayerController>().GetHashCode());
         }
-    }
 
-    public void PlayerDied(GameObject player)
-    {
-        players.Remove(player);
-
-        if(players.Count == 0)
+        if (IsServer)
         {
-            Debug.Log("Everyone died, the giant should win");
-            //LevelManager.instance.GiantVictory();
+            SyncPlayerCodesClientRpc(playerCodes);
         }
     }
 
-    public void PlayerEscaped(GameObject escapedPlayer)
+    //this is to assure that everyone has the same playerCodes list
+    [ClientRpc]
+    private void SyncPlayerCodesClientRpc(List<int> codesList, ClientRpcParams clientRpcParams = default)
     {
-        Debug.Log("Someone escaped");
-        foreach(GameObject player in players)
-        {
-            if (!player.Equals(escapedPlayer))
-            {
-                player.GetComponent<PlayerController>().Defeat();
-            }
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        playerCodes = codesList;
     }
 
     //Assign a spawnpoint to one of the non-giant players
     public void AssignSpawn(PlayerController player, int spawn)
     {
         player.SetSpawnpoint(playersSpawnPoints[spawn]);
+    }
+
+    //==============Handling the Giant Victory==============
+
+    //This is called by the GiantController owner, saves the clientId of that player so the Server can later get it immediately 
+    public void AssignGiantCliendId()
+    {
+        Debug.Log("You are the Giant");
+        AssignGiantClientIdServerRpc();
+    }
+
+    //assigns the giantClientId only on the server
+    [ServerRpc(RequireOwnership = false)]
+    private void AssignGiantClientIdServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+
+        if (NetworkManager.ConnectedClients.ContainsKey(clientId))
+        {
+            if (!IsServer)
+                return;
+
+            giantClientId = clientId;
+        }
+    }
+
+
+    public void GiantVictory()
+    {
+        Debug.Log("The last player died");
+        GiantVictoryServerRpc();
+    }
+
+    //Gets the GiantClientId saved previously to send ONLY to the GiantController owner the message 
+    [ServerRpc(RequireOwnership =false)]
+    private void GiantVictoryServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+
+        if (NetworkManager.ConnectedClients.ContainsKey(clientId))
+        {
+            GiantVictoryServerSide();
+        }
+    }
+
+    //Executes the calls, only on server and only if it wasn't already called
+    private void GiantVictoryServerSide()
+    {
+        if (!IsServer || alreadySent)
+            return;
+
+        alreadySent = true;
+
+        ClientRpcParams clientRpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { giantClientId }
+            }
+        };
+
+        GiantVictoryClientRpc(clientRpcParams);
+    }
+
+    //Activates the winning screen for the Giant
+    [ClientRpc]
+    private void GiantVictoryClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        LevelManager.instance.GiantVictory();
+    }
+
+    //==============Handling the death of a Player==============
+
+    //When a player dies, it calls this, getting his hashcode (this allows us to only send an int, making communication faster)
+    public void PlayerDied(GameObject player)
+    {
+        int i = players.IndexOf(player);
+        PlayerDiedServerRpc(i);
+    }
+
+    //The server ensures that the client who sent it exists, then proceeds with the code
+    [ServerRpc(RequireOwnership = false)]
+    private void PlayerDiedServerRpc(int playerHash, ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+
+        if (NetworkManager.ConnectedClients.ContainsKey(clientId))
+        {
+            PlayerDiedServerSide(playerHash);
+        }
+    }
+
+    //Only executed on server, calls the ClientRpc method for all clients
+    private void PlayerDiedServerSide(int playerHash)
+    {
+        if (!IsServer)
+            return;
+
+        PlayerDiedClientRpc(playerHash);
+    }
+
+    //removes the playerHash from the list. If no hashes are left, every player died, so it calls GiantVictory
+    [ClientRpc]
+    public void PlayerDiedClientRpc(int playerHash)
+    {
+        playerCodes.Remove(playerHash);
+
+        if (playerCodes.Count == 0)
+        {
+            //Here I should insert the Giant's win. 
+            Debug.Log("Everyone died, the giant should win");
+            GiantVictory();
+        }
+    }
+
+    //==============Handling the escape of a Player==============
+
+    //This needs to be turned into a rpc behaviour, communicating to all other clients that a certain player escaped
+    public void PlayerEscaped(GameObject escapedPlayer)
+    {
+        Debug.Log("Someone escaped");
+        PlayerEscapedServerRpc();
+    }
+
+    [ServerRpc]
+    void PlayerEscapedServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+
+        if (NetworkManager.ConnectedClients.ContainsKey(clientId))
+        {
+            foreach (var client in NetworkManager.ConnectedClients)
+            {
+                if (client.Value != NetworkManager.ConnectedClients[clientId])
+                {
+                    PlayerEscapedServerSide(client.Key);
+                }
+            }
+        }
+    }
+
+    void PlayerEscapedServerSide(ulong clientId)
+    {
+        if (!IsServer)
+            return;
+
+        ClientRpcParams clientRpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { clientId }
+            }
+        };
+
+        PlayerEscapedClientRpc(clientRpcParams);
+    }
+
+    [ClientRpc]
+    void PlayerEscapedClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        LevelManager.instance.Death();
     }
 }
