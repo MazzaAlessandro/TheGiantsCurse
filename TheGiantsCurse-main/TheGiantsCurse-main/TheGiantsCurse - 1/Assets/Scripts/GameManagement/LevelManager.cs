@@ -17,6 +17,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private CircleTransition circleTransition;
 
+    public GameObject playerToGiant = null;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -121,7 +123,8 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene("FinalTrack");
-        CharacterSwap.instance.Swap(player);
+        //FinalTrackManagement.instance.Swap(player);
+        playerToGiant = player;
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);

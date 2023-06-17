@@ -82,7 +82,8 @@ public class PlayerController : NetworkBehaviour
             cameraInstance = Instantiate(cameraPrefab, null);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-            GameObject.FindWithTag("tmpCam").SetActive(false);
+            if (GameObject.FindWithTag("tmpCam")!=null)
+                GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
         }
             //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
@@ -647,7 +648,8 @@ public class PlayerController : NetworkBehaviour
         cameraInstance = Instantiate(cameraPrefab, null);
         mainCamera = cameraInstance.GetComponentInChildren<Camera>();
         cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-        GameObject.FindWithTag("tmpCam").SetActive(false);
+        if (GameObject.FindWithTag("tmpCam") != null)
+            GameObject.FindWithTag("tmpCam").SetActive(false);
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         //mainCamera = FindObjectOfType<Camera>();
         rb.useGravity = true;

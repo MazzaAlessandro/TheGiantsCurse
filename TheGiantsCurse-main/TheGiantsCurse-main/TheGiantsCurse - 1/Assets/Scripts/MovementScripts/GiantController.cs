@@ -65,7 +65,8 @@ public class GiantController : NetworkBehaviour
             cameraInstance = Instantiate(cameraPrefab, null);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-            GameObject.FindWithTag("tmpCam").SetActive(false);
+            if (GameObject.FindWithTag("tmpCam") != null) 
+                GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
             FinalTrackManagement.instance.AssignGiantCliendId();
         }
@@ -137,6 +138,17 @@ public class GiantController : NetworkBehaviour
             }
             else
                 Debug.Log("Leap is not ready yet");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            cameraInstance = Instantiate(cameraPrefab, null);
+            mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+            cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+            if (GameObject.FindWithTag("tmpCam") != null)
+                GameObject.FindWithTag("tmpCam").SetActive(false);
+            HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+            FinalTrackManagement.instance.AssignGiantCliendId();
         }
     }
 

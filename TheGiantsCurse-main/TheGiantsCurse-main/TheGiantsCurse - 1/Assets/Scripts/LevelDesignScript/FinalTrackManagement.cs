@@ -13,8 +13,10 @@ public class FinalTrackManagement: NetworkBehaviour
     [SerializeField] private GameObject[] playersSpawnPoints;
     [SerializeField] public GameObject giantSpawnpoint;
 
+    public Transform giant;
+
     public List<GameObject> players;
-    private List<int> playerCodes;
+    private List<int> playerCodes = new List<int>();
 
     private ulong giantClientId;
     private bool alreadySent = false;
@@ -45,11 +47,17 @@ public class FinalTrackManagement: NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (LevelManager.instance.playerToGiant != null)
+        {
+            Swap(LevelManager.instance.playerToGiant);
+        }
+
         players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         for(int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerController>().SetSpawnpoint(playersSpawnPoints[i]);
             playerCodes.Add(players[i].GetComponent<PlayerController>().GetServerCode());
+            players[i].GetComponent<PlayerController>().EnterLevel();
         }
 
         if (IsServer)
@@ -57,6 +65,8 @@ public class FinalTrackManagement: NetworkBehaviour
             ListToSend list = new ListToSend(playerCodes);
             SyncPlayerCodesClientRpc(list);
         }
+
+        
     }
 
     //this is to assure that everyone has the same playerCodes list
@@ -64,6 +74,14 @@ public class FinalTrackManagement: NetworkBehaviour
     private void SyncPlayerCodesClientRpc(ListToSend codesList, ClientRpcParams clientRpcParams = default)
     {
         playerCodes = codesList.pCodes;
+    }
+
+    //This disable a specific character and enables the GiantController script for him
+    //It's called before the assignment of the player list, so it should not cause any problem
+    public void Swap(GameObject character)
+    {
+        character.SetActive(false);
+        giant.GetComponent<GiantController>().enabled = true;
     }
 
     //Assign a spawnpoint to one of the non-giant players
@@ -232,4 +250,6 @@ public class FinalTrackManagement: NetworkBehaviour
     {
         LevelManager.instance.Death();
     }
+
+    
 }

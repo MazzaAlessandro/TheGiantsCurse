@@ -56,7 +56,8 @@ public class CallystoController : PlayerController
         cameraInstance = Instantiate(cameraPrefab, null);
         mainCamera = cameraInstance.GetComponentInChildren<Camera>();
         cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-        GameObject.FindWithTag("tmpCam").SetActive(false);
+        if(GameObject.FindWithTag("tmpCam")!=null) 
+            GameObject.FindWithTag("tmpCam").SetActive(false);
         gadget.GetComponent<LanternGadget>().SetGlobalLight(GameObject.FindWithTag("GlobalLight").GetComponent<Light>());
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         //mainCamera = FindObjectOfType<Camera>();
