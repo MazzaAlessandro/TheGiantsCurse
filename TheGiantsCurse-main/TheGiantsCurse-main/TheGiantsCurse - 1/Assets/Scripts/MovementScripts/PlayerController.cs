@@ -40,7 +40,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] protected bool dead;
 
     [SerializeField] protected GameObject spawnPoint;
-    [SerializeField] private GameObject cameraPrefab;
+    [SerializeField] protected GameObject cameraPrefab;
 
     protected Rigidbody rb;
     private Rigidbody pickup;
@@ -78,6 +78,7 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+            Debug.Log("Set up camera");
             cameraInstance = Instantiate(cameraPrefab, null);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
@@ -642,6 +643,7 @@ public class PlayerController : NetworkBehaviour
     protected virtual IEnumerator NewLevel()
     {
         yield return new WaitForSeconds(2f);
+        Debug.Log("Set up camera");
         cameraInstance = Instantiate(cameraPrefab, null);
         mainCamera = cameraInstance.GetComponentInChildren<Camera>();
         cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);

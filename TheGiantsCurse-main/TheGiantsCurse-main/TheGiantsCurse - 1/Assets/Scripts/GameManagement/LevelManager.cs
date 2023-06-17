@@ -121,6 +121,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene("FinalTrack");
+        CharacterSwap.instance.Swap(player);
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);

@@ -49,7 +49,7 @@ public class FinalTrackManagement: NetworkBehaviour
         for(int i = 0; i < players.Count; i++)
         {
             players[i].GetComponent<PlayerController>().SetSpawnpoint(playersSpawnPoints[i]);
-            playerCodes.Add(players[i].GetComponent<PlayerController>().GetHashCode());
+            playerCodes.Add(players[i].GetComponent<PlayerController>().GetServerCode());
         }
 
         if (IsServer)
@@ -152,23 +152,23 @@ public class FinalTrackManagement: NetworkBehaviour
 
     //The server ensures that the client who sent it exists, then proceeds with the code
     [ServerRpc(RequireOwnership = false)]
-    private void PlayerDiedServerRpc(int playerHash, ServerRpcParams serverRpcParams = default)
+    private void PlayerDiedServerRpc(int playerCode, ServerRpcParams serverRpcParams = default)
     {
         var clientId = serverRpcParams.Receive.SenderClientId;
 
         if (NetworkManager.ConnectedClients.ContainsKey(clientId))
         {
-            PlayerDiedServerSide(playerHash);
+            PlayerDiedServerSide(playerCode);
         }
     }
 
     //Only executed on server, calls the ClientRpc method for all clients
-    private void PlayerDiedServerSide(int playerHash)
+    private void PlayerDiedServerSide(int playerCode)
     {
         if (!IsServer)
             return;
 
-        PlayerDiedClientRpc(playerHash);
+        PlayerDiedClientRpc(playerCode);
     }
 
     //removes the playerHash from the list. If no hashes are left, every player died, so it calls GiantVictory
