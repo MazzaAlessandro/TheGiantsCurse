@@ -331,6 +331,7 @@ MonoBehaviour:
   slidingDoorSpeed: 1
   openTime: 5
   animator: {fileID: 0}
+  tickingSound: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
 --- !u!95 &8909107457895819535
 Animator:
   serializedVersion: 5

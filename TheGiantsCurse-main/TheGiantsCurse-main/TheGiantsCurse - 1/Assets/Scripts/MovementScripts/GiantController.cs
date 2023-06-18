@@ -58,6 +58,12 @@ public class GiantController : NetworkBehaviour
         boulderReady = true;
         doingAction = false;
         speed = movementSpeed;
+        this.gameObject.GetComponent<NetworkObject>().Spawn();
+        foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
+        {
+            i.enabled = true;
+        }
+        
     }
 
     public override void OnNetworkSpawn()
@@ -79,6 +85,9 @@ public class GiantController : NetworkBehaviour
                 GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
             FinalTrackManagement.instance.AssignGiantCliendId();
+            Ability1UI.SetFillAmount(0);
+            Ability2UI.SetFillAmount(0);
+            Ability3UI.SetFillAmount(0);
         }
         //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
     }
@@ -108,6 +117,7 @@ public class GiantController : NetworkBehaviour
 
         else if(collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("IceBlock") || collision.gameObject.CompareTag("Torch"))
         {
+            SoundManager.instance.PlayEffect(destroySound);
             Destroy(collision.gameObject);
         }
     }
