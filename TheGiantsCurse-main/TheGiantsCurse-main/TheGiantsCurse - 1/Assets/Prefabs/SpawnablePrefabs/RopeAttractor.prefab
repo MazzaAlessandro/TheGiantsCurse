@@ -61,6 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attractionSpeed: 10
   type: 2
+  pickupSound: {fileID: 8300000, guid: 7cc057bed53baf34799f52aab3c84800, type: 3}
 --- !u!1 &6174593268247954357
 GameObject:
   m_ObjectHideFlags: 0

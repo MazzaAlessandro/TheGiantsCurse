@@ -156,11 +156,27 @@ public class LevelManager : MonoBehaviour
 
     //Spawn the player in the racing phase
     public void Spawn(){
-        if (NetworkManager.Singleton.IsServer){
-            SpawnPlayer();
+        if (playerToGiant != null)
+        {
+            if (NetworkManager.Singleton.IsServer)
+            {
+                SpawnGiantPlayer();
+            }
+            else
+            {
+                SpawnGiantPlayerServerRpc();
+            }
         }
-        else{
-            SpawnPlayerServerRpc();
+        else
+        {
+            if (NetworkManager.Singleton.IsServer)
+            {
+                SpawnPlayer();
+            }
+            else
+            {
+                SpawnPlayerServerRpc();
+            }
         }
     }
 
@@ -174,6 +190,20 @@ public class LevelManager : MonoBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SpawnPlayerServerRpc(){
         SpawnPlayer();
+    }
+
+    //Spawn giant for server
+    public void SpawnGiantPlayer()
+    {
+        //GameObject player = Instantiate(GameManager.instance.currentCharacter.prefab, transform.position, Quaternion.identity);
+        playerToGiant.GetComponent<NetworkObject>().Spawn();
+    }
+
+    //Spawn giant for client
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnGiantPlayerServerRpc()
+    {
+        SpawnGiantPlayer();
     }
 
     public bool IsLastRoom()

@@ -14,6 +14,8 @@ public class HazardEvent : MonoBehaviour
     private CameraShake globalCamera;
     private GameObject[] affectedByWind;
 
+    [SerializeField] private AudioClip windSound;
+
     private Vector3 windDirection;
     
     // Start is called before the first frame update
