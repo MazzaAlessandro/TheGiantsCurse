@@ -59,6 +59,11 @@ public class GiantController : NetworkBehaviour
         doingAction = false;
         speed = movementSpeed;
         this.gameObject.GetComponent<NetworkObject>().Spawn();
+        foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
+        {
+            i.enabled = true;
+        }
+        
     }
 
     public override void OnNetworkSpawn()
