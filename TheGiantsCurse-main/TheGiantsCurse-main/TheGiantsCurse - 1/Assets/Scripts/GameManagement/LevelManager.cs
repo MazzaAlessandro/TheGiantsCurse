@@ -32,13 +32,13 @@ public class LevelManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void Start()
     {
         RoomsSetup();
         SoundManager.instance.PlayMusic(SoundManager.Phases.PUZZLE);
+        NetworkManager.Singleton.SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void RoomsSetup()
@@ -123,6 +123,8 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
+        playerToGiant = player;
+        spawn();
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
@@ -137,18 +139,41 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator FinalLevel()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         HazardEvent.instance.Earthquake();
         yield return new WaitForSeconds(transitionTime);
-
+        spawn();
         circleTransition.CloseBlackScreen();
         yield return new WaitForSeconds(transitionTime);
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
         currentRoom = roomsSequence.Count;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().EnterLevel();
+        player.GetComponent<PlayerController>().EnterLevel();
         yield return new WaitForSeconds(2f);
 
         circleTransition.OpenBlackScreen();
+    }
+
+    //Spawn the player in the racing phase
+    public void spawn(){
+        if (NetworkManager.Singleton.IsServer){
+            spawnPlayer();
+        }
+        else{
+            spawnPlayerServerRpc();
+        }
+    }
+
+    //Spawn for server
+    public void spawnPlayer(){
+        GameObject player = Instantiate(GameManager.instance.currentCharacter.prefab, transform.position, Quaternion.identity);
+        player.GetComponent<NetworkObject>().Spawn();
+    }
+
+    //Spawn for client
+    [ServerRpc]
+    public void spawnPlayerServerRpc(){
+        spawnPlayer();
     }
 
     public bool isLastRoom()
