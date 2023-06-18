@@ -32,13 +32,13 @@ public class LevelManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        NetworkManager.Singleton.SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void Start()
     {
         RoomsSetup();
         SoundManager.instance.PlayMusic(SoundManager.Phases.PUZZLE);
+        NetworkManager.Singleton.SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void RoomsSetup()
