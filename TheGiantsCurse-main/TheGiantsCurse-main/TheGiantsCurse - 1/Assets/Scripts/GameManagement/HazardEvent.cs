@@ -79,6 +79,9 @@ public class HazardEvent : MonoBehaviour
             case 2:
                 Wind();
                 break;
+            default:
+                Darkness();
+                break;
         }
     }
 

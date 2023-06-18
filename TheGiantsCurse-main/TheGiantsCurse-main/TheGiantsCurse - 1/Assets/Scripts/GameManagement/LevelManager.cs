@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
         playerToGiant = player;
-        spawn();
+        Spawn();
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
@@ -142,7 +142,7 @@ public class LevelManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         HazardEvent.instance.Earthquake();
         yield return new WaitForSeconds(transitionTime);
-        spawn();
+        Spawn();
         circleTransition.CloseBlackScreen();
         yield return new WaitForSeconds(transitionTime);
 
@@ -155,28 +155,28 @@ public class LevelManager : MonoBehaviour
     }
 
     //Spawn the player in the racing phase
-    public void spawn(){
+    public void Spawn(){
         if (NetworkManager.Singleton.IsServer){
-            spawnPlayer();
+            SpawnPlayer();
         }
         else{
-            spawnPlayerServerRpc();
+            SpawnPlayerServerRpc();
         }
     }
 
     //Spawn for server
-    public void spawnPlayer(){
+    public void SpawnPlayer(){
         GameObject player = Instantiate(GameManager.instance.currentCharacter.prefab, transform.position, Quaternion.identity);
         player.GetComponent<NetworkObject>().Spawn();
     }
 
     //Spawn for client
-    [ServerRpc]
-    public void spawnPlayerServerRpc(){
-        spawnPlayer();
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnPlayerServerRpc(){
+        SpawnPlayer();
     }
 
-    public bool isLastRoom()
+    public bool IsLastRoom()
     {
         return currentRoom == roomsSequence.Count - 1;
     }
