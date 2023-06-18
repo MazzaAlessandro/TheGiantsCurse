@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
+//The basic script that handles everything about the player. It is overridden to create the various characters (beside the Giant)
 interface IInteractable{
     public void Interact();
 }
@@ -18,6 +19,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float turnSpeed = 720;
     [SerializeField] private float reloadTime = 1f;
     [SerializeField] private float interactRange = 1f;
+
+    [SerializeField] private int serverCode;
 
     [SerializeField] protected Transform arrowSpawnPoint; 
 
@@ -37,7 +40,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] protected bool dead;
 
     [SerializeField] protected GameObject spawnPoint;
-    [SerializeField] private GameObject cameraPrefab;
+    [SerializeField] protected GameObject cameraPrefab;
 
     protected Rigidbody rb;
     private Rigidbody pickup;
@@ -61,6 +64,8 @@ public class PlayerController : NetworkBehaviour
     public Healthbar healthbar;
     public ArrowCounter arrowUI;
 
+    //When spawning on other clients, if it is not the owner of the objectdisables the HUD and disables this
+    //If it's the owner of the object, instantiates his own camera to follow him
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
@@ -73,16 +78,19 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
+            Debug.Log("Set up camera");
             cameraInstance = Instantiate(cameraPrefab, null);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-            GameObject.FindWithTag("tmpCam").SetActive(false);
+            if (GameObject.FindWithTag("tmpCam")!=null)
+                GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
         }
             //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
 
     }
 
+    //Sets up the various booleans and values
     private void Awake()
     {
         health = maxHealth;
@@ -108,6 +116,8 @@ public class PlayerController : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    //Coroutine that enables all movements after a bit of time
+    //movement is locked during spawn to preven player from moving during loading of scenes
     protected IEnumerator MovementEnabler()
     {
         yield return new WaitForSeconds(1.25f);
@@ -117,6 +127,7 @@ public class PlayerController : NetworkBehaviour
         nextLevel = false;
     }
 
+    //Called when a player falls to reset him to a spawnpoint transform
     private void Spawn()
     {       
         Reload();
@@ -128,6 +139,7 @@ public class PlayerController : NetworkBehaviour
         animator.SetBool("isFalling", false);
     }
 
+    //Handles the various interactions with pickups and checkpoints
     public virtual void OnTriggerEnter(Collider coll)
     {
         if (!dead)
@@ -165,7 +177,6 @@ public class PlayerController : NetworkBehaviour
                 }
             }
 
-            //this is only to test the hazards. Ideally they're activated when a certain message reaches the client
             if (coll.CompareTag("Hazard"))
             {
                 HazardEvent.instance.PickRandomEvent();
@@ -175,6 +186,7 @@ public class PlayerController : NetworkBehaviour
         
     }
 
+    // Update is used for getting player input. It may get reworked if needed
     // Update is called once per frame
     private void Update()
     {
@@ -198,7 +210,7 @@ public class PlayerController : NetworkBehaviour
                 UseGadget();
             }
 
-            //testing the final level transition for non-Giant players. This has to be removed
+            //This input is used for testing certain methods during programming, it can be easily removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
                 NetworkMatchManager.instance.Test();
@@ -257,6 +269,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //handles movement speed based on input, it had to be split because we needed to override this on ChasmController
     public virtual void SpeedHandling()
     {
         if (Input.GetMouseButton(1) && aimingEnabled)
@@ -276,6 +289,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //handles the respawn of players
     private IEnumerator FallCoroutine()
     {
         LevelManager.instance.FallTransition();
@@ -284,6 +298,7 @@ public class PlayerController : NetworkBehaviour
         
     }
 
+    //Handles movement inputs. It is in FixedUpdate instead of normal update because FixedUpdate handles physics more accurately
     private void FixedUpdate()
     {
         if (!dead)
@@ -316,6 +331,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //Moves the player to a grappling point
     public virtual void GrappledMovement()
     {
         if (Vector3.Distance(transform.position, movementInput) < 2f)
@@ -332,11 +348,13 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //Calls the Gadget action. It is overridden by ReaperController because it has multiple GadgetActions
     public virtual void UseGadget()
     {
         gadget.GadgetAction();
     }
 
+    //Either interacts with interactable items or pick up explosive barrels
     void Interact()
     {
         Ray r = new Ray(transform.position, transform.forward);
@@ -355,6 +373,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //Make the pickup follow the player
     void Pickup(Rigidbody obj)
     {
         pickup = obj;
@@ -365,10 +384,12 @@ public class PlayerController : NetworkBehaviour
         Debug.Log("Interact with pickup object");
     }
 
+    //Stops the pickup from following the player anymore
     void Drop()
     {
         StartCoroutine(StopMovement(0.25f));
-        pickup.transform.position = throwTransform.position;
+        //pickup.transform.position = throwTransform.position;
+        pickup.transform.position = pickupTransform.position;
         pickup.transform.SetParent(null);
         pickup.isKinematic = false;
         pickup.useGravity = true;
@@ -376,6 +397,7 @@ public class PlayerController : NetworkBehaviour
         holdingItem = false;
     }
 
+    //Places the pickup in front of the player and applies force to it
     void Throw()
     {
         animator.SetTrigger("throw");
@@ -393,6 +415,7 @@ public class PlayerController : NetworkBehaviour
         holdingItem = false;
     }
 
+    //Briefly stops the player from moving. Needed for game balance, to prevent some problems in physics interactions and make animations feel more appropriate
     public virtual IEnumerator StopMovement(float duration)
     {
         movementEnabled = false;
@@ -402,6 +425,7 @@ public class PlayerController : NetworkBehaviour
         aimingEnabled = true;
     }
 
+    //Turns the player in the direction of the movement
     protected void RotateLook()
     {
         if (movementInput != Vector3.zero)
@@ -411,6 +435,8 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+
+    //When aiming, makes the player face the direction of the pointer, additionally it calls ChargeArrow to add force to the arrow
     protected void Aiming()
     {
         ChargeArrow();
@@ -429,6 +455,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //The longer this is called, the stronger the arrow charge (up to a cap value)
     public virtual void ChargeArrow()
     {
         if (!fullCharge)
@@ -443,6 +470,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //If the player is not reloading and if he has arrows left, it calls the Shoot() function
     void ShootArrow()
     {
         if (isReloading)
@@ -460,6 +488,8 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //Instantiates the arrows, adds force to it and the rope if one was picked up
+    //It is overridden by CallystoController, that makes the arrow on fire if the arrow is at maximum charge 
     public virtual void Shoot()
     {
         float finalArrowSpeed = arrowSpeed * arrowCharge;
@@ -488,6 +518,7 @@ public class PlayerController : NetworkBehaviour
             Reload();
     }
 
+    //Prevents the player from shooting continously
     protected void Reload()
     {
         if (isReloading) 
@@ -504,6 +535,7 @@ public class PlayerController : NetworkBehaviour
         isReloading = false;
     }
 
+    //Subtracts health. If health is zero, the player dies
     public virtual void TakeDamage(float damage)
     {
         if (!dead)
@@ -518,6 +550,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    //Makes the player take damage over time for a small duration
     public void TakeFireDamage()
     {
         if (!dead)
@@ -543,18 +576,21 @@ public class PlayerController : NetworkBehaviour
             StartCoroutine(FireDamage());
     }
 
+    //Adds an arrow to the counter
     public void PickUpArrow(int arrows)
     {
         arrowCounter += arrows;
         arrowUI.UpdateArrowNumber(arrowCounter);
     }
 
+    //Adds the rope attribute to the next arrow shot
     public void MakeRoped()
     {
         ropedArrow = true;
         arrowUI.SetRopeImage(true);
     }
 
+    //Set up for the grappled movement
     public virtual void PullTowards(Vector3 destination)
     {
         Debug.Log("You are pulled to: " + destination);
@@ -573,6 +609,7 @@ public class PlayerController : NetworkBehaviour
         return grappled;
     }
 
+    //stops the player for a bit of time, usually called when hit by other players
     public virtual void Stun(float stunDuration)
     {
         if(!dead || !grappled)
@@ -589,11 +626,13 @@ public class PlayerController : NetworkBehaviour
         aimingEnabled = true;
     }
 
+    //Allows the player to update his spawnpoint with a check point
     public void SetSpawnpoint(GameObject spawn)
     {
         spawnPoint = spawn;
     }
 
+    //The next four methods are needed to properly handle the player behaviour on level transition
     public void EnterLevel()
     {
         rb.useGravity = false;
@@ -605,10 +644,12 @@ public class PlayerController : NetworkBehaviour
     protected virtual IEnumerator NewLevel()
     {
         yield return new WaitForSeconds(2f);
+        Debug.Log("Set up camera");
         cameraInstance = Instantiate(cameraPrefab, null);
         mainCamera = cameraInstance.GetComponentInChildren<Camera>();
         cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-        GameObject.FindWithTag("tmpCam").SetActive(false);
+        if (GameObject.FindWithTag("tmpCam") != null)
+            GameObject.FindWithTag("tmpCam").SetActive(false);
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         //mainCamera = FindObjectOfType<Camera>();
         rb.useGravity = true;
@@ -625,35 +666,51 @@ public class PlayerController : NetworkBehaviour
         nextLevel = true;
     }
 
+    //Checks if the player is at max health
     public bool AtMaxHealth()
     {
         return health.Equals(maxHealth);
     }
 
+    //The player dies. If we are in the final track, it signals to the others that he died
     public void Death()
     {
         dead = true;
         movementEnabled = false;
         aimingEnabled = false;
-        if(FinalTrackManagement.instance!=null)
-            FinalTrackManagement.instance.PlayerDied(this.gameObject);
+        if (FinalTrackManagement.instance != null)
+        {
+            if (IsOwner)
+            {
+                FinalTrackManagement.instance.PlayerDied(this.gameObject);
+                DeathAction();
+                Debug.Log("RIP");
+            }
+
+        }
+        else
+            DeathAction();
+        
+    }
+
+    //Handles the player death
+    public void DeathAction()
+    {
         animator.SetTrigger("Death");
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
         LevelManager.instance.Death();
-        Debug.Log("RIP");
+        Destroy(this.gameObject);
     }
 
     public void Defeat()
     {
         movementEnabled = false;
         aimingEnabled = false;
-        animator.SetTrigger("Death");
-        Destroy(GetComponent<Rigidbody>());
-        Destroy(GetComponent<BoxCollider>());
-        LevelManager.instance.Death();
+        DeathAction();
     }
 
+    //Handles player victory, communicating to the others that one player won
     public void Victory()
     {
         dead = true;
@@ -661,13 +718,26 @@ public class PlayerController : NetworkBehaviour
         aimingEnabled = false;
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
-        LevelManager.instance.Victory();
-        Debug.Log("LESS GOOOOO");
+        if (FinalTrackManagement.instance != null)
+        {
+            if (IsOwner)
+            {
+                FinalTrackManagement.instance.PlayerEscaped(this.gameObject);
+                LevelManager.instance.Victory();
+                Debug.Log("LESS GOOOOO");
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     public void EnableMovement()
     {
         movementEnabled = true;
         aimingEnabled = true;
+    }
+
+    public int GetServerCode()
+    {
+        return serverCode;
     }
 }

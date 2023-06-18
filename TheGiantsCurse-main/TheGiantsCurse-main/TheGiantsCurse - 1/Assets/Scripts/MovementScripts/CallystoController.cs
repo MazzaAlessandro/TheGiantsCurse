@@ -50,10 +50,17 @@ public class CallystoController : PlayerController
 
     protected override IEnumerator NewLevel()
     {
+        
         yield return new WaitForSeconds(2f);
-        transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
-        mainCamera = FindObjectOfType<Camera>();
+        Debug.Log("Set up camera");
+        cameraInstance = Instantiate(cameraPrefab, null);
+        mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+        cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+        if(GameObject.FindWithTag("tmpCam")!=null) 
+            GameObject.FindWithTag("tmpCam").SetActive(false);
         gadget.GetComponent<LanternGadget>().SetGlobalLight(GameObject.FindWithTag("GlobalLight").GetComponent<Light>());
+        transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        //mainCamera = FindObjectOfType<Camera>();
         rb.useGravity = true;
         StartCoroutine(MovementEnabler());
     }

@@ -18,6 +18,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private CircleTransition circleTransition;
 
+    public GameObject playerToGiant = null;
+
     private void Awake()
     {
         if (instance != null && instance != this)
