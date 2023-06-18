@@ -123,6 +123,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
+        playerToGiant = player;
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
