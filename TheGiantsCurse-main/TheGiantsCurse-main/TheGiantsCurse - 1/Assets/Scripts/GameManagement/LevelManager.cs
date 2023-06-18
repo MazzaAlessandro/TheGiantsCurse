@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
+        NetworkManager.Singleton.SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void Start()
@@ -124,6 +124,7 @@ public class LevelManager : MonoBehaviour
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
         playerToGiant = player;
+        //player.GetComponent<NetworkObject>().Spawn();
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
@@ -138,6 +139,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator FinalLevel()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         HazardEvent.instance.Earthquake();
         yield return new WaitForSeconds(transitionTime);
 
@@ -146,7 +148,8 @@ public class LevelManager : MonoBehaviour
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
         currentRoom = roomsSequence.Count;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().EnterLevel();
+        player.GetComponent<PlayerController>().EnterLevel();
+        player.GetComponent<NetworkObject>().Spawn();
         yield return new WaitForSeconds(2f);
 
         circleTransition.OpenBlackScreen();

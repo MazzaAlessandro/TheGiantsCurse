@@ -58,6 +58,7 @@ public class GiantController : NetworkBehaviour
         boulderReady = true;
         doingAction = false;
         speed = movementSpeed;
+        this.gameObject.GetComponent<NetworkObject>().Spawn();
     }
 
     public override void OnNetworkSpawn()
@@ -79,6 +80,9 @@ public class GiantController : NetworkBehaviour
                 GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
             FinalTrackManagement.instance.AssignGiantCliendId();
+            Ability1UI.SetFillAmount(0);
+            Ability2UI.SetFillAmount(0);
+            Ability3UI.SetFillAmount(0);
         }
         //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
     }
