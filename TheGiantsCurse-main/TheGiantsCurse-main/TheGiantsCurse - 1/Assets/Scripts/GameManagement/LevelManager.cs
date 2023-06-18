@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
         playerToGiant = player;
-        //player.GetComponent<NetworkObject>().Spawn();
+        spawn();
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
@@ -142,17 +142,38 @@ public class LevelManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         HazardEvent.instance.Earthquake();
         yield return new WaitForSeconds(transitionTime);
-
+        spawn();
         circleTransition.CloseBlackScreen();
         yield return new WaitForSeconds(transitionTime);
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
         currentRoom = roomsSequence.Count;
         player.GetComponent<PlayerController>().EnterLevel();
-        player.GetComponent<NetworkObject>().Spawn();
         yield return new WaitForSeconds(2f);
 
         circleTransition.OpenBlackScreen();
+    }
+
+    //Spawn the player in the racing phase
+    public void spawn(){
+        if (NetworkManager.Singleton.IsServer){
+            spawnPlayer();
+        }
+        else{
+            spawnPlayerServerRpc();
+        }
+    }
+
+    //Spawn for server
+    public void spawnPlayer(){
+        GameObject player = Instantiate(GameManager.instance.currentCharacter.prefab, transform.position, Quaternion.identity);
+        player.GetComponent<NetworkObject>().Spawn();
+    }
+
+    //Spawn for client
+    [ServerRpc]
+    public void spawnPlayerServerRpc(){
+        spawnPlayer();
     }
 
     public bool isLastRoom()
