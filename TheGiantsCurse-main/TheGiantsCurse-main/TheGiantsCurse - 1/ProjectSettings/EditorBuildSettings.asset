@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FirstMenu.unity
     guid: 35668a93c3f0f294392a065e00be4569
-  - enabled: 1
-    path: Assets/Scenes/SecondMenu.unity
-    guid: eac6a98319e9ee749a38d3407325a36a
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/OptionMenu.unity
     guid: 7e9226ebb6683f24aa553537a81242cb
@@ -59,4 +59,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VictoryClipGiant.unity
     guid: f48468fdb4676db409153f8535b1e030
+  - enabled: 1
+    path: Assets/Scenes/MatchManager.unity
+    guid: c69db73b4fbe3d74bbb62529e1c2ffd3
   m_configObjects: {}

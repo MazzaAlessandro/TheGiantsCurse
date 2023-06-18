@@ -51,6 +51,23 @@ public class HazardEvent : MonoBehaviour
     {
         Debug.Log("event starts");
         int hazard = Random.Range(0,3);
+        NetworkMatchManager.instance.HazardCalled(hazard);
+        /*switch (hazard)
+        {
+            case 0:
+                Darkness();
+                break;
+            case 1:
+                Earthquake();
+                break;
+            case 2:
+                Wind();
+                break;
+        }*/
+    }
+
+    public void ExecuteHazardEvent(int hazard)
+    {
         switch (hazard)
         {
             case 0:

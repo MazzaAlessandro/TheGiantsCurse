@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 //This should be shared between all players, one single FinalTrackManagement in all the lobby
 //Either that or this needs to basically be redone
-public class FinalTrackManagement: MonoBehaviour
+public class FinalTrackManagement: NetworkBehaviour
 {
     public static FinalTrackManagement instance;
 
@@ -22,7 +23,7 @@ public class FinalTrackManagement: MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(this);
         }
     }
 
