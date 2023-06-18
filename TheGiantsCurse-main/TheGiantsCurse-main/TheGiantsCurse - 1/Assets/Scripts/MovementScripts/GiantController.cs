@@ -117,6 +117,7 @@ public class GiantController : NetworkBehaviour
 
         else if(collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("IceBlock") || collision.gameObject.CompareTag("Torch"))
         {
+            SoundManager.instance.PlayEffect(destroySound);
             Destroy(collision.gameObject);
         }
     }

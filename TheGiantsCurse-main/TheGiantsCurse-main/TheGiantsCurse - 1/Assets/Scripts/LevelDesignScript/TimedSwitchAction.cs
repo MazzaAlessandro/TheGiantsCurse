@@ -87,7 +87,7 @@ public class TimedSwitchAction : MonoBehaviour, IInteractable
         {
             isActive = true;
             animator.SetTrigger("SwitchOn");
-            SoundManager.instance.PlayMultipleTimes(tickingSound, tickingSound.length, 5);
+            SoundManager.instance.PlayMultipleTimes(tickingSound, tickingSound.length, 6);
         }
             
     }

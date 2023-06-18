@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BoulderBehaviour : MonoBehaviour
 {
+    [SerializeField] private AudioClip destroySound;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -25,6 +26,7 @@ public class BoulderBehaviour : MonoBehaviour
 
         else if (collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("IceBlock") || collision.gameObject.CompareTag("Torch"))
         {
+            SoundManager.instance.PlayEffect(destroySound);
             Destroy(collision.gameObject);
         }
     }
