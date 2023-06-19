@@ -40,11 +40,6 @@ public class MoonriseController : PlayerController
         }
     }
 
-    public override void UseGadget()
-    {
-        base.UseGadget();
-    }
-
     public void SetMovement(bool active)
     {
         movementEnabled = active;

@@ -37,6 +37,10 @@ public class GiantController : NetworkBehaviour
     protected GameObject cameraInstance;
     private Camera mainCamera;
 
+    public GadgetUIBehaviour Ability1UI;
+    public GadgetUIBehaviour Ability2UI;
+    public GadgetUIBehaviour Ability3UI;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -54,19 +58,36 @@ public class GiantController : NetworkBehaviour
         boulderReady = true;
         doingAction = false;
         speed = movementSpeed;
+        this.gameObject.GetComponent<NetworkObject>().Spawn();
+        foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
+        {
+            i.enabled = true;
+        }
+        
     }
 
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)
-            Destroy(this);
+        {
+            foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
+            {
+                i.enabled = false;
+            }
+            enabled = false;
+        }
         else
         {
             cameraInstance = Instantiate(cameraPrefab, null);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-            GameObject.FindWithTag("tmpCam").SetActive(false);
+            if (GameObject.FindWithTag("tmpCam") != null) 
+                GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+            FinalTrackManagement.instance.AssignGiantCliendId();
+            Ability1UI.SetFillAmount(0);
+            Ability2UI.SetFillAmount(0);
+            Ability3UI.SetFillAmount(0);
         }
         //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
     }
@@ -96,6 +117,7 @@ public class GiantController : NetworkBehaviour
 
         else if(collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("IceBlock") || collision.gameObject.CompareTag("Torch"))
         {
+            SoundManager.instance.PlayEffect(destroySound);
             Destroy(collision.gameObject);
         }
     }
@@ -137,6 +159,20 @@ public class GiantController : NetworkBehaviour
             else
                 Debug.Log("Leap is not ready yet");
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            cameraInstance = Instantiate(cameraPrefab, null);
+            mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+            cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+            if (GameObject.FindWithTag("tmpCam") != null)
+                GameObject.FindWithTag("tmpCam").SetActive(false);
+            HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+            FinalTrackManagement.instance.AssignGiantCliendId();
+            Ability1UI.SetFillAmount(0);
+            Ability2UI.SetFillAmount(0);
+            Ability3UI.SetFillAmount(0);
+        }
     }
 
     
@@ -171,6 +207,7 @@ public class GiantController : NetworkBehaviour
     }
     private void ClubAttack()
     {
+        Ability1UI.SetFillAmount(1);
         Debug.Log("Swing the club");
         movementEnabled = false;
         rotationEnabled = false;
@@ -188,6 +225,7 @@ public class GiantController : NetworkBehaviour
         rotationEnabled = true;
         doingAction = false;
         club.SetActive(false);
+        Ability1UI.Cooldown(clubCooldown);
         StartCoroutine(ClubRecharge());
     } 
 
@@ -208,6 +246,8 @@ public class GiantController : NetworkBehaviour
 
     private IEnumerator Jump()
     {
+        Ability2UI.SetFillAmount(1);
+
         movementEnabled = false;
         rotationEnabled = false;
 
@@ -280,6 +320,7 @@ public class GiantController : NetworkBehaviour
         Destroy(leapLandingInstance);
         Debug.Log("You should land here");
         doingAction = false;
+        Ability2UI.Cooldown(leapCooldown);
         StartCoroutine(LeapRecharge());
     }
 
@@ -323,6 +364,7 @@ public class GiantController : NetworkBehaviour
         boulderInstance.transform.SetParent(null);
         boulderInstance.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * boulderSpeed, ForceMode.Impulse);
         boulderInstance.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right * 5, ForceMode.Impulse);
+        Ability3UI.SetFillAmount(1);
         StartCoroutine(BoulderTravel());
     }
 
@@ -334,6 +376,7 @@ public class GiantController : NetworkBehaviour
         doingAction = false;
         yield return new WaitForSeconds(4f);
         Destroy(boulderInstance);
+        Ability3UI.Cooldown(boulderCooldown);
         StartCoroutine(BoulderRecharge());
     }
 

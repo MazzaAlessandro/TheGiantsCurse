@@ -47,9 +47,10 @@ public class FinalTrackManagement: NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (LevelManager.instance.playerToGiant != null)
         {
-            Swap(LevelManager.instance.playerToGiant);
+            //Swap(LevelManager.instance.playerToGiant);
         }
 
         players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
@@ -82,6 +83,7 @@ public class FinalTrackManagement: NetworkBehaviour
     {
         character.SetActive(false);
         giant.GetComponent<GiantController>().enabled = true;
+        giant.GetComponent<NetworkObject>().Spawn();
     }
 
     //Assign a spawnpoint to one of the non-giant players

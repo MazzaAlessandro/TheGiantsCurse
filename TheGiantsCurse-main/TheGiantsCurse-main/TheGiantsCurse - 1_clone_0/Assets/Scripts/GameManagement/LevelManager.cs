@@ -18,6 +18,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private CircleTransition circleTransition;
 
+    public GameObject playerToGiant = null;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -30,13 +32,13 @@ public class LevelManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void Start()
     {
         RoomsSetup();
         SoundManager.instance.PlayMusic(SoundManager.Phases.PUZZLE);
+        NetworkManager.Singleton.SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void RoomsSetup()
@@ -121,6 +123,8 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
+        playerToGiant = player;
+        Spawn();
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
@@ -135,21 +139,74 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator FinalLevel()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         HazardEvent.instance.Earthquake();
         yield return new WaitForSeconds(transitionTime);
-
+        Spawn();
         circleTransition.CloseBlackScreen();
         yield return new WaitForSeconds(transitionTime);
 
         NetworkManager.Singleton.SceneManager.LoadScene("FinalTrack", LoadSceneMode.Single);
         currentRoom = roomsSequence.Count;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().EnterLevel();
+        player.GetComponent<PlayerController>().EnterLevel();
         yield return new WaitForSeconds(2f);
 
         circleTransition.OpenBlackScreen();
     }
 
-    public bool isLastRoom()
+    //Spawn the player in the racing phase
+    public void Spawn(){
+        if (playerToGiant != null)
+        {
+            if (NetworkManager.Singleton.IsServer)
+            {
+                SpawnGiantPlayer();
+            }
+            else
+            {
+                SpawnGiantPlayerServerRpc();
+            }
+        }
+        else
+        {
+            if (NetworkManager.Singleton.IsServer)
+            {
+                SpawnPlayer();
+            }
+            else
+            {
+                SpawnPlayerServerRpc();
+            }
+        }
+    }
+
+    //Spawn for server
+    public void SpawnPlayer(){
+        GameObject player = Instantiate(GameManager.instance.currentCharacter.prefab, transform.position, Quaternion.identity);
+        player.GetComponent<NetworkObject>().Spawn();
+    }
+
+    //Spawn for client
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnPlayerServerRpc(){
+        SpawnPlayer();
+    }
+
+    //Spawn giant for server
+    public void SpawnGiantPlayer()
+    {
+        //GameObject player = Instantiate(GameManager.instance.currentCharacter.prefab, transform.position, Quaternion.identity);
+        playerToGiant.GetComponent<NetworkObject>().Spawn();
+    }
+
+    //Spawn giant for client
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnGiantPlayerServerRpc()
+    {
+        SpawnGiantPlayer();
+    }
+
+    public bool IsLastRoom()
     {
         return currentRoom == roomsSequence.Count - 1;
     }

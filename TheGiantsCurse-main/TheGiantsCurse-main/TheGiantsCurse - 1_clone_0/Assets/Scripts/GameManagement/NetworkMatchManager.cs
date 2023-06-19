@@ -120,6 +120,7 @@ public class NetworkMatchManager : NetworkBehaviour
     [ClientRpc]
     void HazardClientRpc(int hazard, ClientRpcParams clientRpcParams = default)
     {
+        Debug.Log("Call hazard number: " + hazard);
         HazardEvent.instance.ExecuteHazardEvent(hazard);
     }
 

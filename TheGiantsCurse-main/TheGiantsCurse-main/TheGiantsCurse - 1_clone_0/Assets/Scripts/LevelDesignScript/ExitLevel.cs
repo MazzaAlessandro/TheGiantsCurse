@@ -12,7 +12,7 @@ public class ExitLevel : MonoBehaviour
     {
         try
         {
-            if (LevelManager.instance.isLastRoom())
+            if (LevelManager.instance.IsLastRoom())
                 isFinalRoom = true;
         }
         catch (Exception e)

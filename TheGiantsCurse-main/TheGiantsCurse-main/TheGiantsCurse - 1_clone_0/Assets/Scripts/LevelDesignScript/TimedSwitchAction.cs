@@ -21,6 +21,8 @@ public class TimedSwitchAction : MonoBehaviour, IInteractable
     private Vector3 origin;
     private Vector3 destination;
 
+    [SerializeField] private AudioClip tickingSound;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -85,6 +87,7 @@ public class TimedSwitchAction : MonoBehaviour, IInteractable
         {
             isActive = true;
             animator.SetTrigger("SwitchOn");
+            SoundManager.instance.PlayMultipleTimes(tickingSound, tickingSound.length, 6);
         }
             
     }
