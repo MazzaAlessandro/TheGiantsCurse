@@ -17,7 +17,7 @@ public class EditPlayerName : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI playerNameText;
 
 
-    private string playerName = "Code Monkey";
+    private string playerName = "Insert your name here";
 
 
     private void Awake() {
