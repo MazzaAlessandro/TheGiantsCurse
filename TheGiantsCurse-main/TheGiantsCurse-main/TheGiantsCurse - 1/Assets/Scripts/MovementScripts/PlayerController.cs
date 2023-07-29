@@ -292,7 +292,8 @@ public class PlayerController : NetworkBehaviour
     //handles the respawn of players
     private IEnumerator FallCoroutine()
     {
-        LevelManager.instance.FallTransition();
+        //LevelManager.instance.FallTransition();
+        TransitionHandler.instance.CloseAndOpen(1.5f);
         yield return new WaitForSeconds(1f);
         Spawn();
         

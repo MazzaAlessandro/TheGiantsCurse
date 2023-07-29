@@ -17,6 +17,7 @@ public class LevelGenerator : MonoBehaviour
     private GameObject prevRoomExit;
     private GameObject nextSpawnPoint;
 
+    private string seed = "";
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,6 +34,8 @@ public class LevelGenerator : MonoBehaviour
             roomsSequence = new List<int>();
             tmpRoomsSet = new List<int> { 0, 1, 2, 3, 4, 5, 6 };
 
+            seed += "|";
+
             for (int i = 0; i < 4; i++)
             {
                 cursor = UnityEngine.Random.Range(0, tmpRoomsSet.Count);
@@ -44,8 +47,13 @@ public class LevelGenerator : MonoBehaviour
                 nextSpawnPoint = Helper.FindGameObjectInChildWithTag(roomInstance, "Respawn");
                 prevRoomExit.GetComponent<ExitLevel>().SetNextRoomSpawn(nextSpawnPoint);
                 prevRoomExit = Helper.FindGameObjectInChildWithTag(roomInstance, "Exit");
+                if (i == 3)
+                    prevRoomExit.GetComponent<ExitLevel>().MakeFinalRoom();
+                seed += roomsSequence[i];
             }
         }
+
+        Debug.Log(seed);
     }
 
     // Update is called once per frame

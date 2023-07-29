@@ -39,6 +39,7 @@ public class ExitLevel : MonoBehaviour
         {
             if (!other.gameObject.GetComponent<PlayerController>().CanExit())
             {
+                TransitionHandler.instance.CloseAndOpen(2f);
                 other.gameObject.GetComponent<PlayerController>().TurnOffExit();
                 other.gameObject.GetComponent<PlayerController>().EnterLevel();
                 if (isFinalRoom)
@@ -67,6 +68,6 @@ public class ExitLevel : MonoBehaviour
     private void EndReached(GameObject player)
     {
         Debug.Log("The Player has reached the end of the sequence");
-        LevelManager.instance.LastRoomFinished(player);
+        //LevelManager.instance.LastRoomFinished(player);
     }
 }
