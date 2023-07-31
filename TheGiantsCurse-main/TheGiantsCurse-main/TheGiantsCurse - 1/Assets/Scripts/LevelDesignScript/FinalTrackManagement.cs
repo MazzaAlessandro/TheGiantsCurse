@@ -48,7 +48,7 @@ public class FinalTrackManagement: NetworkBehaviour
     void Start()
     {
 
-        if (LevelManager.instance.playerToGiant != null)
+        /*if (LevelManager.instance.playerToGiant != null)
         {
             //Swap(LevelManager.instance.playerToGiant);
         }
@@ -65,7 +65,7 @@ public class FinalTrackManagement: NetworkBehaviour
         {
             ListToSend list = new ListToSend(playerCodes);
             SyncPlayerCodesClientRpc(list);
-        }
+        }*/
 
         
     }
@@ -83,6 +83,7 @@ public class FinalTrackManagement: NetworkBehaviour
     {
         character.SetActive(false);
         giant.GetComponent<GiantController>().enabled = true;
+        giant.GetComponent<GiantController>().LocalCameraSetup();
         giant.GetComponent<NetworkObject>().Spawn();
     }
 

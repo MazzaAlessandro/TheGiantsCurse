@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,7 @@ public class LevelGenerator : MonoBehaviour
 {
     private List<int> tmpRoomsSet = new List<int> { 0, 1, 2, 3, 4, 5, 6 };
     private List<int> roomsSequence;
-
-    //public List<List<Transform>> roomsPositions = new List<List<Transform>>(); 
+ 
     [SerializeField] private List<GameObject> roomsPrefabs;
     [SerializeField] private List<Transform> roomsLocations;
 
@@ -18,7 +18,11 @@ public class LevelGenerator : MonoBehaviour
     private GameObject nextSpawnPoint;
 
     private string seed = "";
-    // Start is called before the first frame update
+
+    //This is a LOCAL version of the process. In the final prototype, in Awake only the server starts the RoomSetup
+    //At the end of RoomSetup, the server sends the seed to all clients with an rcp
+    //All clients generate the rooms with SeedParser
+
     void Awake()
     {
         RoomsSetup(5);
@@ -34,31 +38,61 @@ public class LevelGenerator : MonoBehaviour
             roomsSequence = new List<int>();
             tmpRoomsSet = new List<int> { 0, 1, 2, 3, 4, 5, 6 };
 
-            seed += "|";
-
             for (int i = 0; i < 4; i++)
             {
                 cursor = UnityEngine.Random.Range(0, tmpRoomsSet.Count);
                 roomsSequence.Add(tmpRoomsSet[cursor]);
                 tmpRoomsSet.RemoveAt(cursor);
-                if (i == 0)
-                    prevRoomExit = initialExit;
-                roomInstance = Instantiate(roomsPrefabs[roomsSequence[i]], roomsLocations[i + 4 * j]);
-                nextSpawnPoint = Helper.FindGameObjectInChildWithTag(roomInstance, "Respawn");
-                prevRoomExit.GetComponent<ExitLevel>().SetNextRoomSpawn(nextSpawnPoint);
-                prevRoomExit = Helper.FindGameObjectInChildWithTag(roomInstance, "Exit");
-                if (i == 3)
-                    prevRoomExit.GetComponent<ExitLevel>().MakeFinalRoom();
+                
                 seed += roomsSequence[i];
+                if (i < 3)
+                    seed += ".";
             }
+
+            if(j < numOfPlayers - 1)
+                seed += "|";
+
         }
 
         Debug.Log(seed);
+
+        SeedParser(seed);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SeedParser(string seed)
     {
-        
+        string[] columns = seed.Split("|");
+        string[] rooms;
+
+        int tmp;
+
+        for(int j = 0; j < columns.Length; j++)
+        {
+            Debug.Log(columns[j]);
+
+            rooms = columns[j].Split(".");
+            for (int i = 0; i < rooms.Length; i++)
+            {
+                Debug.Log(rooms[i]);
+
+                tmp = Int32.Parse(rooms[i]);
+
+                roomInstance = Instantiate(roomsPrefabs[tmp], roomsLocations[i + 4 * j]);
+                nextSpawnPoint = Helper.FindGameObjectInChildWithTag(roomInstance, "Respawn");
+
+                if (i == 0)
+                {
+                    initialExit.GetComponent<FirstExit>().nextRoomSpawnpoints.Add(nextSpawnPoint);
+                }
+                else
+                {
+                    prevRoomExit.GetComponent<ExitLevel>().SetNextRoomSpawn(nextSpawnPoint);
+                }
+                prevRoomExit = Helper.FindGameObjectInChildWithTag(roomInstance, "Exit");
+                if (i == 3)
+                    prevRoomExit.GetComponent<ExitLevel>().MakeFinalRoom();
+            }
+        }
+
     }
 }

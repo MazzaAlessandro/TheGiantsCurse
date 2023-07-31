@@ -58,16 +58,27 @@ public class ExitLevel : MonoBehaviour
         player.GetComponent<PlayerController>().EnterLevel();
     }
 
-    private void CompleteLevel()
+    /*private void CompleteLevel()
     {
         Debug.Log("The Player has reached the end of the level");
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
         LevelManager.instance.NextLevel();
-    }
+    }*/
 
+
+    //Here it should initiate a sequence that swaps the player with the Giant and moves all others to the final track
+    //This is wrong rn, it takes this player to the final track
     private void EndReached(GameObject player)
     {
         Debug.Log("The Player has reached the end of the sequence");
+        //wrong version
+        //FinalTrackManagement.instance.AssignSpawn(player.GetComponent<PlayerController>(), player.GetComponent<PlayerController>().playerCode);
+        //player.GetComponent<PlayerController>().EnterLevel();
+
+        //v1.0
         //LevelManager.instance.LastRoomFinished(player);
+
+        //v2.0
+        FinalTrackManagement.instance.Swap(player);
     }
 }

@@ -66,6 +66,15 @@ public class GiantController : NetworkBehaviour
         
     }
 
+    public void LocalCameraSetup()
+    {
+        cameraInstance = Instantiate(cameraPrefab, null);
+        mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+        cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+        //GameObject.FindWithTag("tmpCam").SetActive(false);
+        HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+    }
+
     public override void OnNetworkSpawn()
     {
         if (!IsOwner)

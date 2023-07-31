@@ -21,6 +21,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float interactRange = 1f;
 
     [SerializeField] private int serverCode;
+    [SerializeField] public int playerCode;
 
     [SerializeField] protected Transform arrowSpawnPoint; 
 
@@ -213,7 +214,8 @@ public class PlayerController : NetworkBehaviour
             //This input is used for testing certain methods during programming, it can be easily removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                NetworkMatchManager.instance.Test();
+                MoveToFinalTrack();
+                //NetworkMatchManager.instance.Test();
                 //LevelManager.instance.LoadFinalLevel();
                 //HazardEvent.instance.Earthquake();
                 //Death();
@@ -740,5 +742,12 @@ public class PlayerController : NetworkBehaviour
     public int GetServerCode()
     {
         return serverCode;
+    }
+
+    public void MoveToFinalTrack()
+    {
+        FinalTrackManagement.instance.AssignSpawn(this, playerCode);
+        TransitionHandler.instance.CloseAndOpen(2f);
+        EnterLevel();
     }
 }
