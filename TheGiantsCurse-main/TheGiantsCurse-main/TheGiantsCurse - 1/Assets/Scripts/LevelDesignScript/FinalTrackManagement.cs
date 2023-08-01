@@ -21,6 +21,9 @@ public class FinalTrackManagement: NetworkBehaviour
     private ulong giantClientId;
     private bool alreadySent = false;
 
+    private int playersInBoulderArea;
+    public bool activeBoulderArea = false;
+
     //This struct is needed to send the list on NetCode since NetCode doesn't support Serializable items as parameters
     public struct ListToSend : INetworkSerializeByMemcpy
     {
@@ -70,6 +73,23 @@ public class FinalTrackManagement: NetworkBehaviour
         
     }
 
+    public void PlayerEnterArea()
+    {
+        playersInBoulderArea++;
+        if (playersInBoulderArea > 0)
+            activeBoulderArea = true;
+    }
+
+    public void PlayerExitArea()
+    {
+        playersInBoulderArea--;
+        if(playersInBoulderArea < 1)
+        {
+            playersInBoulderArea = 0;
+            activeBoulderArea = false;
+        }
+    }
+
     //this is to assure that everyone has the same playerCodes list
     [ClientRpc]
     private void SyncPlayerCodesClientRpc(ListToSend codesList, ClientRpcParams clientRpcParams = default)
@@ -84,7 +104,7 @@ public class FinalTrackManagement: NetworkBehaviour
         character.SetActive(false);
         giant.GetComponent<GiantController>().enabled = true;
         giant.GetComponent<GiantController>().LocalCameraSetup();
-        giant.GetComponent<NetworkObject>().Spawn();
+        //giant.GetComponent<NetworkObject>().Spawn();
     }
 
     //Assign a spawnpoint to one of the non-giant players

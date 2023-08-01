@@ -37,4 +37,9 @@ public class TransitionHandler : MonoBehaviour
     {
         circleTransition.OpenBlackScreen();
     }
+
+    public void Close()
+    {
+        circleTransition.CloseBlackScreen();
+    }
 }

@@ -39,7 +39,6 @@ public class ExitLevel : MonoBehaviour
         {
             if (!other.gameObject.GetComponent<PlayerController>().CanExit())
             {
-                TransitionHandler.instance.CloseAndOpen(2f);
                 other.gameObject.GetComponent<PlayerController>().TurnOffExit();
                 other.gameObject.GetComponent<PlayerController>().EnterLevel();
                 if (isFinalRoom)
@@ -54,6 +53,7 @@ public class ExitLevel : MonoBehaviour
     private void CompleteLevel(GameObject player)
     {
         Debug.Log("New version of the exit");
+        TransitionHandler.instance.CloseAndOpen(2f);
         player.GetComponent<PlayerController>().SetSpawnpoint(nextRoomSpawnpoint);
         player.GetComponent<PlayerController>().EnterLevel();
     }
@@ -67,18 +67,28 @@ public class ExitLevel : MonoBehaviour
 
 
     //Here it should initiate a sequence that swaps the player with the Giant and moves all others to the final track
-    //This is wrong rn, it takes this player to the final track
     private void EndReached(GameObject player)
     {
         Debug.Log("The Player has reached the end of the sequence");
-        //wrong version
-        //FinalTrackManagement.instance.AssignSpawn(player.GetComponent<PlayerController>(), player.GetComponent<PlayerController>().playerCode);
-        //player.GetComponent<PlayerController>().EnterLevel();
-
         //v1.0
         //LevelManager.instance.LastRoomFinished(player);
 
         //v2.0
+        StartCoroutine(ChangePhaseCoroutine(player));
+    }
+
+    private IEnumerator ChangePhaseCoroutine(GameObject player)
+    {
+        HazardEvent.instance.Earthquake();
+        yield return new WaitForSeconds(1f);
+
+        TransitionHandler.instance.Close();
+        yield return new WaitForSeconds(1f);
+
         FinalTrackManagement.instance.Swap(player);
+        yield return new WaitForSeconds(2f);
+
+        SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
+        TransitionHandler.instance.Open();
     }
 }

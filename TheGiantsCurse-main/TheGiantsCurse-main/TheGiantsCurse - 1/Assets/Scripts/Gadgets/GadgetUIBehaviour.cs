@@ -23,6 +23,11 @@ public class GadgetUIBehaviour : MonoBehaviour
         }
     }
 
+    public void ReduceCooldown(float amount)
+    {
+        cooldown.fillAmount -= 1 / lenght * amount;
+    }
+
     public void SetFillAmount(float amount)
     {
         cooldown.fillAmount = amount;

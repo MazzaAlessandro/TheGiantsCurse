@@ -169,6 +169,12 @@ public class PlayerController : NetworkBehaviour
                 Destroy(coll.gameObject);
             }
 
+            if (coll.CompareTag("Cooldown"))
+            {
+                gadget.ReduceCooldown(10f);
+                Destroy(coll.gameObject);
+            }
+
             if (coll.CompareTag("Checkpoint"))
             {
                 if (spawnPoint != coll.gameObject)

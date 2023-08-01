@@ -47,5 +47,5 @@ MonoBehaviour:
   gadgetUI: {fileID: 0}
   grenadePrefab: {fileID: 2188943435603485458, guid: f22e92fcb48a43e46a9a685316848e77, type: 3}
   grenadeSpeed: 16
-  cooldown: 15
+  cooldown: 50
   throwSound: {fileID: 8300000, guid: 8ad8e1b7041dd394aa92aad52c8636e5, type: 3}

@@ -5,7 +5,8 @@ using UnityEngine;
 public class Gadget : MonoBehaviour
 {
     public GadgetUIBehaviour gadgetUI;
-    protected bool isReady;
+    protected bool isReady, onCooldown;
+    protected float tmpCooldown;
 
     public virtual void GadgetAction()
     {
@@ -15,7 +16,10 @@ public class Gadget : MonoBehaviour
     public void StartCooldown(float cooldown)
     {
         gadgetUI.Cooldown(cooldown);
-        StartCoroutine(Cooldown(cooldown));
+        tmpCooldown = cooldown;
+        onCooldown = true;
+        Debug.Log("Start cooldown of: " + cooldown);
+        //StartCoroutine(Cooldown(cooldown));
     }
 
     private IEnumerator Cooldown(float cooldown)
@@ -23,5 +27,39 @@ public class Gadget : MonoBehaviour
         yield return new WaitForSeconds(cooldown);
         isReady = true;
         Debug.Log("Gadget is ready!");
+    }
+
+    protected virtual void Update()
+    {
+        if (onCooldown)
+        {
+            tmpCooldown -= Time.deltaTime;
+
+            if (tmpCooldown <= 0)
+            {
+                tmpCooldown = 0;
+                isReady = true;
+                onCooldown = false;
+                Debug.Log("Gadget is ready!");
+            }
+        }
+    }
+
+    public void ReduceCooldown(float amount)
+    {
+        gadgetUI.ReduceCooldown(amount);
+
+        if (tmpCooldown > 0)
+        {
+            tmpCooldown -= amount;
+
+            if(tmpCooldown <= 0)
+            {
+                tmpCooldown = 0;
+                isReady = true;
+                onCooldown = false;
+                Debug.Log("Gadget is ready!");
+            }
+        }
     }
 }

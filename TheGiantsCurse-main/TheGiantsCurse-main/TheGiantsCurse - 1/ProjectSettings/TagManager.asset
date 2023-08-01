@@ -26,6 +26,7 @@ TagManager:
   - MusicGame
   - tmpCam
   - Exit
+  - Cooldown
   layers:
   - Default
   - TransparentFX
