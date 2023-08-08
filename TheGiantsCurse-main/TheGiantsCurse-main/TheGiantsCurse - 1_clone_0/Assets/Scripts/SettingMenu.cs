@@ -19,6 +19,16 @@ public class SettingMenu : MonoBehaviour{
         SoundManager.instance.SetMasterVolume(volume);
     }
 
+    public void SetMusicVolume(float volume)
+    {
+        SoundManager.instance.SetMusicVolume(volume);
+    }
+
+    public void SetEffectsVolume(float volume)
+    {
+        SoundManager.instance.SetEffectVolume(volume);
+    }
+
     public void SetFullscreen(bool isFullscreen){
         Screen.fullScreen = isFullscreen;
     }

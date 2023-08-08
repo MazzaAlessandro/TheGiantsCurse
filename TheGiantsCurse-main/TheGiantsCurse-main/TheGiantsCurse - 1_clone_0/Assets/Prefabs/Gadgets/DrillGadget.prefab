@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gadgetUI: {fileID: 0}
-  cooldown: 20
+  cooldown: 100

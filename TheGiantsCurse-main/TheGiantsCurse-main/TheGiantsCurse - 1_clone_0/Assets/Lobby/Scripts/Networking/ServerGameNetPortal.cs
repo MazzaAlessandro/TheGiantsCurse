@@ -86,7 +86,7 @@ namespace Francesca.UMT.Lobby.Networking
         {
             gameInProgress = true;
             Debug.Log("Funzione ");
-            NetworkManager.Singleton.SceneManager.LoadScene("VideoOpeningScene", LoadSceneMode.Single); //VideoOpeningScene
+            NetworkManager.Singleton.SceneManager.LoadScene("StartingScene", LoadSceneMode.Single); 
         }
 
         //Start the game and load the lobby.

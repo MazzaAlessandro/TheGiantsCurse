@@ -21,6 +21,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float interactRange = 1f;
 
     [SerializeField] private int serverCode;
+    [SerializeField] public int playerCode;
 
     [SerializeField] protected Transform arrowSpawnPoint; 
 
@@ -168,6 +169,12 @@ public class PlayerController : NetworkBehaviour
                 Destroy(coll.gameObject);
             }
 
+            if (coll.CompareTag("Cooldown"))
+            {
+                gadget.ReduceCooldown(10f);
+                Destroy(coll.gameObject);
+            }
+
             if (coll.CompareTag("Checkpoint"))
             {
                 if (spawnPoint != coll.gameObject)
@@ -213,7 +220,8 @@ public class PlayerController : NetworkBehaviour
             //This input is used for testing certain methods during programming, it can be easily removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                NetworkMatchManager.instance.Test();
+                MoveToFinalTrack();
+                //NetworkMatchManager.instance.Test();
                 //LevelManager.instance.LoadFinalLevel();
                 //HazardEvent.instance.Earthquake();
                 //Death();
@@ -292,7 +300,8 @@ public class PlayerController : NetworkBehaviour
     //handles the respawn of players
     private IEnumerator FallCoroutine()
     {
-        LevelManager.instance.FallTransition();
+        //LevelManager.instance.FallTransition();
+        TransitionHandler.instance.CloseAndOpen(1.5f);
         yield return new WaitForSeconds(1f);
         Spawn();
         
@@ -645,11 +654,11 @@ public class PlayerController : NetworkBehaviour
     {
         yield return new WaitForSeconds(2f);
         Debug.Log("Set up camera");
-        cameraInstance = Instantiate(cameraPrefab, null);
+        /*cameraInstance = Instantiate(cameraPrefab, null);
         mainCamera = cameraInstance.GetComponentInChildren<Camera>();
         cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
         if (GameObject.FindWithTag("tmpCam") != null)
-            GameObject.FindWithTag("tmpCam").SetActive(false);
+            GameObject.FindWithTag("tmpCam").SetActive(false);*/
         transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
         //mainCamera = FindObjectOfType<Camera>();
         rb.useGravity = true;
@@ -739,5 +748,17 @@ public class PlayerController : NetworkBehaviour
     public int GetServerCode()
     {
         return serverCode;
+    }
+
+    public void MoveToFinalTrack()
+    {
+        FinalTrackManagement.instance.AssignSpawn(this, playerCode);
+        TransitionHandler.instance.CloseAndOpen(2f);
+        EnterLevel();
+    }
+
+    public void SetPlayerCode(int code)
+    {
+        playerCode = code;
     }
 }

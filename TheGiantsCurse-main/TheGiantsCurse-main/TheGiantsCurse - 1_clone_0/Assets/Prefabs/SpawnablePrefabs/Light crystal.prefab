@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 981776640296779214}
   - component: {fileID: 3330397945069904870}
   - component: {fileID: 2398308142844815585}
+  - component: {fileID: 6354435942822065312}
   m_Layer: 3
   m_Name: Light crystal
   m_TagString: Pickup
@@ -179,6 +180,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystalIntensity: 4
   fallSound: {fileID: 8300000, guid: e58d8bd078f188a4ba314e933b98528b, type: 3}
+--- !u!114 &6354435942822065312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330397945069904869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076ccf62d3f8d7c43a5b8fdd26dffdf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
 --- !u!1 &5965324685687979655
 GameObject:
   m_ObjectHideFlags: 0

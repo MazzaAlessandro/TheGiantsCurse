@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4274413912506783180}
   - component: {fileID: 2112723191830318858}
   - component: {fileID: 2883534978174498097}
+  - component: {fileID: -6951828948852741827}
   m_Layer: 0
   m_Name: HealthAttractor
   m_TagString: Untagged
@@ -62,6 +63,19 @@ MonoBehaviour:
   attractionSpeed: 10
   type: 1
   pickupSound: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
+--- !u!114 &-6951828948852741827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3083067469862925649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076ccf62d3f8d7c43a5b8fdd26dffdf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
 --- !u!1 &7311251822715446704
 GameObject:
   m_ObjectHideFlags: 0

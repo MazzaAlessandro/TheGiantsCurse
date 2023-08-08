@@ -756,4 +756,9 @@ public class PlayerController : NetworkBehaviour
         TransitionHandler.instance.CloseAndOpen(2f);
         EnterLevel();
     }
+
+    public void SetPlayerCode(int code)
+    {
+        playerCode = code;
+    }
 }

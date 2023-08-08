@@ -5,12 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class FirstMenu : MonoBehaviour{
 
+    [SerializeField] private string startScene = "StartMenu";
+    [SerializeField] private string optionsScene = "OptionMenu";
+
     private void Start()
     {
         SoundManager.instance.PlayMusic(SoundManager.Phases.MENU);
     }
     public void PlayGame(){
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(startScene);
     }
 
     public void OptionGame(){

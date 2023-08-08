@@ -58,7 +58,7 @@ public class GiantController : NetworkBehaviour
         boulderReady = true;
         doingAction = false;
         speed = movementSpeed;
-        this.gameObject.GetComponent<NetworkObject>().Spawn();
+        //this.gameObject.GetComponent<NetworkObject>().Spawn();
         foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
         {
             i.enabled = true;

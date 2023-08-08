@@ -8,17 +8,24 @@ public class ExitLevel : MonoBehaviour
 {
     [SerializeField] private bool isFinalRoom;
 
+    [SerializeField] private GameObject nextRoomSpawnpoint;
+
     private void Awake()
     {
-        try
+        /*try
         {
             if (LevelManager.instance.IsLastRoom())
                 isFinalRoom = true;
         }
         catch (Exception e)
         {
-            Debug.Log("don't break");
-        }
+            //Debug.Log("don't break");
+        }*/
+    }
+
+    public void SetNextRoomSpawn(GameObject nextSpawn)
+    {
+        nextRoomSpawnpoint = nextSpawn;
     }
 
     public void MakeFinalRoom()
@@ -37,22 +44,51 @@ public class ExitLevel : MonoBehaviour
                 if (isFinalRoom)
                     EndReached(other.gameObject);
                 else
-                    CompleteLevel();
+                    CompleteLevel(other.gameObject);
             }
             
         }
     }
 
-    private void CompleteLevel()
+    private void CompleteLevel(GameObject player)
+    {
+        Debug.Log("New version of the exit");
+        TransitionHandler.instance.CloseAndOpen(2f);
+        player.GetComponent<PlayerController>().SetSpawnpoint(nextRoomSpawnpoint);
+        player.GetComponent<PlayerController>().EnterLevel();
+    }
+
+    /*private void CompleteLevel()
     {
         Debug.Log("The Player has reached the end of the level");
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
         LevelManager.instance.NextLevel();
-    }
+    }*/
 
+
+    //Here it should initiate a sequence that swaps the player with the Giant and moves all others to the final track
     private void EndReached(GameObject player)
     {
         Debug.Log("The Player has reached the end of the sequence");
-        LevelManager.instance.LastRoomFinished(player);
+        //v1.0
+        //LevelManager.instance.LastRoomFinished(player);
+
+        //v2.0
+        StartCoroutine(ChangePhaseCoroutine(player));
+    }
+
+    private IEnumerator ChangePhaseCoroutine(GameObject player)
+    {
+        HazardEvent.instance.Earthquake();
+        yield return new WaitForSeconds(1f);
+
+        TransitionHandler.instance.Close();
+        yield return new WaitForSeconds(1f);
+
+        FinalTrackManagement.instance.Swap(player);
+        yield return new WaitForSeconds(2f);
+
+        SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
+        TransitionHandler.instance.Open();
     }
 }

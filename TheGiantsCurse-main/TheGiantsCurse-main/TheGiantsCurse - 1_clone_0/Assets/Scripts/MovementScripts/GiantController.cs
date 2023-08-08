@@ -58,12 +58,21 @@ public class GiantController : NetworkBehaviour
         boulderReady = true;
         doingAction = false;
         speed = movementSpeed;
-        this.gameObject.GetComponent<NetworkObject>().Spawn();
+        //this.gameObject.GetComponent<NetworkObject>().Spawn();
         foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
         {
             i.enabled = true;
         }
         
+    }
+
+    public void LocalCameraSetup()
+    {
+        cameraInstance = Instantiate(cameraPrefab, null);
+        mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+        cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+        //GameObject.FindWithTag("tmpCam").SetActive(false);
+        HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
     }
 
     public override void OnNetworkSpawn()

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class DestroyableObject : MonoBehaviour
 {
-    [SerializeField] private GameObject healthPickUpPrefab;
+    [SerializeField] private GameObject healthPickUpPrefab, cooldownPickUpPrefab;
     [SerializeField] private int health = 20;
 
     [SerializeField] private AudioClip destroySound;
 
     private Vector3 originalPos;
 
-    private GameObject healthPickUp;
+    private GameObject healthPickUp, cooldownPickUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,11 +53,19 @@ public class DestroyableObject : MonoBehaviour
         Debug.Log("You got: " + dropChance);
         if (dropChance == 0)
         {
-            Debug.Log("Spawn it!");
+            Debug.Log("Spawn health!");
             healthPickUp = Instantiate(healthPickUpPrefab, transform);
             healthPickUp.transform.localPosition = Vector3.zero;
             healthPickUp.transform.SetParent(null);
             healthPickUp.transform.localScale = Vector3.one;
+        }
+        if (dropChance == 1)
+        {
+            Debug.Log("Spawn cooldown!");
+            cooldownPickUp = Instantiate(cooldownPickUpPrefab, transform);
+            cooldownPickUp.transform.localPosition = Vector3.zero;
+            cooldownPickUp.transform.SetParent(null);
+            cooldownPickUp.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         }
         Destroy(this.gameObject);
     }

@@ -62,4 +62,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MatchManager.unity
     guid: c69db73b4fbe3d74bbb62529e1c2ffd3
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: 8ed54db0684e7e84fac20cce3750f518
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelection.unity
+    guid: 34a5d644b70b97846b6d5658fc87bee8
   m_configObjects: {}

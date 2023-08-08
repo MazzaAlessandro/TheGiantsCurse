@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2415334366847784125}
   - component: {fileID: 2415334366847784066}
   - component: {fileID: 2415334366847784067}
+  - component: {fileID: -1604029115825489842}
   m_Layer: 0
   m_Name: ArrowAttractor
   m_TagString: Untagged
@@ -62,6 +63,19 @@ MonoBehaviour:
   attractionSpeed: 10
   type: 0
   pickupSound: {fileID: 8300000, guid: 7cc057bed53baf34799f52aab3c84800, type: 3}
+--- !u!114 &-1604029115825489842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2415334366847784064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076ccf62d3f8d7c43a5b8fdd26dffdf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
 --- !u!1 &7175841218456689599
 GameObject:
   m_ObjectHideFlags: 0

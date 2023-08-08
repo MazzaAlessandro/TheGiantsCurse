@@ -25,6 +25,8 @@ TagManager:
   - Giant
   - MusicGame
   - tmpCam
+  - Exit
+  - Cooldown
   layers:
   - Default
   - TransparentFX

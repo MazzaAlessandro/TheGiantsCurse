@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gadgetUI: {fileID: 0}
   hookSpeed: 25
-  cooldown: 8
+  cooldown: 30
   Hook: {fileID: 3317342736168845347, guid: 79c07d9ddba763b4bbf73cd0e1cce39c, type: 3}

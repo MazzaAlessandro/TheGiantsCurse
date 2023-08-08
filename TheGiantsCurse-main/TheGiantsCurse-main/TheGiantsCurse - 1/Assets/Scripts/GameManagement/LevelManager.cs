@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
     {
         //RoomsSetup();
         SoundManager.instance.PlayMusic(SoundManager.Phases.PUZZLE);
-        NetworkManager.Singleton.SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
+        //NetworkManager.Singleton.SceneManager.LoadScene("MatchManager", LoadSceneMode.Additive);
     }
 
     private void RoomsSetup()

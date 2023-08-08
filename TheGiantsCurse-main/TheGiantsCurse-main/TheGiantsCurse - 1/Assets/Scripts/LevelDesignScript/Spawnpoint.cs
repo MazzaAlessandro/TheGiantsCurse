@@ -8,7 +8,7 @@ public class Spawnpoint : MonoBehaviour
 
     private void Awake()
     {
-        if(first)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().SetSpawnpoint(this.gameObject);
+        /*if(first)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().SetSpawnpoint(this.gameObject);*/
     }
 }
