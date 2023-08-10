@@ -716,7 +716,7 @@ GameObject:
   - component: {fileID: 6073178875629054916}
   - component: {fileID: -4116053001160639065}
   - component: {fileID: 7934464758722171872}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Moonrise modeled
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -965,6 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971a5f3d40487b74ba95493011541750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cheapInterpolationTime: 0.1
 --- !u!1 &731783502397884510
 GameObject:
   m_ObjectHideFlags: 0

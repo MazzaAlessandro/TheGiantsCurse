@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 5858659635813489437}
   - component: {fileID: 4768756713941630901}
   - component: {fileID: 4972841153505167254}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cerberus_modeled
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -825,6 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971a5f3d40487b74ba95493011541750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cheapInterpolationTime: 0.1
 --- !u!1 &1029873739479486456
 GameObject:
   m_ObjectHideFlags: 0

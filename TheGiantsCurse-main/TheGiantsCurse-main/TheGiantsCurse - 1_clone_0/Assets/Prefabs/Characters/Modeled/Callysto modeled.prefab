@@ -1833,7 +1833,7 @@ GameObject:
   - component: {fileID: 3621067114013564848}
   - component: {fileID: 9042874279954005542}
   - component: {fileID: 3357699448813307714}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Callysto modeled
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2082,6 +2082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971a5f3d40487b74ba95493011541750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cheapInterpolationTime: 0.1
 --- !u!1 &3631391638924232372
 GameObject:
   m_ObjectHideFlags: 0

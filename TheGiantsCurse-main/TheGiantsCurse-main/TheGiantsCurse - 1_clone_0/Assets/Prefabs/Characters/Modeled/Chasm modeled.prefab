@@ -1396,7 +1396,7 @@ GameObject:
   - component: {fileID: 8842664509832944767}
   - component: {fileID: -3752408716635801708}
   - component: {fileID: 5220163646001440973}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Chasm modeled
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1648,6 +1648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971a5f3d40487b74ba95493011541750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cheapInterpolationTime: 0.1
 --- !u!1 &2826394501877187979
 GameObject:
   m_ObjectHideFlags: 0
