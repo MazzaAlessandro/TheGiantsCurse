@@ -8,7 +8,9 @@ public class CharacterSpawner : NetworkBehaviour
     [SerializeField] private List<Transform> spawnpoints;
     [SerializeField] private CharacterDatabase characterDatabase;
 
+    private Vector3 offset = new Vector3(0, 10, 0);
     private int spawnAvailable = 0;
+
     public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
@@ -20,7 +22,7 @@ public class CharacterSpawner : NetworkBehaviour
             {
                 Debug.Log("Should spawn character: " + client.Value.characterId + "at position: " + spawnAvailable);
 
-                var charInstance = Instantiate(character.GameplayPrefab, spawnpoints[spawnAvailable].position, Quaternion.identity);
+                var charInstance = Instantiate(character.GameplayPrefab, spawnpoints[spawnAvailable].position + offset, Quaternion.identity);
                 charInstance.SpawnAsPlayerObject(client.Value.clientId);
 
                 charInstance.gameObject.GetComponent<PlayerController>().SetPlayerCode(spawnAvailable);

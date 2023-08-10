@@ -37,6 +37,7 @@ public class ClientManager : MonoBehaviour
         catch
         {
             Debug.LogError("Relay get join code request failed");
+            StartMenuScript.instance.SetButtonsActive(true);
             throw;
         }
 

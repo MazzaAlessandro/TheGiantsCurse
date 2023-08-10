@@ -11,6 +11,7 @@ public class CameraFollow : NetworkBehaviour
     private void Awake()
     {
         playerGameObject = GameObject.FindWithTag("Player");
+        this.transform.SetParent(null);
     }
 
     // This version should correctly handle the camera follow in the NetCode Envrionment

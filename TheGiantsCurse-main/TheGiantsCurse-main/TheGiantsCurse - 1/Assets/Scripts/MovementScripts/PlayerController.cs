@@ -38,6 +38,7 @@ public class PlayerController : NetworkBehaviour
     private float burningDuration;
 
     protected bool movementEnabled, aimingEnabled, isReloading, grappled, holdingItem, fullCharge, ropedArrow, onFire, nextLevel, fell;
+    private bool initSpawn = false;
     [SerializeField] protected bool dead;
 
     [SerializeField] protected GameObject spawnPoint;
@@ -75,17 +76,22 @@ public class PlayerController : NetworkBehaviour
             {
                 i.enabled = false;
             }
+            if (cameraInstance != null)
+                cameraInstance.SetActive(false);
             enabled = false;
         }
         else
         {
             Debug.Log("Set up camera");
-            cameraInstance = Instantiate(cameraPrefab, null);
+            spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
+            //transform.position = new Vector3(0, 10, 0);
+            //rb.useGravity = true;
+            /*cameraInstance = Instantiate(cameraPrefab, this.transform);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
             if (GameObject.FindWithTag("tmpCam")!=null)
                 GameObject.FindWithTag("tmpCam").SetActive(false);
-            HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+            HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);*/
         }
             //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
 
@@ -106,15 +112,30 @@ public class PlayerController : NetworkBehaviour
         healthbar.SetMaxHealth(maxHealth);
         arrowUI.UpdateArrowNumber(arrowCounter);
         arrowUI.SetRopeImage(false);
-        spawnPoint = GameObject.FindWithTag("Respawn");
         pickupTransform = transform.GetChild(2);
         throwTransform = transform.GetChild(3);
         rb = GetComponent<Rigidbody>();
         lineRenderer = GetComponent<LineRenderer>();
-        transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        //transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        /*transform.position = new Vector3(0, 0, 0);
         animator.SetBool("isFalling", true);
         StartCoroutine(MovementEnabler());
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);*/
+    }
+
+    private void Start()
+    {
+        spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
+        //transform.position = new Vector3(spawnPoint.transform.position.x, 10, spawnPoint.transform.position.z);
+        //transform.position = new Vector3(0, 0, 0);
+        animator.SetBool("isFalling", true);
+        StartCoroutine(MovementEnabler());
+        cameraInstance = Instantiate(cameraPrefab, this.transform);
+        mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+        cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+        if (GameObject.FindWithTag("tmpCam") != null)
+            GameObject.FindWithTag("tmpCam").SetActive(false);
+        //HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
     }
 
     //Coroutine that enables all movements after a bit of time
@@ -179,8 +200,12 @@ public class PlayerController : NetworkBehaviour
             {
                 if (spawnPoint != coll.gameObject)
                 {
-                    Debug.Log("New Checkpoint! Now kill yourself");
                     spawnPoint = coll.gameObject;
+                    if (coll.gameObject.GetComponent<InitCheckpoint>() != null && !initSpawn)
+                    {
+                        playerCode = coll.gameObject.GetComponent<InitCheckpoint>().respectivePlayer;
+                        initSpawn = true;
+                    }
                 }
             }
 
@@ -246,7 +271,7 @@ public class PlayerController : NetworkBehaviour
 
             if (transform.position.y <= -3 && !fell)
             {
-                SoundManager.instance.PlayEffect(fall);
+                //SoundManager.instance.PlayEffect(fall);
                 TakeDamage(fallDamage);
                 fell = true;
                 Debug.Log("Current health: " + health);

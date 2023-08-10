@@ -26,8 +26,8 @@ public class LevelGenerator : MonoBehaviour
     void Awake()
     {
         //Local test
-        //RoomsSetup(5); 
-        RoomsSetup(ServerManager.instance.clientData.Count);
+        RoomsSetup(5); 
+        //RoomsSetup(ServerManager.instance.clientData.Count);
     }
 
     private void RoomsSetup(int players)

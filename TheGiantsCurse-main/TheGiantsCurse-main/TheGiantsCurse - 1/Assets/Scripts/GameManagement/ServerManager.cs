@@ -57,6 +57,7 @@ public class ServerManager : MonoBehaviour
         catch(Exception e)
         {
             Debug.LogError($"Relay create allocation request failed {e.Message}");
+            StartMenuScript.instance.SetButtonsActive(true);
             throw;
         }
 
@@ -67,6 +68,7 @@ public class ServerManager : MonoBehaviour
         catch
         {
             Debug.LogError("Relay get join code request failed");
+            StartMenuScript.instance.SetButtonsActive(true);
             throw;
         }
 
