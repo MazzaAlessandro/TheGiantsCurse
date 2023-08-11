@@ -10,19 +10,6 @@ public class ExitLevel : MonoBehaviour
 
     [SerializeField] private GameObject nextRoomSpawnpoint;
 
-    private void Awake()
-    {
-        /*try
-        {
-            if (LevelManager.instance.IsLastRoom())
-                isFinalRoom = true;
-        }
-        catch (Exception e)
-        {
-            //Debug.Log("don't break");
-        }*/
-    }
-
     public void SetNextRoomSpawn(GameObject nextSpawn)
     {
         nextRoomSpawnpoint = nextSpawn;
@@ -37,16 +24,20 @@ public class ExitLevel : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!other.gameObject.GetComponent<PlayerController>().CanExit())
+            if (other.gameObject.GetComponent<PlayerController>().enabled)
             {
-                other.gameObject.GetComponent<PlayerController>().TurnOffExit();
-                other.gameObject.GetComponent<PlayerController>().EnterLevel();
-                if (isFinalRoom)
-                    EndReached(other.gameObject);
-                else
-                    CompleteLevel(other.gameObject);
+
+                if (!other.gameObject.GetComponent<PlayerController>().CanExit())
+                {
+                    other.gameObject.GetComponent<PlayerController>().TurnOffExit();
+                    other.gameObject.GetComponent<PlayerController>().EnterLevel();
+                    if (isFinalRoom)
+                        EndReached(other.gameObject);
+                    else
+                        CompleteLevel(other.gameObject);
+                }
+
             }
-            
         }
     }
 

@@ -12,15 +12,17 @@ public class FirstExit : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!other.gameObject.GetComponent<PlayerController>().CanExit())
+            if (other.gameObject.GetComponent<PlayerController>().enabled)
             {
-                TransitionHandler.instance.CloseAndOpen(2f);
-                other.gameObject.GetComponent<PlayerController>().TurnOffExit();
-                other.gameObject.GetComponent<PlayerController>().EnterLevel();
+                if (!other.gameObject.GetComponent<PlayerController>().CanExit())
+                {
+                    TransitionHandler.instance.CloseAndOpen(2f);
+                    other.gameObject.GetComponent<PlayerController>().TurnOffExit();
+                    other.gameObject.GetComponent<PlayerController>().EnterLevel();
 
-                EnterSequence(other.gameObject);
+                    EnterSequence(other.gameObject);
+                }
             }
-
         }
     }
 
