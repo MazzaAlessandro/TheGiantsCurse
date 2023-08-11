@@ -29,7 +29,7 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] protected Gadget gadget;
 
-    [SerializeField] private PlayerNetworkActions networkActions;
+    [SerializeField] protected PlayerNetworkActions networkActions;
 
     protected float health;
     protected float speed;

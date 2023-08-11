@@ -26,22 +26,22 @@ public class CallystoController : PlayerController
         arrowCounter--;
         arrowUI.UpdateArrowNumber(arrowCounter);
         Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
-        var force = transform.TransformDirection(Vector3.forward);
-        currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
-        currentArrow.transform.localPosition = Vector3.zero;
-        if (fullCharge)
-            currentArrow.MakeFireArrow();
+        animator.SetTrigger("Shoot");
+        networkActions.ShootArrow(finalArrowSpeed, ropedArrow, fullCharge);
+        //currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
+        //currentArrow.transform.localPosition = Vector3.zero;
+        //if (fullCharge) currentArrow.MakeFireArrow();
         if (ropedArrow)
         {
-            currentArrow.MakeRoped();
+            //currentArrow.MakeRoped();
             arrowUI.SetRopeImage(false);
             aimingEnabled = false;
             movementEnabled = false;
         }
-        currentArrow.Shoot(transform.forward * finalArrowSpeed);
-        currentArrow.SetOwner(this.gameObject);
+        //currentArrow.Shoot(transform.forward * finalArrowSpeed);
+        //currentArrow.SetOwner(this.gameObject);
         //currentArrow.Shoot(transform.forward, finalArrowSpeed);
-        currentArrow = null;
+        //currentArrow = null;
         fullCharge = false;
         ropedArrow = false;
         if (arrowCounter > 0)
