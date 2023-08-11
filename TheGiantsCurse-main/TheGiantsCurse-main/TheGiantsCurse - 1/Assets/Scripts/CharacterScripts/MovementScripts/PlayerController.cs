@@ -536,21 +536,22 @@ public class PlayerController : NetworkBehaviour
         arrowUI.UpdateArrowNumber(arrowCounter);
         Debug.Log("Arrow Speed is: " + finalArrowSpeed + " and remaining arrows are: " + arrowCounter);
         animator.SetTrigger("Shoot");
-        currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
-        currentArrow.transform.localPosition = Vector3.zero;
+        networkActions.ShootArrow(finalArrowSpeed, ropedArrow, false);
+        //currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
+        //currentArrow.transform.localPosition = Vector3.zero;
         if (ropedArrow)
         {
-            currentArrow.MakeRoped();
+            //currentArrow.MakeRoped();
             arrowUI.SetRopeImage(false);
             aimingEnabled = false;
             movementEnabled = false;
         }
             
-        currentArrow.Shoot(transform.forward * finalArrowSpeed);
-        currentArrow.SetOwner(this.gameObject);
+        //currentArrow.Shoot(transform.forward * finalArrowSpeed);
+        //currentArrow.SetOwner(this.gameObject);
         //currentArrow.Shoot(transform.forward, finalArrowSpeed);
         ropedArrow = false;
-        currentArrow = null;
+        //currentArrow = null;
         if (arrowCounter > 0)
             Reload();
     }
