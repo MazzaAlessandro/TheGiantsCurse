@@ -233,7 +233,7 @@ public class PlayerController : NetworkBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
-                if (holdingItem)
+                if (networkActions.holdingItem)
                     Throw();
                 else
                     ShootArrow();
@@ -257,7 +257,7 @@ public class PlayerController : NetworkBehaviour
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (pickup != null)
+                if (networkActions.pickup != null)
                 {
                     Drop();
                 }
@@ -363,8 +363,7 @@ public class PlayerController : NetworkBehaviour
 
             }
 
-            if (holdingItem)
-                pickup.transform.position = pickupTransform.position;
+            //if (holdingItem) pickup.transform.position = pickupTransform.position;
         }
     }
 
@@ -394,7 +393,8 @@ public class PlayerController : NetworkBehaviour
     //Either interacts with interactable items or pick up explosive barrels
     void Interact()
     {
-        Ray r = new Ray(transform.position, transform.forward);
+        networkActions.Interact();
+        /*Ray r = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange))
         {
             if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
@@ -407,7 +407,7 @@ public class PlayerController : NetworkBehaviour
             {
                 Pickup(hitInfo.rigidbody);
             }
-        }
+        }*/
     }
 
     //Make the pickup follow the player
@@ -425,13 +425,14 @@ public class PlayerController : NetworkBehaviour
     void Drop()
     {
         StartCoroutine(StopMovement(0.25f));
+        networkActions.Drop();
         //pickup.transform.position = throwTransform.position;
-        pickup.transform.position = pickupTransform.position;
+        /*pickup.transform.position = pickupTransform.position;
         pickup.transform.SetParent(null);
         pickup.isKinematic = false;
         pickup.useGravity = true;
         pickup = null;
-        holdingItem = false;
+        holdingItem = false;*/
     }
 
     //Places the pickup in front of the player and applies force to it
@@ -439,7 +440,8 @@ public class PlayerController : NetworkBehaviour
     {
         animator.SetTrigger("throw");
         StartCoroutine(StopMovement(0.25f));
-        pickup.transform.position = throwTransform.position;
+        networkActions.Throw();
+        /*pickup.transform.position = throwTransform.position;
         pickup.transform.SetParent(null);
         pickup.isKinematic = false;
         pickup.useGravity = false;
@@ -449,7 +451,7 @@ public class PlayerController : NetworkBehaviour
         }
         pickup.AddForce(transform.forward * arrowSpeed, ForceMode.Impulse);
         pickup = null;
-        holdingItem = false;
+        holdingItem = false;*/
     }
 
     //Briefly stops the player from moving. Needed for game balance, to prevent some problems in physics interactions and make animations feel more appropriate
