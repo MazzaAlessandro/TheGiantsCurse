@@ -573,6 +573,7 @@ GameObject:
   - component: {fileID: 5858659635813489432}
   - component: {fileID: 5858659635813489435}
   - component: {fileID: 5858659635813489434}
+  - component: {fileID: 8394326129954432458}
   - component: {fileID: 5858659635813489437}
   - component: {fileID: 4768756713941630901}
   - component: {fileID: 4972841153505167254}
@@ -686,6 +687,7 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 4495774870688954247}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   gadget: {fileID: 3498471852854299945}
+  networkActions: {fileID: 8394326129954432458}
   dead: 0
   spawnPoint: {fileID: 0}
   cameraPrefab: {fileID: 6572922849473397061, guid: 70e621aae58826d4fa6447d037e1ec8d, type: 3}
@@ -694,6 +696,18 @@ MonoBehaviour:
   animator: {fileID: 5858659635813489436}
   healthbar: {fileID: 3499366031329483057}
   arrowUI: {fileID: 4696755334853625233}
+--- !u!114 &8394326129954432458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929394767473187804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f57e75e68e009545a1bb1639afaf8bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &5858659635813489437
 LineRenderer:
   m_ObjectHideFlags: 0

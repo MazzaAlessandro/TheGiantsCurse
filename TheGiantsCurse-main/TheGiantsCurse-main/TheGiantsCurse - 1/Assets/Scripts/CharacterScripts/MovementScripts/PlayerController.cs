@@ -247,7 +247,8 @@ public class PlayerController : NetworkBehaviour
             //This input is used for testing certain methods during programming, it can be easily removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                MoveToFinalTrack();
+                networkActions.Test(playerCode);
+                //MoveToFinalTrack();
                 //NetworkMatchManager.instance.Test();
                 //LevelManager.instance.LoadFinalLevel();
                 //HazardEvent.instance.Earthquake();

@@ -1396,6 +1396,7 @@ GameObject:
   - component: {fileID: 8842664509832944767}
   - component: {fileID: -3752408716635801708}
   - component: {fileID: 5220163646001440973}
+  - component: {fileID: 8735918185711085044}
   m_Layer: 7
   m_Name: Chasm modeled
   m_TagString: Player
@@ -1506,6 +1507,7 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 6654438143654113581}
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   gadget: {fileID: 4813667973531735116}
+  networkActions: {fileID: 8735918185711085044}
   dead: 0
   spawnPoint: {fileID: 0}
   cameraPrefab: {fileID: 6572922849473397061, guid: 70e621aae58826d4fa6447d037e1ec8d, type: 3}
@@ -1649,6 +1651,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cheapInterpolationTime: 0.1
+--- !u!114 &8735918185711085044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818278088902073472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f57e75e68e009545a1bb1639afaf8bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2826394501877187979
 GameObject:
   m_ObjectHideFlags: 0
