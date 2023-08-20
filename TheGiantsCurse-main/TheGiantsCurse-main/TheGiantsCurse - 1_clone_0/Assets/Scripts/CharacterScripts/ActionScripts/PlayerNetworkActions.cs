@@ -11,10 +11,14 @@ public class PlayerNetworkActions : NetworkBehaviour
     [SerializeField] protected ArrowBehaviour arrowPrefab;
     [SerializeField] private Transform pickupTransform, throwTransform;
 
+    [SerializeField] protected Gadget gadget;
+
     [SerializeField] private float throwSpeed = 20f;
 
     public Rigidbody pickup;
     private ArrowBehaviour currentArrow;
+
+    private PickaxeGadget pickaxe;
 
     public bool holdingItem;
 
@@ -89,6 +93,45 @@ public class PlayerNetworkActions : NetworkBehaviour
         currentArrow.SetOwner(this.gameObject);
 
         currentArrow = null;
+    }
+
+    #endregion
+
+    #region Gadget Action
+
+    public void GadgetAction()
+    {
+        GadgetActionServerRpc(false);
+    }
+
+    public void ReaperGadgetAction(bool isAiming)
+    {
+        GadgetActionServerRpc(isAiming);
+    }
+
+    [ServerRpc]
+    private void GadgetActionServerRpc(bool reaperGadgetMode)
+    {
+        GadgetActionClientRpc(reaperGadgetMode);
+    }
+
+    [ClientRpc]
+    private void GadgetActionClientRpc(bool reaperGadgetMode)
+    {
+        LocalGadgetAction(reaperGadgetMode);
+    }
+
+    private void LocalGadgetAction(bool reaperGadgetMode)
+    {
+        if (reaperGadgetMode)
+        {
+            pickaxe = (PickaxeGadget)gadget;
+            pickaxe.ThrowGadget();
+        }
+        else
+        {
+            gadget.GadgetAction();
+        }
     }
 
     #endregion

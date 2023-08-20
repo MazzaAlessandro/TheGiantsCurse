@@ -1827,6 +1827,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4110464805004952837}
   - component: {fileID: 8064646359638941567}
+  - component: {fileID: -3148283679560037604}
   - component: {fileID: 3621067114013564851}
   - component: {fileID: 3621067114013564850}
   - component: {fileID: 3357699448813307714}
@@ -1888,6 +1889,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3148283679560037604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621067114013564863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 8064646359638941567}
 --- !u!65 &3621067114013564851
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1967,7 +1982,10 @@ MonoBehaviour:
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   pickupTransform: {fileID: 2057985228066389250}
   throwTransform: {fileID: 3712479136167195633}
+  gadget: {fileID: 836359082512921792}
+  throwSpeed: 20
   pickup: {fileID: 0}
+  holdingItem: 0
 --- !u!120 &3621067114013564849
 LineRenderer:
   m_ObjectHideFlags: 0

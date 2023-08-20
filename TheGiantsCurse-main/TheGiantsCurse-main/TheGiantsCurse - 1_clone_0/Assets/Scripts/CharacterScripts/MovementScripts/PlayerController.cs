@@ -387,7 +387,8 @@ public class PlayerController : NetworkBehaviour
     //Calls the Gadget action. It is overridden by ReaperController because it has multiple GadgetActions
     public virtual void UseGadget()
     {
-        gadget.GadgetAction();
+        //gadget.GadgetAction();
+        networkActions.GadgetAction();
     }
 
     //Either interacts with interactable items or pick up explosive barrels

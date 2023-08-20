@@ -23,16 +23,18 @@ public class ReaperController : PlayerController
     {
         if (hasPickaxe)
         {
-            pickaxe = (PickaxeGadget)gadget;
+            //pickaxe = (PickaxeGadget)gadget;
             if (Input.GetMouseButton(1))
             {
-                pickaxe.ThrowGadget();
+                //pickaxe.ThrowGadget();
+                networkActions.ReaperGadgetAction(true);
                 hasPickaxe = false;
                 Debug.Log("Do you have it?" + hasPickaxe);
             }
             else
             {
-                pickaxe.GadgetAction();
+                networkActions.ReaperGadgetAction(false);
+                //pickaxe.GadgetAction();
             }
         }
     }

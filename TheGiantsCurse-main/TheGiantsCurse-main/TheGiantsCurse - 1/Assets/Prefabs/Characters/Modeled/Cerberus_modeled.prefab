@@ -713,7 +713,10 @@ MonoBehaviour:
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   pickupTransform: {fileID: 3161084490420598072}
   throwTransform: {fileID: 4129767638203680701}
+  gadget: {fileID: 3498471852854299945}
+  throwSpeed: 20
   pickup: {fileID: 0}
+  holdingItem: 0
 --- !u!120 &5858659635813489437
 LineRenderer:
   m_ObjectHideFlags: 0
