@@ -3126,11 +3126,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1081099548844503025}
   - component: {fileID: 1027698611376988013}
+  - component: {fileID: 2607087659830988186}
   - component: {fileID: 1027698611376988018}
   - component: {fileID: 1027698611376988019}
   - component: {fileID: 1027698611376988012}
   - component: {fileID: 4885242233412713221}
-  - component: {fileID: 1493384282199999089}
+  - component: {fileID: 2977505220860975783}
   m_Layer: 0
   m_Name: troll
   m_TagString: Untagged
@@ -3185,6 +3186,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2607087659830988186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087365073303109029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1528963d4be924740a67e37ee373a551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 1027698611376988013}
 --- !u!65 &1027698611376988018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3263,7 +3278,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1493384282199999089
+--- !u!114 &2977505220860975783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3272,27 +3287,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1087365073303109029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Script: {fileID: 11500000, guid: 971a5f3d40487b74ba95493011541750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 0
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 0
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 0
-  UseQuaternionCompression: 0
-  UseHalfFloatPrecision: 0
-  InLocalSpace: 0
-  Interpolate: 1
-  SlerpPosition: 0
+  cheapInterpolationTime: 0.1
 --- !u!1 &1087369596453062023
 GameObject:
   m_ObjectHideFlags: 0
