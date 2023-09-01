@@ -206,6 +206,7 @@ public class PlayerController : NetworkBehaviour
                     if (coll.gameObject.GetComponent<InitCheckpoint>() != null && !initSpawn)
                     {
                         playerCode = coll.gameObject.GetComponent<InitCheckpoint>().respectivePlayer;
+                        MatchManager.instance.SetLocalPlayer(this);
                         initSpawn = true;
                     }
                 }
@@ -213,7 +214,7 @@ public class PlayerController : NetworkBehaviour
 
             if (coll.CompareTag("Hazard"))
             {
-                HazardEvent.instance.PickRandomEvent();
+                HazardEvent.instance.PickRandomEvent(playerCode);
                 Destroy(coll.gameObject);
             }
         }
@@ -247,7 +248,8 @@ public class PlayerController : NetworkBehaviour
             //This input is used for testing certain methods during programming, it can be easily removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                networkActions.Test(playerCode);
+                MatchManager.instance.Test(playerCode);
+                //networkActions.Test(playerCode);
                 //MoveToFinalTrack();
                 //NetworkMatchManager.instance.Test();
                 //LevelManager.instance.LoadFinalLevel();

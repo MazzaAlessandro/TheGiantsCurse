@@ -18,8 +18,13 @@ public class GiantNetworkActions : NetworkBehaviour
     private GameObject boulderInstance, leapLandingInstance;
 
     //This set of bools are public because Giant Controller will need to check on them, replacing their own bools
-    public bool leapReady, clubReady, boulderReady, doingAction;
+    public bool leapReady, clubReady, boulderReady, doingAction, canMove, onAir;
 
+    public GadgetUIBehaviour Ability1UI;
+    public GadgetUIBehaviour Ability2UI;
+    public GadgetUIBehaviour Ability3UI;
+
+    [SerializeField] private Animator animator;
 
     #region Test structure
 
@@ -74,21 +79,29 @@ public class GiantNetworkActions : NetworkBehaviour
 
     private void LocalAbility(int ability)
     {
-        switch (ability)
+        Debug.Log($"Activating ability {ability}");
+        if (!doingAction)
         {
-            case 0:
-                ClubAttack();
-                break;
-            case 1:
-                Leap();
-                break;
-            case 2:
-                ThrowBoulder();
-                break;
-            default:
-                Debug.LogError($"Giant ability number {ability} does not exist");
-                break;
+            switch (ability)
+            {
+                case 0:
+                    if (clubReady)
+                        ClubAttack();
+                    break;
+                case 1:
+                    if (leapReady)
+                        Leap();
+                    break;
+                case 2:
+                    if (boulderReady)
+                        ThrowBoulder();
+                    break;
+                default:
+                    Debug.LogError($"Giant ability number {ability} does not exist");
+                    break;
+            }
         }
+        
     }
 
     #endregion
@@ -100,17 +113,30 @@ public class GiantNetworkActions : NetworkBehaviour
 
     private void ClubAttack()
     {
-
+        Ability1UI.SetFillAmount(1);
+        Debug.Log("Activate Club");
+        canMove = false;
+        animator.SetTrigger("attack1");
+        club.SetActive(true);
+        club.transform.localPosition = new Vector3(0, -0.4f, 0.6f);
+        club.GetComponent<Animator>().SetTrigger("Attack");
+        clubReady = false;
+        doingAction = true;
     }
 
     public void ClubAttackEnd()
     {
-
+        canMove = true;
+        doingAction = false;
+        club.SetActive(false);
+        Ability1UI.Cooldown(clubCooldown);
+        StartCoroutine(ClubRecharge());
     }
 
     private IEnumerator ClubRecharge()
     {
         yield return new WaitForSeconds(clubCooldown);
+        clubReady = true;
     }
 
     #endregion
@@ -119,24 +145,41 @@ public class GiantNetworkActions : NetworkBehaviour
 
     private void ThrowBoulder()
     {
-
+        Debug.Log("Activate Boulder");
+        canMove = false;
+        boulderReady = false;
+        doingAction = true;
+        animator.SetTrigger("attack2");
     }
 
     public void Boulder()
     {
-
+        boulderInstance = Instantiate(boulder, transform);
+        boulderInstance.transform.localPosition = new Vector3(0, 1, 3f);
+        boulderInstance.transform.localScale = new Vector3(0.005f, 0.005f, 0.005f);
+        boulderInstance.transform.SetParent(null);
+        boulderInstance.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * boulderSpeed, ForceMode.Impulse);
+        boulderInstance.gameObject.GetComponent<Rigidbody>().AddTorque(transform.right * 5, ForceMode.Impulse);
+        Ability3UI.SetFillAmount(1);
+        StartCoroutine(BoulderTravel());
     }
 
     private IEnumerator BoulderTravel()
     {
         yield return new WaitForSeconds(0.5f);
+        canMove = true;
+        doingAction = false;
+        yield return new WaitForSeconds(4f);
+        Destroy(boulderInstance);
+        Ability3UI.Cooldown(boulderCooldown);
+        StartCoroutine(BoulderRecharge());
     }
 
     private IEnumerator BoulderRecharge()
     {
         yield return new WaitForSeconds(boulderCooldown);
-        
-        
+        Debug.Log("The boulder is now ready again");
+        boulderReady = true;
     }
 
     #endregion
@@ -145,32 +188,105 @@ public class GiantNetworkActions : NetworkBehaviour
 
     private void Leap()
     {
-
+        doingAction = true;
+        leapReady = false;
+        StartCoroutine(Jump());
     }
 
     private IEnumerator Jump()
     {
-        yield return new WaitForSeconds(1f);
+        Ability2UI.SetFillAmount(1);
+
+        canMove = false;
+
+        float elapsedTime = 0f;
+        float time = 0.25f;
+
+        Vector3 start = transform.position;
+        Vector3 end = new Vector3(transform.position.x, 30, transform.position.z);
+
+        while (elapsedTime < time)
+        {
+            if (IsOwner)
+                transform.position = Vector3.Lerp(start, end, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        leapLandingInstance = Instantiate(leapLandingArea, transform);
+        leapLandingInstance.transform.SetParent(null);
+        leapLandingInstance.transform.position = new Vector3(transform.position.x, 0.01f, transform.position.z);
+
+        canMove = true;
+
+        StartCoroutine(LeapAction());
     }
 
     private IEnumerator LeapAction()
     {
-        yield return new WaitForSeconds(1f);
+        onAir = true;
+
+        float elapsedTime = 0f;
+        float time = 5f;
+
+        while (elapsedTime < time)
+        {
+            leapLandingInstance.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        StartCoroutine(LeapEnd());
     }
 
     public IEnumerator LeapEnd()
     {
-        yield return new WaitForSeconds(1f);
+        canMove = false;
+
+        float elapsedTime = 0f;
+        float time = 0.25f;
+
+        Vector3 start = transform.position;
+        Vector3 end = new Vector3(transform.position.x, -0.2f, transform.position.z);
+
+        while (elapsedTime < time)
+        {
+            if (IsOwner) 
+                transform.position = Vector3.Lerp(start, end, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        LandingCrash();
+
+        onAir = false;
+        canMove = true;
+
+        Destroy(leapLandingInstance);
+        Debug.Log("You should land here");
+        doingAction = false;
+        Ability2UI.Cooldown(leapCooldown);
+        StartCoroutine(LeapRecharge());
     }
 
     private void LandingCrash()
     {
+        GameObject.FindWithTag("MainCamera").GetComponent<CameraShake>().SmallShake(0.5f, 1f);
 
+        Collider[] objectsInRange = Physics.OverlapSphere(transform.position, leapCrashRange);
+        foreach (var objectHit in objectsInRange)
+        {
+            if (objectHit.CompareTag("Player"))
+            {
+                objectHit.GetComponent<PlayerController>().Stun(1.2f);
+            }
+        }
     }
 
     private IEnumerator LeapRecharge()
     {
         yield return new WaitForSeconds(leapCooldown);
+        leapReady = true;
     }
 
     #endregion

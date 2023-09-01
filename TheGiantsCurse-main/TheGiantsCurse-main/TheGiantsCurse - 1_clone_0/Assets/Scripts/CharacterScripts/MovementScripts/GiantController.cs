@@ -41,6 +41,8 @@ public class GiantController : NetworkBehaviour
     public GadgetUIBehaviour Ability2UI;
     public GadgetUIBehaviour Ability3UI;
 
+    [SerializeField] protected GiantNetworkActions networkActions;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -87,13 +89,13 @@ public class GiantController : NetworkBehaviour
         }
         else
         {
-            cameraInstance = Instantiate(cameraPrefab, null);
+            /*cameraInstance = Instantiate(cameraPrefab, null);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
             cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
             if (GameObject.FindWithTag("tmpCam") != null) 
                 GameObject.FindWithTag("tmpCam").SetActive(false);
             HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
-            FinalTrackManagement.instance.AssignGiantCliendId();
+            FinalTrackManagement.instance.AssignGiantCliendId();*/
             Ability1UI.SetFillAmount(0);
             Ability2UI.SetFillAmount(0);
             Ability3UI.SetFillAmount(0);
@@ -107,6 +109,7 @@ public class GiantController : NetworkBehaviour
         Gizmos.DrawWireSphere(new Vector3(transform.position.x, 0, transform.position.z), leapCrashRange);
     }
 
+    //It may be necessary to move this to GNA
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -141,9 +144,10 @@ public class GiantController : NetworkBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            if (clubReady && !doingAction)
+            if (networkActions.clubReady && !networkActions.doingAction)
             {
-                ClubAttack();
+                //ClubAttack();
+                networkActions.Ability(0);
             }
             else
                 Debug.Log("Club is not ready yet");
@@ -151,9 +155,10 @@ public class GiantController : NetworkBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            if (boulderReady && !doingAction)
+            if (networkActions.boulderReady && !networkActions.doingAction)
             {
-                ThrowBoulder();
+                //ThrowBoulder();
+                networkActions.Ability(2);
             }
             else
                 Debug.Log("Boulder is not ready yet");
@@ -161,9 +166,10 @@ public class GiantController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (leapReady && !doingAction)
+            if (networkActions.leapReady && !networkActions.doingAction)
             {
-                Leap();
+                //Leap();
+                networkActions.Ability(1);
             }
             else
                 Debug.Log("Leap is not ready yet");
@@ -191,7 +197,8 @@ public class GiantController : NetworkBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         movementInput = new Vector3(horizontal, 0, vertical);
 
-        if (movementEnabled)
+        if(networkActions.canMove)
+        //if (movementEnabled)
         {
             if (movementInput != Vector3.zero)
             {
@@ -199,7 +206,15 @@ public class GiantController : NetworkBehaviour
             }
             else
                 animator.SetBool("run", false);
+
+            if (networkActions.onAir)
+                speed = jumpSpeed;
+            else
+                speed = movementSpeed;
+
             rb.MovePosition(transform.position + movementInput * speed * Time.fixedDeltaTime);
+
+            RotateLook();
         }
 
         if (rotationEnabled)

@@ -16,7 +16,8 @@ public class AttractorBehaviour : MonoBehaviour
     {
         if (transform.childCount < 1)
         {
-            SoundManager.instance.PlayEffect(pickupSound);
+            if(pickupSound!=null)
+                SoundManager.instance.PlayEffect(pickupSound);
             Destroy(this.gameObject);
         }
     }

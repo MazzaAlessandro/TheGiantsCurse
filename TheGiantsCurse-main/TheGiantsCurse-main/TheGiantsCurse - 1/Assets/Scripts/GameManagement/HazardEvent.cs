@@ -49,11 +49,11 @@ public class HazardEvent : MonoBehaviour
         }
     }
 
-    public void PickRandomEvent()
+    public void PickRandomEvent(int caller)
     {
         Debug.Log("event starts");
         int hazard = Random.Range(0,3);
-        NetworkMatchManager.instance.HazardCalled(hazard);
+        //MatchManager.instance.HazardCalled(hazard);
         /*switch (hazard)
         {
             case 0:
@@ -66,6 +66,7 @@ public class HazardEvent : MonoBehaviour
                 Wind();
                 break;
         }*/
+        MatchManager.instance.Hazard(caller, hazard);
     }
 
     public void ExecuteHazardEvent(int hazard)

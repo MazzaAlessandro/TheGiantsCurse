@@ -3130,6 +3130,7 @@ GameObject:
   - component: {fileID: 1027698611376988018}
   - component: {fileID: 1027698611376988019}
   - component: {fileID: 1027698611376988012}
+  - component: {fileID: 5824340100720781060}
   - component: {fileID: 4885242233412713221}
   - component: {fileID: 2977505220860975783}
   m_Layer: 0
@@ -3246,7 +3247,7 @@ MonoBehaviour:
   jumpSpeed: 12
   leapCooldown: 15
   clubCooldown: 5
-  boulderCooldown: 10
+  boulderCooldown: 20
   boulderSpeed: 20
   leapCrashRange: 8
   club: {fileID: 9126107871060307541}
@@ -3258,6 +3259,37 @@ MonoBehaviour:
   Ability1UI: {fileID: 2549452123302917865}
   Ability2UI: {fileID: 4734450019352477088}
   Ability3UI: {fileID: 5463629819683434736}
+  networkActions: {fileID: 5824340100720781060}
+--- !u!114 &5824340100720781060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087365073303109029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 890601994fcdbae4db9cb9e78469a411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leapCooldown: 15
+  clubCooldown: 5
+  boulderCooldown: 20
+  boulderSpeed: 20
+  leapCrashRange: 8
+  club: {fileID: 9126107871060307541}
+  boulder: {fileID: 5748187089747987225, guid: 449d45862242a57449ec1c347a86f89d, type: 3}
+  leapLandingArea: {fileID: 6608151584160924760, guid: dd5b78b9726510a48b912a9210eaa34d, type: 3}
+  leapReady: 0
+  clubReady: 0
+  boulderReady: 0
+  doingAction: 0
+  canMove: 0
+  onAir: 0
+  Ability1UI: {fileID: 2549452123302917865}
+  Ability2UI: {fileID: 4734450019352477088}
+  Ability3UI: {fileID: 5463629819683434736}
+  animator: {fileID: 1027698611376988013}
 --- !u!114 &4885242233412713221
 MonoBehaviour:
   m_ObjectHideFlags: 0

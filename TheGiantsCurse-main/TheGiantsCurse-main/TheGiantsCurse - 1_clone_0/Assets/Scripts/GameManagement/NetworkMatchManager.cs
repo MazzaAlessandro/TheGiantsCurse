@@ -36,6 +36,8 @@ public class NetworkMatchManager : NetworkBehaviour
     {
         var clientId = serverRpcParams.Receive.SenderClientId;
 
+        Debug.Log("Test Server");
+
         if (NetworkManager.ConnectedClients.ContainsKey(clientId))
         {
             foreach(var client in NetworkManager.ConnectedClients)
@@ -69,7 +71,8 @@ public class NetworkMatchManager : NetworkBehaviour
     [ClientRpc]
     void TestClientRpc(ClientRpcParams clientRpcParams = default)
     {
-        LevelManager.instance.Test();
+        //LevelManager.instance.Test();
+        Debug.Log("I am not who pressed the button");
     }
 
     //==============Handling Hazards==============
