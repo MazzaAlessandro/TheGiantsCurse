@@ -61,11 +61,15 @@ public class GiantController : NetworkBehaviour
         doingAction = false;
         speed = movementSpeed;
         //this.gameObject.GetComponent<NetworkObject>().Spawn();
-        foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
-        {
-            i.enabled = true;
-        }
         
+        
+    }
+
+    private void OnEnable()
+    {
+        //GetComponent<NetworkObject>().ChangeOwnership(NetworkManager.LocalClientId);
+        networkActions.GetOwnership();
+        LocalCameraSetup();
     }
 
     public void LocalCameraSetup()
@@ -75,6 +79,18 @@ public class GiantController : NetworkBehaviour
         cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
         //GameObject.FindWithTag("tmpCam").SetActive(false);
         HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
+
+        foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
+        {
+            i.enabled = true;
+        }
+
+        Ability1UI.SetFillAmount(0);
+        Ability2UI.SetFillAmount(0);
+        Ability3UI.SetFillAmount(0);
+
+        networkActions.SetUp();
+        TransitionHandler.instance.Open();
     }
 
     public override void OnNetworkSpawn()
@@ -175,7 +191,7 @@ public class GiantController : NetworkBehaviour
                 Debug.Log("Leap is not ready yet");
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        /*if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             cameraInstance = Instantiate(cameraPrefab, null);
             mainCamera = cameraInstance.GetComponentInChildren<Camera>();
@@ -187,7 +203,7 @@ public class GiantController : NetworkBehaviour
             Ability1UI.SetFillAmount(0);
             Ability2UI.SetFillAmount(0);
             Ability3UI.SetFillAmount(0);
-        }
+        }*/
     }
 
     
@@ -217,8 +233,7 @@ public class GiantController : NetworkBehaviour
             RotateLook();
         }
 
-        if (rotationEnabled)
-            RotateLook();
+        //if (rotationEnabled) RotateLook();
     }
 
     private void RotateLook()

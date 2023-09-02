@@ -32,7 +32,7 @@ public class ExitLevel : MonoBehaviour
                     other.gameObject.GetComponent<PlayerController>().TurnOffExit();
                     other.gameObject.GetComponent<PlayerController>().EnterLevel();
                     if (isFinalRoom)
-                        EndReached(other.gameObject);
+                        EndReached(other.gameObject.GetComponent<PlayerController>().playerCode);
                     else
                         CompleteLevel(other.gameObject);
                 }
@@ -58,7 +58,7 @@ public class ExitLevel : MonoBehaviour
 
 
     //Here it should initiate a sequence that swaps the player with the Giant and moves all others to the final track
-    private void EndReached(GameObject player)
+    private void EndReached(int player)
     {
         Debug.Log("The Player has reached the end of the sequence");
         //v1.0
@@ -68,7 +68,7 @@ public class ExitLevel : MonoBehaviour
         StartCoroutine(ChangePhaseCoroutine(player));
     }
 
-    private IEnumerator ChangePhaseCoroutine(GameObject player)
+    private IEnumerator ChangePhaseCoroutine(int player)
     {
         HazardEvent.instance.Earthquake();
         yield return new WaitForSeconds(1f);
@@ -76,10 +76,11 @@ public class ExitLevel : MonoBehaviour
         TransitionHandler.instance.Close();
         yield return new WaitForSeconds(1f);
 
-        FinalTrackManagement.instance.Swap(player);
+        MatchManager.instance.EndReached(player);
+        /*FinalTrackManagement.instance.Swap(player);
         yield return new WaitForSeconds(2f);
 
         SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
-        TransitionHandler.instance.Open();
+        TransitionHandler.instance.Open();*/
     }
 }

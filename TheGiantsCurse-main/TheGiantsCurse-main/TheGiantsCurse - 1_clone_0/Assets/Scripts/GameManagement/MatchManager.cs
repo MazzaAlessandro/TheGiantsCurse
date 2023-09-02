@@ -9,6 +9,8 @@ public class MatchManager : NetworkBehaviour
 
     public PlayerController localPlayer;
 
+    public GiantController giant;
+
     private void Awake()
     {
         if(instance!=null && instance != this)
@@ -93,6 +95,44 @@ public class MatchManager : NetworkBehaviour
     private void LocalHazard(int hazard)
     {
         HazardEvent.instance.ExecuteHazardEvent(hazard);
+    }
+
+    #endregion
+
+    #region Phase shift
+
+    public void EndReached(int callerCode)
+    {
+        Debug.Log("I reached the end!");
+        EndReachedServerRpc(callerCode);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void EndReachedServerRpc(int callerCode)
+    {
+        EndReachedClientRpc(callerCode);
+    }
+
+    [ClientRpc]
+    private void EndReachedClientRpc(int callerCode)
+    {
+        if (callerCode != localPlayer.playerCode)
+            MoveToFinalTrack();
+        else
+            TurnToGiant();
+    }
+
+    private void MoveToFinalTrack()
+    {
+        Debug.Log("Someone else reached the end");
+        localPlayer.MoveToFinalTrack();
+    }
+
+    private void TurnToGiant()
+    {
+        Debug.Log("Turning into Giant now...");
+        localPlayer.gameObject.SetActive(false);
+        giant.enabled = true;
     }
 
     #endregion

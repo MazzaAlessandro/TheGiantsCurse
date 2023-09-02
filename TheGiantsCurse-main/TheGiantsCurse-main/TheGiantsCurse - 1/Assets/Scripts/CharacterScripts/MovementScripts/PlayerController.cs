@@ -99,6 +99,10 @@ public class PlayerController : NetworkBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        Destroy(cameraInstance);
+    }
     //Sets up the various booleans and values
     private void Awake()
     {
@@ -786,8 +790,16 @@ public class PlayerController : NetworkBehaviour
 
     public void MoveToFinalTrack()
     {
+        Light globalLight = GameObject.FindGameObjectWithTag("GlobalLight").GetComponent<Light>();
+
         FinalTrackManagement.instance.AssignSpawn(this, playerCode);
         TransitionHandler.instance.CloseAndOpen(2f);
+
+        if (globalLight.intensity < 1)
+        {
+            globalLight.intensity = 1;
+        }
+
         EnterLevel();
     }
 

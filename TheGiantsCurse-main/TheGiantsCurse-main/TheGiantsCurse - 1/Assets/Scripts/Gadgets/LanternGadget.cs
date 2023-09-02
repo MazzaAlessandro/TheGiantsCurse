@@ -19,9 +19,9 @@ public class LanternGadget : Gadget
     // Start is called before the first frame update
     void Start()
     {
-        globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
+        //globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
         isReady = true;
-        if(globalLight.intensity < 0.5f)
+        /*if(globalLight.intensity < 0.5f)
         {
             lanternLight.intensity = lanternIntensity;
             lightOn = true;
@@ -30,13 +30,17 @@ public class LanternGadget : Gadget
         {
             lanternLight.intensity = 0;
             lightOn = false;
-        }
+        }*/
+        lanternLight.intensity = 0;
         gadgetUI.SetFillAmount(0);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        if (globalLight == null && GameObject.FindWithTag("GlobalLight").GetComponent<Light>() != null)
+            globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
+
         if (globalLight != null)
         {
             if (globalLight.intensity < 0.5f && !lightOn)

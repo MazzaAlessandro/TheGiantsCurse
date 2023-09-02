@@ -92,7 +92,8 @@ public class HazardEvent : MonoBehaviour
     {
         globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
         Debug.Log("darkness starts");
-        StartCoroutine(Helper.Darkness(globalLight, 1, hazardDuration));
+        if (globalLight.intensity > 0.5f)
+            StartCoroutine(Helper.Darkness(globalLight, 1, hazardDuration));
     }
 
     public void Earthquake()

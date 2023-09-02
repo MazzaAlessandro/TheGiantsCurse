@@ -26,6 +26,27 @@ public class GiantNetworkActions : NetworkBehaviour
 
     [SerializeField] private Animator animator;
 
+    public void SetUp()
+    {
+        leapReady = true;
+        clubReady = true;
+        boulderReady = true;
+        doingAction = false;
+        canMove = true;
+        onAir = false;
+    }
+
+    public void GetOwnership()
+    {
+        ChangeOwnershipServerRpc(NetworkManager.LocalClientId);
+    }
+
+    [ServerRpc(RequireOwnership =false)]
+    private void ChangeOwnershipServerRpc(ulong client)
+    {
+        GetComponent<NetworkObject>().ChangeOwnership(client);
+    }
+
     #region Test structure
 
     //Just testing if it works
