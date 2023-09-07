@@ -5322,10 +5322,14 @@ PrefabInstance:
     - target: {fileID: 1863474177839273368, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: OnAnimationEventTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1027698611376988012}
+      objectReference: {fileID: 5824340100720781060}
     - target: {fileID: 1863474177839273368, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: OnAnimationEventTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ClubAttackEnd
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863474177839273368, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
+      propertyPath: OnAnimationEventTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GiantNetworkActions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2955763791980674143, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: m_RootOrder

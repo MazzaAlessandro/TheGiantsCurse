@@ -136,4 +136,35 @@ public class MatchManager : NetworkBehaviour
     }
 
     #endregion
+
+    #region Win or Lose
+
+    //called by PlayerController on death, it signals to everyone else that he died
+    //to prevent the game from breaking if the host disconnects, I could implement a spectator mode
+    public void PlayerDeath()
+    {
+
+    }
+
+    //If all players died, these two should execute the win for the giant
+    //Otherwise it just subtracts the dead player from the players list
+    [ServerRpc(RequireOwnership = false)]
+    private void PlayerDeathServerRpc()
+    {
+
+    }
+
+    [ClientRpc]
+    private void PlayerDeathClientRpc()
+    {
+
+    }
+
+    //called when a player escapes, it should return him that he won and the others that they lost
+    public void PlayerEscaped()
+    {
+
+    }
+
+    #endregion
 }

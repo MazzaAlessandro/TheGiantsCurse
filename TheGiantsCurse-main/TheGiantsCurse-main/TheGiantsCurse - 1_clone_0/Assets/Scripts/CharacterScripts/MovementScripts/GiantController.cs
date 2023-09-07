@@ -76,7 +76,7 @@ public class GiantController : NetworkBehaviour
     {
         cameraInstance = Instantiate(cameraPrefab, null);
         mainCamera = cameraInstance.GetComponentInChildren<Camera>();
-        cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
+        cameraInstance.GetComponent<CameraFollow>().ChangeFollowGiant(this.gameObject);
         //GameObject.FindWithTag("tmpCam").SetActive(false);
         HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
 
