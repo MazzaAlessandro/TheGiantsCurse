@@ -251,4 +251,33 @@ public class PlayerNetworkActions : NetworkBehaviour
         holdingItem = false;
     }
     #endregion
+
+    #region Death
+
+    public void Death()
+    {
+        DeathServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership =false)]
+    private void DeathServerRpc()
+    {
+        DeathClientRpc();
+    }
+
+    [ClientRpc]
+    private void DeathClientRpc()
+    {
+        DeathAction();
+    }
+
+    private void DeathAction()
+    {
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(GetComponent<BoxCollider>());
+        //LevelManager.instance.Death();
+        Destroy(this);
+    }
+
+    #endregion
 }

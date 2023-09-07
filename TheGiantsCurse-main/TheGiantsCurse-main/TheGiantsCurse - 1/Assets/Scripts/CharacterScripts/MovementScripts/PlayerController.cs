@@ -722,10 +722,13 @@ public class PlayerController : NetworkBehaviour
     //The player dies. If we are in the final track, it signals to the others that he died
     public void Death()
     {
+        animator.SetTrigger("Death");
         dead = true;
         movementEnabled = false;
         aimingEnabled = false;
-        if (FinalTrackManagement.instance != null)
+        networkActions.Death();
+        MatchManager.instance.PlayerDeath(NetworkManager.LocalClientId);
+        /*if (FinalTrackManagement.instance != null)
         {
             if (IsOwner)
             {
@@ -736,26 +739,22 @@ public class PlayerController : NetworkBehaviour
 
         }
         else
-            DeathAction();
+            DeathAction();*/
         
     }
 
-    //Handles the player death
-    public void DeathAction()
-    {
-        animator.SetTrigger("Death");
-        Destroy(GetComponent<Rigidbody>());
-        Destroy(GetComponent<BoxCollider>());
-        LevelManager.instance.Death();
-        Destroy(this.gameObject);
-    }
-
-    public void Defeat()
+    /*public void Defeat()
     {
         movementEnabled = false;
         aimingEnabled = false;
         DeathAction();
     }
+
+    //Handles the player death
+    public void DeathAction()
+    {
+        
+    }*/
 
     //Handles player victory, communicating to the others that one player won
     public void Victory()
@@ -765,12 +764,12 @@ public class PlayerController : NetworkBehaviour
         aimingEnabled = false;
         Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
-        if (FinalTrackManagement.instance != null)
+        if (MatchManager.instance != null)
         {
             if (IsOwner)
             {
-                FinalTrackManagement.instance.PlayerEscaped(this.gameObject);
-                LevelManager.instance.Victory();
+                //FinalTrackManagement.instance.PlayerEscaped(this.gameObject);
+                //LevelManager.instance.Victory();
                 Debug.Log("LESS GOOOOO");
                 Destroy(this.gameObject);
             }

@@ -11,6 +11,10 @@ public class MatchManager : NetworkBehaviour
 
     public GiantController giant;
 
+    private List<ulong> clientIDList;
+
+    private ulong giantClientID;
+
     private void Awake()
     {
         if(instance!=null && instance != this)
@@ -26,7 +30,10 @@ public class MatchManager : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (IsServer)
+        {
+            clientIDList = ServerManager.instance.GetClientIdList();
+        }
     }
 
     // Update is called once per frame
@@ -40,6 +47,27 @@ public class MatchManager : NetworkBehaviour
         if (player.enabled)
         {
             localPlayer = player;
+        }
+    }
+
+    public void ClientDisconnected(ulong clientId)
+    {
+        if (IsServer)
+        {
+            if(clientId == giantClientID)
+            {
+                //all players win
+            }
+
+            else if (clientIDList.Contains(clientId))
+            {
+                clientIDList.Remove(clientId);
+
+                if(clientIDList.Count == 0)
+                {
+                    //Giant win
+                }
+            }
         }
     }
 
@@ -101,15 +129,17 @@ public class MatchManager : NetworkBehaviour
 
     #region Phase shift
 
-    public void EndReached(int callerCode)
+    public void EndReached(int callerCode, ulong clientId)
     {
         Debug.Log("I reached the end!");
-        EndReachedServerRpc(callerCode);
+        EndReachedServerRpc(callerCode, clientId);
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void EndReachedServerRpc(int callerCode)
+    private void EndReachedServerRpc(int callerCode, ulong clientId)
     {
+        giantClientID = clientId;
+        clientIDList.Remove(clientId);
         EndReachedClientRpc(callerCode);
     }
 
@@ -141,24 +171,27 @@ public class MatchManager : NetworkBehaviour
 
     //called by PlayerController on death, it signals to everyone else that he died
     //to prevent the game from breaking if the host disconnects, I could implement a spectator mode
-    public void PlayerDeath()
+    public void PlayerDeath(ulong clientId)
     {
-
+        PlayerDeathServerRpc(clientId);
     }
 
     //If all players died, these two should execute the win for the giant
     //Otherwise it just subtracts the dead player from the players list
     [ServerRpc(RequireOwnership = false)]
-    private void PlayerDeathServerRpc()
+    private void PlayerDeathServerRpc(ulong clientId)
     {
+        if (clientIDList.Contains(clientId))
+        {
+            clientIDList.Remove(clientId);
+        }
 
+        if (clientIDList.Count == 0)
+        {
+            //Giant wins
+        }
     }
 
-    [ClientRpc]
-    private void PlayerDeathClientRpc()
-    {
-
-    }
 
     //called when a player escapes, it should return him that he won and the others that they lost
     public void PlayerEscaped()

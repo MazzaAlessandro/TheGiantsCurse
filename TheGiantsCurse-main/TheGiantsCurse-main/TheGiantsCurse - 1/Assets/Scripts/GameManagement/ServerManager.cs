@@ -112,6 +112,11 @@ public class ServerManager : MonoBehaviour
     {
         if (clientData.ContainsKey(clientId))
         {
+            if (gameHasStarted && MatchManager.instance!=null)
+            {
+                MatchManager.instance.ClientDisconnected(clientId);
+            }
+
             if (clientData.Remove(clientId))
             {
                 Debug.Log($"Removed client {clientId}");
@@ -132,5 +137,17 @@ public class ServerManager : MonoBehaviour
         gameHasStarted = true;
 
         NetworkManager.Singleton.SceneManager.LoadScene(gameplayScene, LoadSceneMode.Single);
+    }
+
+    public List<ulong> GetClientIdList()
+    {
+        List<ulong> clients = new List<ulong>();
+
+        foreach(ulong id in clientData.Keys)
+        {
+            clients.Add(id);
+        }
+
+        return clients;
     }
 }

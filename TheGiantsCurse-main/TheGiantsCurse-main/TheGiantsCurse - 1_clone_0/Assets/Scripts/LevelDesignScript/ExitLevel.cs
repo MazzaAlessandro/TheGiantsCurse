@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ExitLevel : MonoBehaviour
+public class ExitLevel : NetworkBehaviour
 {
     [SerializeField] private bool isFinalRoom;
 
@@ -76,7 +77,7 @@ public class ExitLevel : MonoBehaviour
         TransitionHandler.instance.Close();
         yield return new WaitForSeconds(1f);
 
-        MatchManager.instance.EndReached(player);
+        MatchManager.instance.EndReached(player, NetworkManager.LocalClientId);
         /*FinalTrackManagement.instance.Swap(player);
         yield return new WaitForSeconds(2f);
 
