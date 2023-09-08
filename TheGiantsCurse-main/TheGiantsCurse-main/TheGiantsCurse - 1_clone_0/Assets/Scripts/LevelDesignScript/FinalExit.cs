@@ -8,8 +8,11 @@ public class FinalExit : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerController>().Victory();
-            FinalTrackManagement.instance.PlayerEscaped(other.gameObject);
+            if (other.gameObject.GetComponent<PlayerController>().enabled)
+            {
+                other.gameObject.GetComponent<PlayerController>().Victory();
+                //FinalTrackManagement.instance.PlayerEscaped(other.gameObject);
+            }
         }
     }
 }

@@ -11,9 +11,10 @@ public class MatchManager : NetworkBehaviour
 
     public GiantController giant;
 
-    private List<ulong> clientIDList;
+    public List<ulong> clientIDList;
 
-    private ulong giantClientID;
+    private int giantPlayerCode;
+    public ulong giantClientID;
 
     private void Awake()
     {
@@ -139,6 +140,7 @@ public class MatchManager : NetworkBehaviour
     private void EndReachedServerRpc(int callerCode, ulong clientId)
     {
         giantClientID = clientId;
+        giantPlayerCode = callerCode;
         clientIDList.Remove(clientId);
         EndReachedClientRpc(callerCode);
     }
@@ -188,15 +190,50 @@ public class MatchManager : NetworkBehaviour
 
         if (clientIDList.Count == 0)
         {
-            //Giant wins
+            GiantWinClientRpc(giantPlayerCode);
         }
     }
 
+    [ClientRpc]
+    private void GiantWinClientRpc(int giantCallerCode)
+    {
+        if(localPlayer.playerCode == giantCallerCode)
+        {
+            //win
+            Debug.Log("You have killed all other players. YOU WIN");
+        }
+        else
+        {
+            //lose
+            Debug.Log("The Giant has killed all players. YOU LOSE");
+        }
+    }
 
     //called when a player escapes, it should return him that he won and the others that they lost
-    public void PlayerEscaped()
+    public void PlayerEscaped(int winner)
     {
+        PlayerEscapedServerRpc(winner);
+    }
 
+    [ServerRpc(RequireOwnership =false)]
+    private void PlayerEscapedServerRpc(int winner)
+    {
+        PlayerEscapedClientRpc(winner);
+    }
+
+    [ClientRpc]
+    private void PlayerEscapedClientRpc(int winner)
+    {
+        if(localPlayer.playerCode == winner)
+        {
+            //win
+            Debug.Log("You escaped from the cave. YOU WIN");
+        }
+        else
+        {
+            //loose
+            Debug.Log("Someone else escaped from the cave. YOU LOSE");
+        }
     }
 
     #endregion

@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/FirstMenu.unity
+    guid: 35668a93c3f0f294392a065e00be4569
+  - enabled: 1
+    path: Assets/Scenes/SecondMenu.unity
+    guid: f88b32672ac94a9408f823a3a49a42e3
+  - enabled: 1
+    path: Assets/Scenes/OptionMenu.unity
+    guid: 7e9226ebb6683f24aa553537a81242cb
+  - enabled: 1
+    path: Assets/Scenes/StartingScene.unity
+    guid: f09daf8e19e2b924486b702195e96166
+  - enabled: 1
+    path: Assets/Scenes/Level_00.unity
+    guid: 6f268738f52b6404abd51020d374f17d
+  - enabled: 1
+    path: Assets/Scenes/Level_01.unity
+    guid: af8af651bf2225f408edd34cee9996a0
+  - enabled: 1
+    path: Assets/Scenes/Level_02.unity
+    guid: 4c327648c3a8dad41ba9b603f8daba5f
+  - enabled: 1
+    path: Assets/Scenes/Level_03.unity
+    guid: 8812208a8475f8742aa59afcc30f884c
+  - enabled: 1
+    path: Assets/Scenes/Level_04.unity
+    guid: 6257e2fa249bc4243adf7fb092f40498
+  - enabled: 1
+    path: Assets/Scenes/Level_05.unity
+    guid: 6816937e8fc1c7040910ca0f35e24b6a
+  - enabled: 1
+    path: Assets/Scenes/Level_06.unity
+    guid: 896f5a37b3eb7044395fc227a3e97d96
+  - enabled: 1
+    path: Assets/Scenes/FinalTrack.unity
+    guid: ca4178392d424874d87a1db374ef95a8
+  - enabled: 1
+    path: Assets/Scenes/TestingArea.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/VideoOpeningScene.unity
+    guid: 22d692596202fcf4a92585cd52cdb3d7
+  - enabled: 1
+    path: Assets/Scenes/DefeatClipCharacter.unity
+    guid: 345d87b4d0710564fb3a8be605767d7f
+  - enabled: 1
+    path: Assets/Scenes/DefeatClipGiant.unity
+    guid: b76e960ad59d8734abbc243e2eeab7a3
+  - enabled: 1
+    path: Assets/Scenes/VictoryClipCharacter.unity
+    guid: 8b06ce33e26ce8a4e8c79f3417b1a92a
+  - enabled: 1
+    path: Assets/Scenes/VictoryClipGiant.unity
+    guid: f48468fdb4676db409153f8535b1e030
+  - enabled: 1
+    path: Assets/Scenes/MatchManager.unity
+    guid: c69db73b4fbe3d74bbb62529e1c2ffd3
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: 8ed54db0684e7e84fac20cce3750f518
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelection.unity
+    guid: 34a5d644b70b97846b6d5658fc87bee8
+  m_configObjects: {}

@@ -252,13 +252,14 @@ public class PlayerController : NetworkBehaviour
             //This input is used for testing certain methods during programming, it can be easily removed
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                MatchManager.instance.Test(playerCode);
+                //MatchManager.instance.Test(playerCode);
                 //networkActions.Test(playerCode);
                 //MoveToFinalTrack();
                 //NetworkMatchManager.instance.Test();
                 //LevelManager.instance.LoadFinalLevel();
                 //HazardEvent.instance.Earthquake();
                 //Death();
+                MatchManager.instance.EndReached(playerCode, NetworkManager.LocalClientId);
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -743,15 +744,19 @@ public class PlayerController : NetworkBehaviour
         
     }
 
-    /*public void Defeat()
+    public void Defeat()
     {
+        animator.SetTrigger("Death");
+        dead = true;
         movementEnabled = false;
         aimingEnabled = false;
-        DeathAction();
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(GetComponent<BoxCollider>());
+
     }
 
     //Handles the player death
-    public void DeathAction()
+    /*public void DeathAction()
     {
         
     }*/
@@ -770,8 +775,9 @@ public class PlayerController : NetworkBehaviour
             {
                 //FinalTrackManagement.instance.PlayerEscaped(this.gameObject);
                 //LevelManager.instance.Victory();
-                Debug.Log("LESS GOOOOO");
-                Destroy(this.gameObject);
+                MatchManager.instance.PlayerEscaped(playerCode);
+                Debug.Log("Escaped");
+                //Destroy(this.gameObject);
             }
         }
     }

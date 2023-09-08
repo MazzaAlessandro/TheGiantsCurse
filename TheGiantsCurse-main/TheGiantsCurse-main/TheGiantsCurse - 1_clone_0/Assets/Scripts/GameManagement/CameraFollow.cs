@@ -51,14 +51,21 @@ public class CameraFollow : NetworkBehaviour
             {
                 float vertical = Input.GetAxisRaw("Vertical");
                 
-                if (vertical < 0)
-                    yOffSet = -2f;
-                if (vertical > 0)
-                    yOffSet = 10f;
-                if (vertical == 0)
-                    yOffSet = 0f;
+                if(vertical == 0)
+                {
+                    transform.position = new Vector3(playerGameObject.transform.position.x, 0, playerGameObject.transform.position.z);
+                }
+
+                else
+                {
+                    if (vertical < 0)
+                        yOffSet = -2f;
+                    if (vertical > 0)
+                        yOffSet = 15f;
+
+                    transform.position = Vector3.SmoothDamp(prevPos, new Vector3(playerGameObject.transform.position.x, yOffSet, playerGameObject.transform.position.z), ref vel, 0.5f);
+                }
                 
-                transform.position = Vector3.SmoothDamp(prevPos, new Vector3(playerGameObject.transform.position.x, yOffSet, playerGameObject.transform.position.z), ref vel, 0.5f);
                 
                 prevPos = transform.position;
             }
