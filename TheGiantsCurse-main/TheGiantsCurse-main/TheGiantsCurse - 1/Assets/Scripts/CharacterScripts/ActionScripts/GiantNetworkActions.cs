@@ -137,8 +137,8 @@ public class GiantNetworkActions : NetworkBehaviour
         Ability1UI.SetFillAmount(1);
         Debug.Log("Activate Club");
         canMove = false;
-        animator.SetTrigger("attack1");
         club.SetActive(true);
+        animator.SetTrigger("attack1");
         club.transform.localPosition = new Vector3(0, -0.4f, 0.6f);
         club.GetComponent<Animator>().SetTrigger("Attack");
         clubReady = false;

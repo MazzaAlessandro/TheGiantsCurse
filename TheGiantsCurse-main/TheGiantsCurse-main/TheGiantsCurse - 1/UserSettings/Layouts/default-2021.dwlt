@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 82
+  controlID: 20
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 83
+  controlID: 21
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 84
+  controlID: 22
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 85
+  controlID: 105
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1003,13 +1003,13 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/GameManagement
+    - Assets/Scripts/CharacterScripts/MovementScripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 72
   m_LastFolders:
-  - Assets/Scripts/GameManagement
+  - Assets/Scripts/CharacterScripts/MovementScripts
   m_LastFoldersGridSize: 72
   m_LastProjectPath: C:\Users\alema\Documents\GitHub\TheGiantsCurse\TheGiantsCurse-main\TheGiantsCurse-main\TheGiantsCurse
     - 1
@@ -1017,8 +1017,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 434}
-    m_SelectedIDs: d0a50000
-    m_LastClickedID: 42448
+    m_SelectedIDs: aacb0000
+    m_LastClickedID: 52138
     m_ExpandedIDs: 0000000080a5000082a5000084a5000086a5000088a500008aa500008ca5000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1072,8 +1072,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 5c1f0000
-    m_LastClickedInstanceID: 8028
+    m_SelectedInstanceIDs: 4a3b0000
+    m_LastClickedInstanceID: 15178
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000468f00008e9700001a980000c89700005898000052f90000d4050100b4de0000c2a8000054d9000046d2000010ec00000eec0000827b0000867b00007cae000030b000008abb0000e2c2000000000000
     m_RenameOverlay:
@@ -1099,7 +1099,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 8}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 72
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 253.66669

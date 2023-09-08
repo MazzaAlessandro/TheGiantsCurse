@@ -3212,8 +3212,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 4, z: 2}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 2, y: 4, z: 1.0558853}
+  m_Center: {x: 0, y: 2, z: -0.17785263}
 --- !u!54 &1027698611376988019
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5341,11 +5341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2955763791980674143, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2955763791980674143, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5000001
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2955763791980674143, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5353,7 +5353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2955763791980674143, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.2
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 2955763791980674143, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5387,7 +5387,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeClub
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8865306482373579313, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
+    - {fileID: 8865306482373579312, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5de3ecb229918d84ea4f4d7d56aae130, type: 3}
 --- !u!4 &7099041609425283938 stripped
 Transform:

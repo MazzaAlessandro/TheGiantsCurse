@@ -16,6 +16,8 @@ public class MatchManager : NetworkBehaviour
     private int giantPlayerCode;
     public ulong giantClientID;
 
+    public int playerCount;
+
     private void Awake()
     {
         if(instance!=null && instance != this)
@@ -31,9 +33,15 @@ public class MatchManager : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public override void OnNetworkSpawn()
+    {
         if (IsServer)
         {
             clientIDList = ServerManager.instance.GetClientIdList();
+            playerCount = ServerManager.instance.clientData.Count;
         }
     }
 
@@ -42,6 +50,8 @@ public class MatchManager : NetworkBehaviour
     {
         
     }
+
+    
 
     public void SetLocalPlayer(PlayerController player)
     {

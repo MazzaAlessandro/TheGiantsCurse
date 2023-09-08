@@ -336,7 +336,8 @@ public class PlayerController : NetworkBehaviour
     private IEnumerator FallCoroutine()
     {
         //LevelManager.instance.FallTransition();
-        TransitionHandler.instance.CloseAndOpen(1.5f);
+        if(TransitionHandler.instance!=null)
+            TransitionHandler.instance.CloseAndOpen(1.5f);
         yield return new WaitForSeconds(1f);
         Spawn();
         

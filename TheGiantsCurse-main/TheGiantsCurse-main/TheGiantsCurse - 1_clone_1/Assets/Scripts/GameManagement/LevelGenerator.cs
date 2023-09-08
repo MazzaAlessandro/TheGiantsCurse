@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class LevelGenerator : MonoBehaviour
+public class LevelGenerator : NetworkBehaviour
 {
+    public static LevelGenerator instance;
+
     private List<int> tmpRoomsSet = new List<int> { 0, 1, 2, 3, 4, 5, 6 };
     private List<int> roomsSequence;
  
@@ -26,8 +29,31 @@ public class LevelGenerator : MonoBehaviour
     void Awake()
     {
         //Local test
-        RoomsSetup(5); 
+        //RoomsSetup(5); 
         //RoomsSetup(ServerManager.instance.clientData.Count);
+        if(instance!=null && instance != this)
+        {
+            Destroy(this);
+        }
+        else if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsServer)
+        {
+            Debug.Log("I'm Server");
+            RoomsSetup(ServerManager.instance.clientData.Count);
+        }
+
+        else
+        {
+            Debug.Log("I'm not");
+            SeedRequest(NetworkManager.LocalClientId);
+        }
     }
 
     private void RoomsSetup(int players)
@@ -96,5 +122,35 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+    }
+
+    public void SeedRequest(ulong client)
+    {
+        Debug.Log("Get request");
+        SeedRequestServerRpc(client);
+    }
+
+    [ServerRpc(RequireOwnership =false)]
+    private void SeedRequestServerRpc(ulong client)
+    {
+        if (!IsServer) 
+            return;
+
+        ClientRpcParams clientRpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { client }
+            }
+        };
+
+        SeedRequestClientRpc(seed, clientRpcParams);
+    }
+
+    [ClientRpc]
+    private void SeedRequestClientRpc(string seedRecieved, ClientRpcParams clientRpcParams = default)
+    {
+        seed = seedRecieved;
+        SeedParser(seed);
     }
 }
