@@ -4793,6 +4793,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 104988359221256524, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
+      propertyPath: cooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 104988359221256524, guid: 555527f44cccaab45b491f8a74603d11, type: 3}
       propertyPath: gadgetUI
       value: 
       objectReference: {fileID: 8831139172584369358}

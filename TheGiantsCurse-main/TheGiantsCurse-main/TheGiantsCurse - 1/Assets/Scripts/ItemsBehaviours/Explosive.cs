@@ -8,6 +8,7 @@ public class Explosive : MonoBehaviour
     [SerializeField] private float playerDamage = 5f;
     [SerializeField] private float explosionDelay = 3f;
 
+    [SerializeField] private GameObject igniteEffect;
     [SerializeField] private GameObject explosionEffect;
     private GameObject explosionInstance;
 
@@ -30,7 +31,10 @@ public class Explosive : MonoBehaviour
     }
     public void Ignite()
     {
-        Debug.Log("The barrel will explode in: " + explosionDelay);
+        if (igniteEffect != null)
+        {
+            igniteEffect.SetActive(true);
+        }
         SoundManager.instance.PlayMultipleTimes(tickingSound, tickingSound.length, 3);
         StartCoroutine(Countdown(explosionDelay));
     }
