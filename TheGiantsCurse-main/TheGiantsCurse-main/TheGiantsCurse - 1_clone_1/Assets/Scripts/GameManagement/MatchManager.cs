@@ -18,6 +18,8 @@ public class MatchManager : NetworkBehaviour
 
     public int playerCount;
 
+    private bool finalPhase = false;
+
     private void Awake()
     {
         if(instance!=null && instance != this)
@@ -74,10 +76,21 @@ public class MatchManager : NetworkBehaviour
             {
                 clientIDList.Remove(clientId);
 
-                if(clientIDList.Count == 0)
+                if (finalPhase)
                 {
-                    //Giant win
+                    if (clientIDList.Count == 0)
+                    {
+                        GiantWinClientRpc(giantPlayerCode);
+                    }
                 }
+                else
+                {
+                    if(clientIDList.Count == 1)
+                    {
+                        
+                    }
+                }
+                
             }
         }
     }
@@ -158,6 +171,7 @@ public class MatchManager : NetworkBehaviour
     [ClientRpc]
     private void EndReachedClientRpc(int callerCode)
     {
+        finalPhase = true;
         if (callerCode != localPlayer.playerCode)
             MoveToFinalTrack();
         else
@@ -198,9 +212,19 @@ public class MatchManager : NetworkBehaviour
             clientIDList.Remove(clientId);
         }
 
-        if (clientIDList.Count == 0)
+        if (finalPhase)
         {
-            GiantWinClientRpc(giantPlayerCode);
+            if (clientIDList.Count == 0)
+            {
+                GiantWinClientRpc(giantPlayerCode);
+            }
+        }
+        else
+        {
+            if (clientIDList.Count == 1)
+            {
+
+            }
         }
     }
 

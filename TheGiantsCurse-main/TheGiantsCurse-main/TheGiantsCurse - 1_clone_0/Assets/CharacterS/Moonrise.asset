@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   displayName: Moonrise
-  icon: {fileID: 21300000, guid: bc81ad78c8443fd4d811eec189dbac6e, type: 3}
+  icon: {fileID: 21300000, guid: 8860b33687eb96545af622f5bc0438cd, type: 3}
   introPrefab: {fileID: 712616003343428357, guid: 9953fc410f27c3640a24a80fb52db802, type: 3}
   gameplayPrefab: {fileID: -4116053001160639065, guid: 20cc4acfcc0e52b4d8fe9ee152996039, type: 3}

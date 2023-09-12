@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   displayName: Chasm
-  icon: {fileID: 21300000, guid: 8860b33687eb96545af622f5bc0438cd, type: 3}
+  icon: {fileID: 21300000, guid: 6c72cf3b84c749d458530bf18053e1ff, type: 3}
   introPrefab: {fileID: 2818278088902073472, guid: d875868674c46f14689e1a7c1f47b7e2, type: 3}
   gameplayPrefab: {fileID: -3752408716635801708, guid: 759463794ef9a4748a1dace5130e590e, type: 3}
