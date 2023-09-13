@@ -273,8 +273,8 @@ public class PlayerNetworkActions : NetworkBehaviour
 
     private void DeathAction()
     {
-        Destroy(GetComponent<Rigidbody>());
-        Destroy(GetComponent<BoxCollider>());
+        //Destroy(GetComponent<Rigidbody>());
+        //Destroy(GetComponent<BoxCollider>());
         //LevelManager.instance.Death();
         Destroy(this);
     }

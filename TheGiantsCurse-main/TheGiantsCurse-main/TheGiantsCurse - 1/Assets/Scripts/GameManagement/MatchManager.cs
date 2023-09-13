@@ -218,6 +218,8 @@ public class MatchManager : NetworkBehaviour
             {
                 GiantWinClientRpc(giantPlayerCode);
             }
+            else 
+                HandleDeath(clientId);
         }
         else
         {
@@ -225,7 +227,32 @@ public class MatchManager : NetworkBehaviour
             {
 
             }
+            else
+                HandleDeath(clientId);
         }
+    }
+
+    private void HandleDeath(ulong clientId)
+    {
+        if (!IsServer) 
+            return;
+
+        ClientRpcParams clientRpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { clientId }
+            }
+        };
+
+        PlayerDeathClientRpc(clientRpcParams);
+    }
+
+    [ClientRpc]
+    private void PlayerDeathClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        GameOverManagement.instance.Setup(0, true);
+        Debug.Log("YOU DIED");
     }
 
     [ClientRpc]
@@ -233,12 +260,12 @@ public class MatchManager : NetworkBehaviour
     {
         if(localPlayer.playerCode == giantCallerCode)
         {
-            //win
+            GameOverManagement.instance.Setup(3, true);
             Debug.Log("You have killed all other players. YOU WIN");
         }
         else
         {
-            //lose
+            GameOverManagement.instance.Setup(0, true);
             Debug.Log("The Giant has killed all players. YOU LOSE");
         }
     }
@@ -260,12 +287,12 @@ public class MatchManager : NetworkBehaviour
     {
         if(localPlayer.playerCode == winner)
         {
-            //win
+            GameOverManagement.instance.Setup(2, true);
             Debug.Log("You escaped from the cave. YOU WIN");
         }
         else
         {
-            //loose
+            GameOverManagement.instance.Setup(1, true);
             Debug.Log("Someone else escaped from the cave. YOU LOSE");
         }
     }

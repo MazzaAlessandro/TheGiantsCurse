@@ -130,7 +130,7 @@ public class GiantController : NetworkBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().Death();
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(999f);
         }
 
         else if (collision.gameObject.CompareTag("Destroyable"))

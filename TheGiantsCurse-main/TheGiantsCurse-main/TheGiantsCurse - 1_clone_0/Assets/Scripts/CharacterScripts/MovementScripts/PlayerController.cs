@@ -751,7 +751,8 @@ public class PlayerController : NetworkBehaviour
         dead = true;
         movementEnabled = false;
         aimingEnabled = false;
-        Destroy(GetComponent<Rigidbody>());
+        rb.useGravity = false;
+        //Destroy(GetComponent<Rigidbody>());
         Destroy(GetComponent<BoxCollider>());
 
     }
