@@ -1000,6 +1000,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   pickupTransform: {fileID: 4921800955798213391}
   throwTransform: {fileID: 6426446598493237863}
+  pc: {fileID: 6073178875629054923}
   gadget: {fileID: 6661157109977945368}
   throwSpeed: 20
   pickup: {fileID: 0}

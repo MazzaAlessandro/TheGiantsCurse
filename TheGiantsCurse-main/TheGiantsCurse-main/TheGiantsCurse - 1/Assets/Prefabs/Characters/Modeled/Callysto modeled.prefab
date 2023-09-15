@@ -1982,6 +1982,7 @@ MonoBehaviour:
   arrowPrefab: {fileID: 6920112574298119211, guid: f422e6a5a8c45904480adffc6668c3c4, type: 3}
   pickupTransform: {fileID: 2057985228066389250}
   throwTransform: {fileID: 3712479136167195633}
+  pc: {fileID: 3621067114013564850}
   gadget: {fileID: 836359082512921792}
   throwSpeed: 20
   pickup: {fileID: 0}
