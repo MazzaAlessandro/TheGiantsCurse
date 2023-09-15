@@ -18,7 +18,11 @@ public class MatchManager : NetworkBehaviour
 
     public int playerCount;
 
+    private int counter = 1;
+
     private bool finalPhase = false;
+
+    public GameObject loadingScreen;
 
     private void Awake()
     {
@@ -123,6 +127,35 @@ public class MatchManager : NetworkBehaviour
     }
 
     #endregion
+
+    public void FinishedLoading()
+    {
+        Debug.Log("finished");
+        FinishedLoadingServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership=false)]
+    private void FinishedLoadingServerRpc()
+    {
+        counter++;
+        Debug.Log($"Players done {counter}");
+        if(counter == playerCount)
+        {
+            Debug.Log("all done");
+            FinishedLoadingClientRpc();
+        }
+    }
+
+    [ClientRpc]
+    private void FinishedLoadingClientRpc()
+    {
+        DisableScreen();
+    }
+
+    private void DisableScreen()
+    {
+        loadingScreen.SetActive(false);
+    }
 
     #region HazardEvent
 

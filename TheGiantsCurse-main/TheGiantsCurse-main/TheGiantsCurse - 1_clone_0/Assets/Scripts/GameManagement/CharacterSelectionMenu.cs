@@ -13,6 +13,7 @@ public class CharacterSelectionMenu : NetworkBehaviour
     [SerializeField] private CharacterSelectButton selectButtonPrefab;
     [SerializeField] private PlayerCard[] playerCards;
     [SerializeField] private GameObject characterInfoPanel;
+    [SerializeField] private GameObject loadingScreen;
     [SerializeField] private TMP_Text characterNameText;
     [SerializeField] private Transform introSpawnPoint;
     [SerializeField] private TMP_Text joinCodeText;
@@ -166,12 +167,20 @@ public class CharacterSelectionMenu : NetworkBehaviour
             if (!player.IsLockedIn) { return; }
         }
 
+        LoadingScreenClientRpc();
+
         foreach (var player in players)
         {
             ServerManager.instance.SetCharacter(player.ClientId, player.CharacterId);
         }
 
         ServerManager.instance.StartGame();
+    }
+
+    [ClientRpc]
+    private void LoadingScreenClientRpc()
+    {
+        loadingScreen.SetActive(true);
     }
 
     private void HandlePlayersStateChanged(NetworkListEvent<CharacterSelectState> changeEvent)

@@ -122,6 +122,8 @@ public class LevelGenerator : NetworkBehaviour
             }
         }
 
+        MatchManager.instance.FinishedLoading();
+
     }
 
     public void SeedRequest(ulong client)
