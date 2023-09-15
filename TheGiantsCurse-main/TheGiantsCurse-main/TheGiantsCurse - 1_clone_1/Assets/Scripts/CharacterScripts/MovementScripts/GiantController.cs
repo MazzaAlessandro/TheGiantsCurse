@@ -30,7 +30,9 @@ public class GiantController : NetworkBehaviour
     private float speed;
 
     private Rigidbody rb;
-    
+
+    private Light globalLight;
+
     private Vector3 movementInput;
 
     [SerializeField] private GameObject cameraPrefab;
@@ -69,6 +71,14 @@ public class GiantController : NetworkBehaviour
     {
         //GetComponent<NetworkObject>().ChangeOwnership(NetworkManager.LocalClientId);
         networkActions.GetOwnership();
+
+        if (globalLight == null && GameObject.FindWithTag("GlobalLight").GetComponent<Light>() != null)
+        {
+            globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
+            if (globalLight.intensity < 0.5)
+                StartCoroutine(Helper.FadeLight(globalLight, 0f, 5f, 1f));
+        }
+            
         LocalCameraSetup();
     }
 
@@ -130,7 +140,7 @@ public class GiantController : NetworkBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage(999f);
+            collision.gameObject.GetComponent<PlayerController>().Death();
         }
 
         else if (collision.gameObject.CompareTag("Destroyable"))
@@ -143,12 +153,21 @@ public class GiantController : NetworkBehaviour
             collision.gameObject.GetComponent<Explosive>().Explode();
         }
 
-        else if(collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("IceBlock") || collision.gameObject.CompareTag("Torch"))
+        else if(collision.gameObject.CompareTag("Grapple") || collision.gameObject.CompareTag("IceBlock") || collision.gameObject.CompareTag("Torch") || collision.gameObject.CompareTag("Pickup"))
         {
             SoundManager.instance.PlayEffect(destroySound);
             Destroy(collision.gameObject);
         }
     }
+
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<PlayerController>().TakeDamage(999f);
+        }
+    }*/
+
 
     private void Start()
     {

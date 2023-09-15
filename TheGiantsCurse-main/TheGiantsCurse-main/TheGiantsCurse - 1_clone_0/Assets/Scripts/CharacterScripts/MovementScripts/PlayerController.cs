@@ -726,10 +726,12 @@ public class PlayerController : NetworkBehaviour
     {
         animator.SetTrigger("Death");
         dead = true;
+        rb.useGravity = false;
         movementEnabled = false;
         aimingEnabled = false;
         networkActions.Death();
-        MatchManager.instance.PlayerDeath(NetworkManager.LocalClientId);
+        if(IsOwner)
+            MatchManager.instance.PlayerDeath(NetworkManager.LocalClientId);
         /*if (FinalTrackManagement.instance != null)
         {
             if (IsOwner)
@@ -753,7 +755,7 @@ public class PlayerController : NetworkBehaviour
         aimingEnabled = false;
         rb.useGravity = false;
         //Destroy(GetComponent<Rigidbody>());
-        Destroy(GetComponent<BoxCollider>());
+        //Destroy(GetComponent<BoxCollider>());
 
     }
 

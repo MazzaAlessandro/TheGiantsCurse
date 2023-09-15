@@ -69,7 +69,7 @@ public class MatchManager : NetworkBehaviour
         {
             if(clientId == giantClientID)
             {
-                //all players win
+                SurvivedClientRpc();
             }
 
             else if (clientIDList.Contains(clientId))
@@ -87,7 +87,7 @@ public class MatchManager : NetworkBehaviour
                 {
                     if(clientIDList.Count == 1)
                     {
-                        
+                        SurvivedClientRpc();
                     }
                 }
                 
@@ -223,12 +223,13 @@ public class MatchManager : NetworkBehaviour
         }
         else
         {
+            HandleDeath(clientId);
+
             if (clientIDList.Count == 1)
             {
-
+                SurvivedClientRpc();
             }
-            else
-                HandleDeath(clientId);
+                
         }
     }
 
@@ -251,7 +252,7 @@ public class MatchManager : NetworkBehaviour
     [ClientRpc]
     private void PlayerDeathClientRpc(ClientRpcParams clientRpcParams = default)
     {
-        GameOverManagement.instance.Setup(0, true);
+        GameOverManagement.instance.Setup(0, false);
         Debug.Log("YOU DIED");
     }
 
@@ -295,6 +296,12 @@ public class MatchManager : NetworkBehaviour
             GameOverManagement.instance.Setup(1, true);
             Debug.Log("Someone else escaped from the cave. YOU LOSE");
         }
+    }
+
+    [ClientRpc]
+    private void SurvivedClientRpc()
+    {
+        GameOverManagement.instance.Setup(4, true);
     }
 
     #endregion

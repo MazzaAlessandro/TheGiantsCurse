@@ -10,7 +10,7 @@ public class PlayerNetworkActions : NetworkBehaviour
     [SerializeField] protected Transform arrowSpawnPoint;
     [SerializeField] protected ArrowBehaviour arrowPrefab;
     [SerializeField] private Transform pickupTransform, throwTransform;
-
+    [SerializeField] private PlayerController pc;
     [SerializeField] protected Gadget gadget;
 
     [SerializeField] private float throwSpeed = 20f;
@@ -58,6 +58,31 @@ public class PlayerNetworkActions : NetworkBehaviour
         Debug.Log($"Executed message sent by: {num}");
     }
 
+    #endregion
+
+    #region Damage
+
+    public void TakeDamage(float damage)
+    {
+        TakeDamageServerRpc(damage);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void TakeDamageServerRpc(float damage)
+    {
+        TakeDamageClientRpc(damage);
+    }
+
+    [ClientRpc]
+    private void TakeDamageClientRpc(float damage)
+    {
+        pc.TakeDamage(damage);
+    }
+
+    private void TakeDamageSync(float damage)
+    {
+
+    }
     #endregion
 
     #region Shoot Arrow
@@ -274,7 +299,8 @@ public class PlayerNetworkActions : NetworkBehaviour
     private void DeathAction()
     {
         //Destroy(GetComponent<Rigidbody>());
-        //Destroy(GetComponent<BoxCollider>());
+        GetComponent<Rigidbody>().useGravity = false;
+        Destroy(GetComponent<BoxCollider>());
         //LevelManager.instance.Death();
         Destroy(this);
     }

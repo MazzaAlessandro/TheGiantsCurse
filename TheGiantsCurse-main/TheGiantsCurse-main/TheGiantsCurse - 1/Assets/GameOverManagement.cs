@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOverManagement : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameOverManagement : MonoBehaviour
     public TMP_Text waitText;
 
     public Button leaveButton;
+
+    private bool done = false;
 
 
     public static GameOverManagement instance;
@@ -30,34 +33,48 @@ public class GameOverManagement : MonoBehaviour
     public void Setup(int cause, bool canLeave)
     {
         gameOverScreen.SetActive(true);
-        switch (cause)
+        if (!done)
         {
-            case 0:
-                gameOverCauseText.text = "YOU DIED";
-                break;
-            case 1:
-                gameOverCauseText.text = "SOMEONE ESCAPED";
-                break;
-            case 2:
-                gameOverCauseText.text = "YOU SURVIVED";
-                break;
-            case 3:
-                gameOverCauseText.text = "PREYS HUNTED";
-                break;
-            default:
-                gameOverCauseText.text = "YOU DIED";
-                break;
+            switch (cause)
+            {
+                case 0:
+                    gameOverCauseText.text = "YOU DIED";
+                    break;
+                case 1:
+                    gameOverCauseText.text = "SOMEONE ESCAPED";
+                    break;
+                case 2:
+                    gameOverCauseText.text = "YOU ESCAPED";
+                    break;
+                case 3:
+                    gameOverCauseText.text = "PREYS HUNTED";
+                    break;
+                case 4:
+                    gameOverCauseText.text = "YOU SURVIVED";
+                    break;
+                default:
+                    gameOverCauseText.text = "YOU DIED";
+                    break;
+            }
         }
 
+        done = canLeave;
         if (canLeave)
-        {
-            leaveButton.gameObject.SetActive(true);
-            waitText.gameObject.SetActive(false);
-        }
-        else
-        {
-            leaveButton.gameObject.SetActive(false);
-            waitText.gameObject.SetActive(true);
-        }
+            {
+                leaveButton.gameObject.SetActive(true);
+                waitText.gameObject.SetActive(false);
+            }
+            else
+            {
+                leaveButton.gameObject.SetActive(false);
+                waitText.gameObject.SetActive(true);
+            }
+        
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Debug.Log("Button pressed");
+        SceneManager.LoadScene(0);
     }
 }

@@ -266,7 +266,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5102681883935784210}
   - component: {fileID: 5102681883935784208}
-  - component: {fileID: 5102681883935784221}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -308,29 +307,3 @@ MonoBehaviour:
   menuMusic: {fileID: 8300000, guid: e8e5ba15d4414ea46879a6f7de9946b8, type: 3}
   puzzleMusic: {fileID: 8300000, guid: 220292c53b51e604b96bbd2305c8a5cb, type: 3}
   racingMusic: {fileID: 8300000, guid: aae386c67b81e5c4cace09a0f1af8fe4, type: 3}
---- !u!114 &5102681883935784221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5102681883935784220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f248cad0a9d42a42bf388100fd08928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters:
-  - prefab: {fileID: 3621067114013564863, guid: d7d4bc2dd56f00b40beb4ba1499e133a, type: 3}
-    icon: {fileID: 21300000, guid: a5084c5dc2b6ffd4384dc58354e03546, type: 3}
-  - prefab: {fileID: 929394767473187804, guid: 773d1ae4b03b6f143af5e168df05923d, type: 3}
-    icon: {fileID: 21300000, guid: 6c72cf3b84c749d458530bf18053e1ff, type: 3}
-  - prefab: {fileID: 2818278088902073472, guid: 759463794ef9a4748a1dace5130e590e, type: 3}
-    icon: {fileID: 21300000, guid: bc81ad78c8443fd4d811eec189dbac6e, type: 3}
-  - prefab: {fileID: 712616003343428357, guid: 20cc4acfcc0e52b4d8fe9ee152996039, type: 3}
-    icon: {fileID: 21300000, guid: 8860b33687eb96545af622f5bc0438cd, type: 3}
-  - prefab: {fileID: 2233193742316790245, guid: c21a8792222360d44a5196e1d0d2b1b6, type: 3}
-    icon: {fileID: 21300000, guid: e7a956bf625a8e645862ecb9396b5528, type: 3}
-  currentCharacter:
-    prefab: {fileID: 0}
-    icon: {fileID: 0}

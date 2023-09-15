@@ -8,6 +8,18 @@ public class FirstMenu : MonoBehaviour{
     [SerializeField] private string startScene = "StartMenu";
     [SerializeField] private string optionsScene = "OptionMenu";
 
+    private void Awake()
+    {
+        if (ServerManager.instance != null)
+            Destroy(ServerManager.instance.gameObject);
+
+        if (HazardEvent.instance != null)
+            Destroy(HazardEvent.instance.gameObject);
+
+        if (ClientManager.instance != null)
+            Destroy(ClientManager.instance.gameObject);
+
+    }
     private void Start()
     {
         SoundManager.instance.PlayMusic(SoundManager.Phases.MENU);
@@ -17,7 +29,7 @@ public class FirstMenu : MonoBehaviour{
     }
 
     public void OptionGame(){
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(optionsScene);
     }
 
     public void QuitGame(){
