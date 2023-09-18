@@ -28,6 +28,23 @@ public class GiantNetworkActions : NetworkBehaviour
 
     public void SetUp()
     {
+        SetUpServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetUpServerRpc()
+    {
+        SetUpClientRpc();
+    }
+
+    [ClientRpc]
+    private void SetUpClientRpc()
+    {
+        SetUp();
+    }
+
+    private void LocalSetUp()
+    {
         leapReady = true;
         clubReady = true;
         boulderReady = true;
@@ -111,7 +128,11 @@ public class GiantNetworkActions : NetworkBehaviour
                     break;
                 case 1:
                     if (leapReady)
+                    {
+                        Debug.Log("Ability 1");
                         Leap();
+                    }
+                        
                     break;
                 case 2:
                     if (boulderReady)
@@ -209,6 +230,7 @@ public class GiantNetworkActions : NetworkBehaviour
 
     private void Leap()
     {
+        Debug.Log("Jump");
         doingAction = true;
         leapReady = false;
         StartCoroutine(Jump());
@@ -216,6 +238,7 @@ public class GiantNetworkActions : NetworkBehaviour
 
     private IEnumerator Jump()
     {
+        Debug.Log("Jump");
         Ability2UI.SetFillAmount(1);
 
         canMove = false;

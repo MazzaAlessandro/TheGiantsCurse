@@ -27,6 +27,7 @@ TagManager:
   - tmpCam
   - Exit
   - Cooldown
+  - Signpost
   layers:
   - Default
   - TransparentFX

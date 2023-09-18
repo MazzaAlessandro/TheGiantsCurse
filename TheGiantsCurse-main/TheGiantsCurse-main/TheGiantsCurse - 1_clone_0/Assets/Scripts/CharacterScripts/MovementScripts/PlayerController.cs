@@ -86,6 +86,9 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.Log("Set up camera");
             spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
+            /*cameraInstance = Instantiate(cameraPrefab, this.transform);
+            mainCamera = cameraInstance.GetComponentInChildren<Camera>();
+            cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);*/
             //transform.position = new Vector3(0, 10, 0);
             //rb.useGravity = true;
             /*cameraInstance = Instantiate(cameraPrefab, this.transform);
@@ -402,7 +405,17 @@ public class PlayerController : NetworkBehaviour
     //Either interacts with interactable items or pick up explosive barrels
     void Interact()
     {
-        networkActions.Interact();
+        Ray r = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange))
+        {
+            if (hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj) && hitInfo.collider.gameObject.CompareTag("Signpost") && this.enabled == true)
+            {
+                interactObj.Interact();
+            }
+            else 
+                networkActions.Interact();
+        }
+        
         /*Ray r = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange))
         {

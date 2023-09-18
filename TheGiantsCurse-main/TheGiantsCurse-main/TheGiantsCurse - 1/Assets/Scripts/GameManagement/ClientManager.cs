@@ -47,5 +47,5 @@ public class ClientManager : MonoBehaviour
 
         NetworkManager.Singleton.StartClient();
     }
-    
+
 }

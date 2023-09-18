@@ -139,7 +139,7 @@ public class MatchManager : NetworkBehaviour
     {
         counter++;
         Debug.Log($"Players done {counter}");
-        if(counter == playerCount)
+        if(counter >= playerCount)
         {
             Debug.Log("all done");
             FinishedLoadingClientRpc();

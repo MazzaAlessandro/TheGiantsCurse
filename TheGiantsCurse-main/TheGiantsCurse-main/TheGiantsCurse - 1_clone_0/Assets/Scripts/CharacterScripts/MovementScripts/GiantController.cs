@@ -36,6 +36,7 @@ public class GiantController : NetworkBehaviour
     private Vector3 movementInput;
 
     [SerializeField] private GameObject cameraPrefab;
+    [SerializeField] private GameObject UI1, UI2, UI3;
     protected GameObject cameraInstance;
     private Camera mainCamera;
 
@@ -90,43 +91,22 @@ public class GiantController : NetworkBehaviour
         //GameObject.FindWithTag("tmpCam").SetActive(false);
         HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
 
-        foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
-        {
-            i.enabled = true;
-        }
+        UI1.SetActive(true);
+        UI2.SetActive(true);
+        UI3.SetActive(true);
 
         Ability1UI.SetFillAmount(0);
         Ability2UI.SetFillAmount(0);
         Ability3UI.SetFillAmount(0);
 
         networkActions.SetUp();
-        TransitionHandler.instance.Open();
+        StartCoroutine(WaitToOpen());
     }
 
-    public override void OnNetworkSpawn()
+    private IEnumerator WaitToOpen()
     {
-        if (!IsOwner)
-        {
-            foreach (Canvas i in this.gameObject.GetComponentsInChildren<Canvas>())
-            {
-                i.enabled = false;
-            }
-            enabled = false;
-        }
-        else
-        {
-            /*cameraInstance = Instantiate(cameraPrefab, null);
-            mainCamera = cameraInstance.GetComponentInChildren<Camera>();
-            cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
-            if (GameObject.FindWithTag("tmpCam") != null) 
-                GameObject.FindWithTag("tmpCam").SetActive(false);
-            HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
-            FinalTrackManagement.instance.AssignGiantCliendId();*/
-            Ability1UI.SetFillAmount(0);
-            Ability2UI.SetFillAmount(0);
-            Ability3UI.SetFillAmount(0);
-        }
-        //mainCamera.GetComponentInParent<CameraFollow>().ChangeFollow(this.gameObject);
+        yield return new WaitForSeconds(2f);
+        TransitionHandler.instance.Open();
     }
 
     private void OnDrawGizmos()
