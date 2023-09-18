@@ -99,7 +99,7 @@ public class GiantController : NetworkBehaviour
         Ability2UI.SetFillAmount(0);
         Ability3UI.SetFillAmount(0);
 
-        networkActions.SetUp();
+        //networkActions.SetUp();
         StartCoroutine(WaitToOpen());
     }
 

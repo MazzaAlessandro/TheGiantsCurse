@@ -26,24 +26,7 @@ public class GiantNetworkActions : NetworkBehaviour
 
     [SerializeField] private Animator animator;
 
-    public void SetUp()
-    {
-        SetUpServerRpc();
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void SetUpServerRpc()
-    {
-        SetUpClientRpc();
-    }
-
-    [ClientRpc]
-    private void SetUpClientRpc()
-    {
-        SetUp();
-    }
-
-    private void LocalSetUp()
+    public void Awake()
     {
         leapReady = true;
         clubReady = true;
