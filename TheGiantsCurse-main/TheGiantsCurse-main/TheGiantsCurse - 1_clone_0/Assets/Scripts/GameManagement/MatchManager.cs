@@ -214,6 +214,7 @@ public class MatchManager : NetworkBehaviour
     private void MoveToFinalTrack()
     {
         Debug.Log("Someone else reached the end");
+        SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
         localPlayer.MoveToFinalTrack();
     }
 
@@ -221,6 +222,7 @@ public class MatchManager : NetworkBehaviour
     {
         Debug.Log("Turning into Giant now...");
         localPlayer.gameObject.SetActive(false);
+        SoundManager.instance.PlayMusic(SoundManager.Phases.RACING);
         giant.enabled = true;
     }
 

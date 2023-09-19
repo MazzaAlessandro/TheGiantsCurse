@@ -6,7 +6,7 @@ public class HazardEvent : MonoBehaviour
 {
     public static HazardEvent instance;
 
-    [SerializeField] private float hazardDuration = 5f;
+    [SerializeField] private float hazardDuration = 10f;
 
     private float windForce = 5f;
 

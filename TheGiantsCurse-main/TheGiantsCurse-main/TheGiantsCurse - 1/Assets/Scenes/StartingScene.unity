@@ -7809,7 +7809,6 @@ GameObject:
   - component: {fileID: 1251964329}
   - component: {fileID: 1711630956}
   - component: {fileID: 1711630957}
-  - component: {fileID: 1711630958}
   - component: {fileID: 1711630959}
   m_Layer: 0
   m_Name: GameManager
@@ -7830,8 +7829,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b64c4611a7ae68c428fdbb05fd21da3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hazardDuration: 5
-  windSound: {fileID: 0}
+  hazardDuration: 10
+  windSound: {fileID: 8300000, guid: db129c23f1af60c4ea5a189afb04a719, type: 3}
 --- !u!4 &1251964328
 Transform:
   m_ObjectHideFlags: 0
@@ -17756,23 +17755,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1711630958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1251964326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a6d552780a59c0458a8d2030aa9843c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playersSpawnPoints: []
-  giantSpawnpoint: {fileID: 0}
-  giant: {fileID: 0}
-  players: []
-  activeBoulderArea: 0
 --- !u!114 &1711630959
 MonoBehaviour:
   m_ObjectHideFlags: 0
