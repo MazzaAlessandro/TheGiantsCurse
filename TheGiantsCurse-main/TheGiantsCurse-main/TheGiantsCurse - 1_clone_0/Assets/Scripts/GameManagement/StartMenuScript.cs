@@ -39,7 +39,7 @@ public class StartMenuScript : MonoBehaviour
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.Log($"Player id: {AuthenticationService.Instance.PlayerId}");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.LogError(e);
             return;

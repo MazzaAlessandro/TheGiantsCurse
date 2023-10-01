@@ -77,7 +77,7 @@ public class GiantController : NetworkBehaviour
         {
             globalLight = GameObject.FindWithTag("GlobalLight").GetComponent<Light>();
             if (globalLight.intensity < 0.5)
-                StartCoroutine(Helper.FadeLight(globalLight, 0f, 5f, 1f));
+                StartCoroutine(Helper.FadeLight(globalLight, 0f, 1f, 1f));
         }
             
         LocalCameraSetup();
@@ -99,13 +99,12 @@ public class GiantController : NetworkBehaviour
         Ability2UI.SetFillAmount(0);
         Ability3UI.SetFillAmount(0);
 
-        //networkActions.SetUp();
         StartCoroutine(WaitToOpen());
     }
 
     private IEnumerator WaitToOpen()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         TransitionHandler.instance.Open();
     }
 
@@ -231,6 +230,8 @@ public class GiantController : NetworkBehaviour
 
             RotateLook();
         }
+
+        rb.useGravity = !networkActions.onAir;
 
         //if (rotationEnabled) RotateLook();
     }
@@ -423,5 +424,34 @@ public class GiantController : NetworkBehaviour
         yield return new WaitForSeconds(boulderCooldown);
         Debug.Log("The boulder is now ready again");
         boulderReady = true;
+    }
+
+    public void GoUp()
+    {
+        StartCoroutine(Up());
+    }
+
+    private IEnumerator Up()
+    {
+        movementEnabled = false;
+        rotationEnabled = false;
+
+        float elapsedTime = 0f;
+        float time = 0.25f;
+        rb.useGravity = false;
+
+        Vector3 start = transform.position;
+        Vector3 end = new Vector3(transform.position.x, 10, transform.position.z);
+
+        while (elapsedTime < time)
+        {
+            transform.position = Vector3.Lerp(start, end, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rb.useGravity = true;
+        movementEnabled = true;
+        rotationEnabled = true;
     }
 }

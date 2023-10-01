@@ -31,6 +31,8 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] protected PlayerNetworkActions networkActions;
 
+    [SerializeField] private GameObject fireGameObject;
+
     protected float health;
     protected float speed;
     protected float arrowCharge;
@@ -144,6 +146,8 @@ public class PlayerController : NetworkBehaviour
         cameraInstance.GetComponent<CameraFollow>().ChangeFollow(this.gameObject);
         if (GameObject.FindWithTag("tmpCam") != null)
             GameObject.FindWithTag("tmpCam").SetActive(false);
+        if(MatchManager.instance!=null)
+            MatchManager.instance.SetLocalPlayer(this);
         //HazardEvent.instance.SetCamera(cameraInstance.transform.GetChild(0).gameObject);
     }
 
@@ -162,7 +166,10 @@ public class PlayerController : NetworkBehaviour
     private void Spawn()
     {       
         Reload();
-        transform.position = spawnPoint.transform.position;
+        if (spawnPoint != null)
+            transform.position = spawnPoint.transform.position;
+        else
+            transform.position = Vector3.zero;
         transform.rotation = Quaternion.identity;
         fell = false;
         movementEnabled = true;
@@ -620,7 +627,8 @@ public class PlayerController : NetworkBehaviour
             if (!onFire)
             {
                 onFire = true;
-                burningDuration = 5f;
+                fireGameObject.SetActive(true);
+                burningDuration = 7f;
                 StartCoroutine(FireDamage());
             }
         }
@@ -633,7 +641,10 @@ public class PlayerController : NetworkBehaviour
         burningDuration -= 1;
         yield return new WaitForSeconds(1f);
         if (burningDuration == 0)
+        {
+            fireGameObject.SetActive(false);
             onFire = false;
+        }   
         else if (burningDuration > 0)
             StartCoroutine(FireDamage());
     }
@@ -814,6 +825,7 @@ public class PlayerController : NetworkBehaviour
     {
         Light globalLight = GameObject.FindGameObjectWithTag("GlobalLight").GetComponent<Light>();
 
+        GameObject.FindWithTag("MainCamera").GetComponent<CameraShake>().Shake(5f);
         FinalTrackManagement.instance.AssignSpawn(this, playerCode);
         TransitionHandler.instance.CloseAndOpen(2f);
 

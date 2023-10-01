@@ -83,7 +83,7 @@ public class HazardEvent : MonoBehaviour
                 Wind();
                 break;
             default:
-                Darkness();
+                //Darkness();
                 break;
         }
     }

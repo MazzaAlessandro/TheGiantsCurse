@@ -230,9 +230,9 @@ public class GiantNetworkActions : NetworkBehaviour
         float time = 0.25f;
 
         Vector3 start = transform.position;
-        Vector3 end = new Vector3(transform.position.x, 30, transform.position.z);
+        Vector3 end = new Vector3(transform.position.x, 40, transform.position.z);
 
-        while (elapsedTime < time)
+        while (elapsedTime <= time)
         {
             if (IsOwner)
                 transform.position = Vector3.Lerp(start, end, elapsedTime / time);
@@ -240,6 +240,7 @@ public class GiantNetworkActions : NetworkBehaviour
             yield return null;
         }
 
+        transform.position = new Vector3(transform.position.x, 40, transform.position.z);
         leapLandingInstance = Instantiate(leapLandingArea, transform);
         leapLandingInstance.transform.SetParent(null);
         leapLandingInstance.transform.position = new Vector3(transform.position.x, 0.01f, transform.position.z);
@@ -256,7 +257,7 @@ public class GiantNetworkActions : NetworkBehaviour
         float elapsedTime = 0f;
         float time = 5f;
 
-        while (elapsedTime < time)
+        while (elapsedTime <= time)
         {
             leapLandingInstance.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             elapsedTime += Time.deltaTime;
@@ -276,7 +277,7 @@ public class GiantNetworkActions : NetworkBehaviour
         Vector3 start = transform.position;
         Vector3 end = new Vector3(transform.position.x, -0.2f, transform.position.z);
 
-        while (elapsedTime < time)
+        while (elapsedTime <= time)
         {
             if (IsOwner) 
                 transform.position = Vector3.Lerp(start, end, elapsedTime / time);
@@ -286,6 +287,7 @@ public class GiantNetworkActions : NetworkBehaviour
 
         LandingCrash();
 
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         onAir = false;
         canMove = true;
 

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   displayName: Cerberus
-  icon: {fileID: 21300000, guid: a5084c5dc2b6ffd4384dc58354e03546, type: 3}
+  icon: {fileID: 21300000, guid: 9b7aae6a01c0d0e40a2ed67426cea2c7, type: 3}
   introPrefab: {fileID: 929394767473187804, guid: be02a65192bcbb24da7a179c5adcefde, type: 3}
   gameplayPrefab: {fileID: 4768756713941630901, guid: 773d1ae4b03b6f143af5e168df05923d, type: 3}
